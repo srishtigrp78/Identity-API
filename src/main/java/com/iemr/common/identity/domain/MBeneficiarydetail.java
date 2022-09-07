@@ -1,0 +1,314 @@
+package com.iemr.common.identity.domain;
+
+import java.io.Serializable;
+import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.google.gson.annotations.Expose;
+
+import lombok.Data;
+
+/**
+ * The persistent class for the m_beneficiarydetails database table.
+ * 
+ */
+@Entity
+@Table(name = "i_beneficiarydetails")
+@NamedQuery(name = "MBeneficiarydetail.findAll", query = "SELECT m FROM MBeneficiarydetail m order by beneficiaryDetailsId asc")
+@Data
+public class MBeneficiarydetail implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private static final int START_YEAR = 1970;
+	private static final String POSITIVE = "yes";
+	private static final String NEGETIVE = "no";
+	private static final String ND = "";
+	private static final int POSITIVE_INT = 1;
+	private static final int NEGETIVE_INT = 2;
+	private static final int ND_INT = 3;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(unique = true, nullable = false)
+	// @OrderBy(value = "beneficiaryDetailsId asc")
+	private BigInteger beneficiaryDetailsId;
+
+	private Integer areaId;
+
+	private BigInteger beneficiaryRegID;
+
+	@Column(length = 45)
+	private String community;
+
+	@Column(nullable = false, length = 50, updatable = false)
+	private String createdBy;
+
+	@Column(name = "CreatedDate", insertable = false, updatable = false)
+	private Timestamp createdDate;
+
+	private Boolean deleted = false;
+
+	private Timestamp dob;
+
+	@Column(length = 45)
+	private String education;
+
+	private Boolean emergencyRegistration;
+
+	@Column(length = 50)
+	private String fatherName;
+
+	@Column(length = 20)
+	private String firstName;
+
+	@Column(length = 50)
+	private String motherName;
+
+	private String gender;
+
+	@Column(name = "incomeStatusId")
+	private Integer incomeStatusId;
+
+	@Column(length = 45)
+	private String incomeStatus;
+	
+
+	@Column(name = "LastModDate", insertable = false, updatable = false)
+	private Timestamp lastModDate;
+
+	@Column(length = 20)
+	private String lastName;
+
+	@Column(length = 20)
+	private String maritalStatus;
+
+	@Column(name = "marriageDate")
+	private Timestamp marriageDate;
+
+	@Transient
+	private Integer ageAtMarriage;
+
+	@Column(name = "MiddleName", length = 20)
+	private String middleName;
+
+	@Column(length = 50)
+	private String modifiedBy;
+
+	// private Integer parkingPlaceID;
+
+	private Integer occupationId;
+
+	@Column(length = 45)
+	private String occupation;
+
+	private Integer phcId;
+
+	@Column(length = 30)
+	private String placeOfWork;
+
+	private String literacyStatus;
+
+	private Integer preferredLanguageId;
+
+	@Column(length = 45)
+	private String preferredLanguage;
+
+	@Column(nullable = false, length = 4)
+	private String processed = "N";
+
+	@Column(length = 45)
+	private BigInteger religionId;
+
+	@Column(length = 45)
+	private String religion;
+
+	@Column(length = 300)
+	private String remarks;
+
+	private Boolean reserved;
+
+	private Integer reservedById;
+
+	@Column(length = 45)
+	private String reservedFor;
+
+	private Timestamp reservedOn;
+
+	private BigInteger servicePointId;
+
+	@Column(length = 45)
+	private String sourceOfInfo;
+
+	@Column(length = 50)
+	private String spouseName;
+
+	@Column(length = 10)
+	private String status;
+
+	@Column(length = 10)
+	private String title;
+
+	private Integer zoneId;
+
+	@OneToOne(mappedBy = "mBeneficiarydetail")
+	private MBeneficiarymapping mBeneficiarymapping;
+
+	@Column(name = "GenderID")
+	private Integer genderId;
+
+	@Column(name = "MaritalStatusID")
+	private Integer maritalStatusId;
+
+	@Column(name = "TitleID")
+	private Integer titleId;
+
+	@Column(name = "CommunityID")
+	private Integer communityId;
+
+	@Column(name = "EducationID")
+	private Integer educationId;
+
+	@Column(name = "SexualOrientationID")
+	private Integer sexualOrientationID;
+
+	@Column(name = "SexualOrientationType")
+	private String sexualOrientationType;
+
+	@Column(name = "HIVStatus")
+	private Integer isHIVPositive;
+
+	@Column(name = "HealthCareWorkerId")
+	private Integer healthCareWorkerId;
+
+	private String healthCareWorker;
+
+	// new column added for data sync
+	// 17-06-2018
+	@Expose
+	@Column(name = "vanID", updatable = false)
+	private Integer vanID;
+	@Expose
+	@Column(name = "parkingPlaceID", updatable = false)
+	private Integer parkingPlaceID;
+
+	@Expose
+	@Column(name = "VanSerialNo", updatable = false)
+	private BigInteger vanSerialNo;
+
+	// END OF new column added for data sync
+	/**
+	 * Default constructor
+	 */
+	public MBeneficiarydetail() {
+
+	}
+
+	/**
+	 * Constructor for retrieving partial beneficiary details
+	 */
+	public MBeneficiarydetail(BigInteger beneficiaryDetailsId, String firstName, String lastName, String middleName,
+			String fatherName, String spouseName) {
+
+		this.beneficiaryDetailsId = beneficiaryDetailsId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.middleName = middleName;
+		this.fatherName = fatherName;
+		this.spouseName = spouseName;
+	}
+
+	public static Timestamp getMarriageDateCalc(Timestamp dob, Timestamp marriageDate, Integer ageAtMarriage) {
+		Timestamp marriageDateCalc = null;
+		if (marriageDate != null) {
+			marriageDateCalc = marriageDate;
+		} else if (dob != null && ageAtMarriage != null) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(dob);
+			cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + ageAtMarriage);
+			marriageDateCalc = new Timestamp(cal.getTime().getTime());
+		}
+		return marriageDateCalc;
+	}
+
+	public static Integer getAgeAtMarriageCalc(Timestamp dob, Timestamp marriageDate, Integer ageAtMarriage) {
+		Integer ageAtMarriageCalc = null;
+		if (ageAtMarriage != null) {
+			ageAtMarriageCalc = ageAtMarriage;
+		} else if (dob != null && marriageDate != null) {
+			Calendar dobCal = Calendar.getInstance();
+			Calendar marriageCal = Calendar.getInstance();
+			dobCal.setTime(dob);
+			marriageCal.setTime(marriageDate);
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(new Date(marriageCal.getTime().getTime() - dobCal.getTime().getTime()));
+			ageAtMarriageCalc = cal.get(Calendar.YEAR) - START_YEAR;
+		}
+		return ageAtMarriageCalc;
+	}
+
+	public static Integer calculateAge(Timestamp dob) {
+		Integer beneficiaryAge = null;
+		if (dob != null) {
+			Calendar dobCal = Calendar.getInstance();
+			Calendar currcal = Calendar.getInstance();
+			dobCal.setTime(new Date(currcal.getTime().getTime() - dob.getTime()));
+			beneficiaryAge = dobCal.get(Calendar.YEAR) - START_YEAR;
+		}
+		return beneficiaryAge;
+	}
+
+	public void setIsHIVPositive(Integer isHivPositive) {
+		this.isHIVPositive = isHivPositive;
+	}
+
+	public Integer getIsHIVPositive() {
+		return this.isHIVPositive;
+	}
+
+	public static Integer setIsHIVPositive(String status) {
+		Integer isHIVPositive = ND_INT;
+		if (status != null) {
+			switch (status.toLowerCase()) {
+			case POSITIVE:
+				isHIVPositive = POSITIVE_INT;
+				break;
+			case NEGETIVE:
+				isHIVPositive = NEGETIVE_INT;
+				break;
+			}
+		}
+		return isHIVPositive;
+	}
+
+	public static String getIsHIVPositive(Integer status) {
+		String isHIVPositive = ND;
+		if (status != null) {
+			switch (status) {
+			case POSITIVE_INT:
+				isHIVPositive = POSITIVE;
+				break;
+			case NEGETIVE_INT:
+				isHIVPositive = NEGETIVE;
+				break;
+			}
+		}
+		return isHIVPositive;
+	}
+
+	// public static void main(String[] args)
+	// {
+	// Timestamp dob = new Timestamp(10, 07, 10,0,0,0,0);
+	// System.out.println(calculateAge(dob));
+	// }
+}

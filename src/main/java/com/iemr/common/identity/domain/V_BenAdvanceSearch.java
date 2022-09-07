@@ -1,0 +1,270 @@
+package com.iemr.common.identity.domain;
+
+import java.math.BigInteger;
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import com.google.gson.annotations.Expose;
+
+@Entity
+@Table(name = "v_benadvancesearch")
+public class V_BenAdvanceSearch {
+
+	@Id
+	@Expose
+	@Column(name = "BenMapID")
+	private BigInteger benMapID;
+	@Expose
+	@Column(name = "BenRegID")
+	private BigInteger benRegID;
+	@Expose
+	@Column(name = "VanSerialNo")
+	private BigInteger vanSerialNo;
+	@Expose
+	@Column(name = "VanID")
+	private Integer vanID;
+	@Expose
+	@Column(name = "BenDetailsId")
+	private BigInteger benDetailsID;
+	@Expose
+	@Column(name = "BenAddressId")
+	private BigInteger benAddressID;
+	@Expose
+	@Column(name = "BenImageId")
+	private Long benImageID;
+	@Expose
+	@Column(name = "BenContactsId")
+	private BigInteger benContactID;
+	@Expose
+	@Column(name = "BenConsentId")
+	private BigInteger benConsentID;
+	@Expose
+	@Column(name = "BenAccountID")
+	private BigInteger benAccountID;
+	@Expose
+	@Column(name = "FirstName")
+	private String firstName;
+	@Expose
+	@Column(name = "MiddleName")
+	private String middleName;
+	@Expose
+	@Column(name = "LastName")
+	private String lastName;
+	@Expose
+	@Column(name = "GenderId")
+	private Integer genderID;
+	@Expose
+	@Column(name = "CurrDistrictId")
+	private Integer districtID;
+	@Expose
+	@Column(name = "CurrVillageId")
+	private Integer villageID;
+	@Expose
+	@Column(name = "CurrStateId")
+	private Integer stateID;
+	@Expose
+	@Column(name = "fathername")
+	private String fatherName;
+	@Expose
+	@Column(name = "DOB")
+	private Timestamp dOB;
+
+	// new column added for D2D, 21-01-2021
+	@Expose
+	@Column(name = "houseoldId")
+	private Long houseHoldID;
+
+	@Expose
+	@Column(name = "guidelineid")
+	private String guideLineID;
+
+	@Expose
+	@Column(name = "rchid")
+	private String rchID;
+
+	public String getRchID() {
+		return rchID;
+	}
+
+	public void setRchID(String rchID) {
+		this.rchID = rchID;
+	}
+
+	public Integer getVillageID() {
+		return villageID;
+	}
+
+	public void setVillageID(Integer villageID) {
+		this.villageID = villageID;
+	}
+
+	public String getGuideLineID() {
+		return guideLineID;
+	}
+
+	public void setGuideLineID(String guideLineID) {
+		this.guideLineID = guideLineID;
+	}
+
+	public Long getHouseHoldID() {
+		return houseHoldID;
+	}
+
+	public void setHouseHoldID(Long houseHoldID) {
+		this.houseHoldID = houseHoldID;
+	}
+
+	public V_BenAdvanceSearch() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public BigInteger getBenMapID() {
+		return benMapID;
+	}
+
+	public void setBenMapID(BigInteger benMapID) {
+		this.benMapID = benMapID;
+	}
+
+	public BigInteger getBenRegID() {
+		return benRegID;
+	}
+
+	public void setBenRegID(BigInteger benRegID) {
+		this.benRegID = benRegID;
+	}
+
+	public BigInteger getVanSerialNo() {
+		return vanSerialNo;
+	}
+
+	public void setVanSerialNo(BigInteger vanSerialNo) {
+		this.vanSerialNo = vanSerialNo;
+	}
+
+	public Integer getVanID() {
+		return vanID;
+	}
+
+	public void setVanID(Integer vanID) {
+		this.vanID = vanID;
+	}
+
+	public BigInteger getBenDetailsID() {
+		return benDetailsID;
+	}
+
+	public void setBenDetailsID(BigInteger benDetailsID) {
+		this.benDetailsID = benDetailsID;
+	}
+
+	public BigInteger getBenAddressID() {
+		return benAddressID;
+	}
+
+	public void setBenAddressID(BigInteger benAddressID) {
+		this.benAddressID = benAddressID;
+	}
+
+	public Long getBenImageID() {
+		return benImageID;
+	}
+
+	public void setBenImageID(Long benImageID) {
+		this.benImageID = benImageID;
+	}
+
+	public BigInteger getBenContactID() {
+		return benContactID;
+	}
+
+	public void setBenContactID(BigInteger benContactID) {
+		this.benContactID = benContactID;
+	}
+
+	public BigInteger getBenConsentID() {
+		return benConsentID;
+	}
+
+	public void setBenConsentID(BigInteger benConsentID) {
+		this.benConsentID = benConsentID;
+	}
+
+	public BigInteger getBenAccountID() {
+		return benAccountID;
+	}
+
+	public void setBenAccountID(BigInteger benAccountID) {
+		this.benAccountID = benAccountID;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Integer getGenderID() {
+		return genderID;
+	}
+
+	public void setGenderID(Integer genderID) {
+		this.genderID = genderID;
+	}
+
+	public Integer getDistrictID() {
+		return districtID;
+	}
+
+	public void setDistrictID(Integer districtID) {
+		this.districtID = districtID;
+	}
+
+	public Integer getStateID() {
+		return stateID;
+	}
+
+	public void setStateID(Integer stateID) {
+		this.stateID = stateID;
+	}
+
+	public String getFatherName() {
+		return fatherName;
+	}
+
+	public void setFatherName(String fatherName) {
+		this.fatherName = fatherName;
+	}
+
+	public Timestamp getdOB() {
+		return dOB;
+	}
+
+	public void setdOB(Timestamp dOB) {
+		this.dOB = dOB;
+	}
+
+}
