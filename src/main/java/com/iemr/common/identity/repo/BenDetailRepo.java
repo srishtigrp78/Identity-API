@@ -98,5 +98,22 @@ public interface BenDetailRepo extends CrudRepository<MBeneficiarydetail, BigInt
 	@Query("SELECT a FROM MBeneficiarydetail a WHERE a.vanSerialNo =:vanSerialNo AND a.vanID =:vanID ")
 	MBeneficiarydetail getWith_vanSerialNo_vanID(@Param("vanSerialNo") BigInteger vanSerialNo,
 			@Param("vanID") Integer vanID);
+	
+	@Query("SELECT a FROM MBeneficiarydetail a WHERE a.familyId =:familyId")
+	List<MBeneficiarydetail> getFamilyDetails(@Param("familyId") String familyId);
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE MBeneficiarydetail c SET c.familyId = :familyId,c.headOfFamily_RelationID =:headofFamily_RelationID, "
+			+ " c.headOfFamily_Relation =:headofFamily_Relation,c.other =:other WHERE c.beneficiaryDetailsId = :beneficiaryDetailsId ")
+	Integer updateFamilyDetails(@Param("familyId") String familyId, @Param("beneficiaryDetailsId") BigInteger beneficiaryDetailsId,
+			@Param("headofFamily_RelationID") Integer headofFamily_RelationID,@Param("headofFamily_Relation") String headofFamily_Relation,
+			@Param("other") String other);
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE MBeneficiarydetail c SET c.familyId = null,headofFamily_RelationID =null,other=null, "
+			+ " headofFamily_Relation =null WHERE c.familyId = :familyId AND c.beneficiaryDetailsId =:detailsId")
+	Integer untagFamily(@Param("familyId") String familyId,@Param("detailsId") BigInteger detailsId);
 
 }
