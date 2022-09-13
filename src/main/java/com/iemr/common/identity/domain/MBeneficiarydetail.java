@@ -191,7 +191,18 @@ public class MBeneficiarydetail implements Serializable {
 	private Integer healthCareWorkerId;
 
 	private String healthCareWorker;
-
+	@Expose
+	@Column(name = "HeadofFamily_RelationID")
+	private Integer headOfFamily_RelationID;
+	@Expose
+	@Column(name = "familyid")
+	private String familyId;
+	
+	@Column(name = "others")
+	private String other;
+	@Expose
+	@Column(name = "HeadofFamily_Relation")
+	private String headOfFamily_Relation;
 	// new column added for data sync
 	// 17-06-2018
 	@Expose
