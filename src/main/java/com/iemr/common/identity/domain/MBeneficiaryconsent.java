@@ -99,11 +99,15 @@ public class MBeneficiaryconsent implements Serializable {
 	@Expose
 	@Column(name = "parkingPlaceID", updatable = false)
 	private Integer parkingPlaceID;
-	
+
 	@Expose
 	@Column(name = "VanSerialNo", updatable = false)
 	private BigInteger vanSerialNo;
 
 	// END OF new column added for data sync
+
+	@Expose
+	@Column(name = "BenConsent", updatable = false)
+	private Boolean beneficiaryConsent;
 
 }

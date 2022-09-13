@@ -99,4 +99,7 @@ public interface BenDetailRepo extends CrudRepository<MBeneficiarydetail, BigInt
 	MBeneficiarydetail getWith_vanSerialNo_vanID(@Param("vanSerialNo") BigInteger vanSerialNo,
 			@Param("vanID") Integer vanID);
 
+	@Query("SELECT b FROM MBeneficiarydetail b WHERE b.familyid =:familyid  ")
+	List<MBeneficiarydetail> searchByFamilyId(@Param("familyid") String familyid);
+
 }

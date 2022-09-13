@@ -82,7 +82,6 @@ public class MBeneficiarydetail implements Serializable {
 
 	@Column(length = 45)
 	private String incomeStatus;
-	
 
 	@Column(name = "LastModDate", insertable = false, updatable = false)
 	private Timestamp lastModDate;
@@ -205,6 +204,10 @@ public class MBeneficiarydetail implements Serializable {
 	@Expose
 	@Column(name = "VanSerialNo", updatable = false)
 	private BigInteger vanSerialNo;
+
+	@Expose
+	@Column(name = "familyid", updatable = true)
+	private String familyid;
 
 	// END OF new column added for data sync
 	/**

@@ -64,4 +64,7 @@ public interface BenIdentityRepo extends CrudRepository<MBeneficiaryidentity, Bi
 	@Modifying
 	@Query(" UPDATE MBeneficiaryidentity set vanSerialNo = :benIdentityId WHERE benIdentityId = :benIdentityId")
 	int updateVanSerialNo(@Param("benIdentityId") BigInteger benIdentityId);
+
+	@Query(value = "select i from MBeneficiaryidentity i where i.identityNo = :identityNo")
+	List<MBeneficiaryidentity> searchByIdentityNo(@Param("identityNo") String identityNo);
 }

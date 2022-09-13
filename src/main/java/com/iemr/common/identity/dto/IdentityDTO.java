@@ -121,4 +121,7 @@ public class IdentityDTO {
 
 	// END OF new column added for data sync
 
+	@Expose
+	private Boolean beneficiaryConsent;
+
 }
