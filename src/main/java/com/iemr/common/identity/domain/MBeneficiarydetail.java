@@ -216,9 +216,9 @@ public class MBeneficiarydetail implements Serializable {
 	@Column(name = "VanSerialNo", updatable = false)
 	private BigInteger vanSerialNo;
 
-	@Expose
-	@Column(name = "familyid", updatable = true)
-	private String familyid;
+//	@Expose
+//	@Column(name = "familyid", updatable = true)
+//	private String familyid;
 
 	// END OF new column added for data sync
 	/**

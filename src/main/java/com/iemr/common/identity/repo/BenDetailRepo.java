@@ -116,7 +116,7 @@ public interface BenDetailRepo extends CrudRepository<MBeneficiarydetail, BigInt
 			+ " headofFamily_Relation =null WHERE c.familyId = :familyId AND c.beneficiaryDetailsId =:detailsId")
 	Integer untagFamily(@Param("familyId") String familyId,@Param("detailsId") BigInteger detailsId);
 
-	@Query("SELECT b FROM MBeneficiarydetail b WHERE b.familyid =:familyid  ")
+	@Query("SELECT b FROM MBeneficiarydetail b WHERE b.familyId =:familyid  ")
 	List<MBeneficiarydetail> searchByFamilyId(@Param("familyid") String familyid);
 
 }

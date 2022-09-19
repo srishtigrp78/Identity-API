@@ -1,7 +1,6 @@
 package com.iemr.common.identity.repo.familyTag;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,7 +21,8 @@ public interface FamilyTagRepo extends CrudRepository<BenFamilyMapping,Long> {
 	public int untagFamily(@Param("benFamilyTagId") List<Long> benFamilyTagId,@Param("modifiedBy") String modifiedBy);
 	
 	
-	@Query("SELECT obj FROM BenFamilyMapping obj WHERE obj.familyName =:familyName AND obj.villageId =:villageId")
+	@Query("SELECT obj FROM BenFamilyMapping obj WHERE obj.familyName =:familyName AND obj.villageId =:villageId AND (obj.noOfmembers is not null "
+			+ " AND obj.noOfmembers >0)")
 	List<BenFamilyMapping> searchFamily(@Param("familyName") String familyName,@Param("villageId") Integer villageId);
 	
 	@Query("SELECT obj FROM BenFamilyMapping obj WHERE obj.familyId =:familyId")

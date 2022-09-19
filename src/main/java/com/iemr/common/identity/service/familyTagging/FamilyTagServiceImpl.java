@@ -102,7 +102,7 @@ public class FamilyTagServiceImpl implements FamilyTagService {
 			if (list != null && list.size() > 0)
 				return new Gson().toJson(list);
 			else
-				throw new IEMRException("No records found");
+				return "No records found";
 		} catch (Exception e) {
 			throw new IEMRException("Error while searching family :" + e.getLocalizedMessage());
 		}
@@ -150,6 +150,7 @@ public class FamilyTagServiceImpl implements FamilyTagService {
 				List<MBeneficiarydetail> list = benDetailRepo.getFamilyDetails(benFamilyObj.getFamilyId());
 				String name = "";
 				for (MBeneficiarydetail obj : list) {
+					name = "";
 					FamilyMembers famObj = new FamilyMembers();
 					BigInteger benRegId = benMappingRepo.getBenRegId(obj.getBeneficiaryDetailsId());
 					if (benRegId != null)
