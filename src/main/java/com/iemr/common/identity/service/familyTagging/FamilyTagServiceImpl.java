@@ -71,13 +71,15 @@ public class FamilyTagServiceImpl implements FamilyTagService {
 					if (obj.getFamilyId() != null) {
 						BigInteger benDetailsId = benMappingRepo
 								.getBenDetailsId(BigInteger.valueOf(obj.getBeneficiaryRegId()));
-						c = benDetailRepo.untagFamily(obj.getFamilyId(),benDetailsId);
+						c = benDetailRepo.untagFamily(obj.getFamilyId(),benDetailsId,obj.getModifiedBy());
 						benFamilyObj = familyTagRepo.searchFamilyByFamilyId(obj.getFamilyId());
 						noOfMembers = benFamilyObj.getNoOfmembers();
+						if(noOfMembers >0)
 						noOfMembers--;
 						benFamilyObj.setNoOfmembers(noOfMembers);
+						benFamilyObj.setModifiedBy(obj.getModifiedBy());
 						benFamilyObj = familyTagRepo.save(benFamilyObj);
-						if (c > 0 && noOfMembers > 0)
+						if (c > 0)
 							benFamilyIdList.add(obj.getFamilyId());
 					}
 				}

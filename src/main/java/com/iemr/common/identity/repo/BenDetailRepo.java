@@ -112,9 +112,9 @@ public interface BenDetailRepo extends CrudRepository<MBeneficiarydetail, BigInt
 	
 	@Transactional
 	@Modifying
-	@Query("UPDATE MBeneficiarydetail c SET c.familyId = null,headofFamily_RelationID =null,other=null, "
-			+ " headofFamily_Relation =null WHERE c.familyId = :familyId AND c.beneficiaryDetailsId =:detailsId")
-	Integer untagFamily(@Param("familyId") String familyId,@Param("detailsId") BigInteger detailsId);
+	@Query("UPDATE MBeneficiarydetail c SET c.familyId = null,headofFamily_RelationID = null,other = null, "
+			+ " headofFamily_Relation = null,modifiedBy = :modifiedBy WHERE c.familyId = :familyId AND c.beneficiaryDetailsId =:detailsId")
+	Integer untagFamily(@Param("familyId") String familyId,@Param("detailsId") BigInteger detailsId,@Param("modifiedBy") String modifiedBy);
 
 	@Query("SELECT b FROM MBeneficiarydetail b WHERE b.familyId =:familyid  ")
 	List<MBeneficiarydetail> searchByFamilyId(@Param("familyid") String familyid);
