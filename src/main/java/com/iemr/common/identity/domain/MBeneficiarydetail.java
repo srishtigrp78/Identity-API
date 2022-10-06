@@ -197,9 +197,10 @@ public class MBeneficiarydetail implements Serializable {
 	@Expose
 	@Column(name = "familyid")
 	private String familyId;
-	
+
 	@Column(name = "others")
 	private String other;
+
 	@Expose
 	@Column(name = "HeadofFamily_Relation")
 	private String headOfFamily_Relation;

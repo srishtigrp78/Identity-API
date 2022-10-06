@@ -452,6 +452,12 @@ public interface IdentityMapper {
 			@Mapping(target = "beneficiaryDetails.guideLineID", source = "map.guideLineID"),
 			@Mapping(target = "beneficiaryDetails.rchID", source = "map.rchID"),
 
+			// family id in response
+			@Mapping(target = "beneficiaryDetails.headOfFamily_RelationID", source = "map.MBeneficiarydetail.headOfFamily_RelationID"),
+			@Mapping(target = "beneficiaryDetails.familyId", source = "map.MBeneficiarydetail.familyId"),
+			@Mapping(target = "beneficiaryDetails.other", source = "map.MBeneficiarydetail.other"),
+			@Mapping(target = "beneficiaryDetails.headOfFamily_Relation", source = "map.MBeneficiarydetail.headOfFamily_Relation"),
+
 			// Start 1097
 			@Mapping(expression = "java(MBeneficiarydetail.calculateAge(map.getMBeneficiarydetail().getDob()))", target = "beneficiaryAge"),
 			// End 1097
