@@ -33,10 +33,11 @@ public class FamilyTaggingController {
 			response.setResponse(s);
 		} catch (Exception e) {
 			logger.error("Error in saving family tagging" + e);
-			response.setError(5000, "Error in saving family tagging");
+			response.setError(5000, "Error in saving family tagging : " + e.getLocalizedMessage());
 		}
 		return response.toString();
 	}
+
 	@CrossOrigin()
 	@ApiOperation(value = "Create Family", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/createFamily" }, method = { RequestMethod.POST })
@@ -48,11 +49,11 @@ public class FamilyTaggingController {
 			response.setResponse(s);
 		} catch (Exception e) {
 			logger.error("Error in saving family tagging" + e);
-			response.setError(5000, "Error in saving family tagging");
+			response.setError(5000, "Error in saving family tagging : " + e.getLocalizedMessage());
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin()
 	@ApiOperation(value = "Search Family", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/searchFamily" }, method = { RequestMethod.POST })
@@ -64,11 +65,11 @@ public class FamilyTaggingController {
 			response.setResponse(s);
 		} catch (Exception e) {
 			logger.error("Error in searching family" + e);
-			response.setError(5000, "Error in searching family");
+			response.setError(5000, "Error in searching family : " + e.getLocalizedMessage());
 		}
 		return response.toString();
 	}
-	
+
 	@CrossOrigin()
 	@ApiOperation(value = "Get family members details", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/getFamilyDetails" }, method = { RequestMethod.POST })
@@ -80,10 +81,11 @@ public class FamilyTaggingController {
 			response.setResponse(s);
 		} catch (Exception e) {
 			logger.error("Error in searching family members" + e);
-			response.setError(5000, "Error in searching family members");
+			response.setError(5000, "Error in searching family members : " + e.getLocalizedMessage());
 		}
 		return response.toString();
-	} 
+	}
+
 	@CrossOrigin()
 	@ApiOperation(value = "Untag beneficiary from a family", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = { "/untag" }, method = { RequestMethod.POST })
@@ -95,25 +97,25 @@ public class FamilyTaggingController {
 			response.setResponse(s);
 		} catch (Exception e) {
 			logger.error("Error in untagging family" + e);
-			response.setError(5000, "Error in untagging family");
+			response.setError(5000, "Error in untagging family : " + e.getLocalizedMessage());
 		}
 		return response.toString();
 	}
 
-//	@CrossOrigin()
-//	@ApiOperation(value = "Search beneficiary family", consumes = "application/json", produces = "application/json")
-//	@RequestMapping(value = { "/searchFamily" }, method = { RequestMethod.POST })
-//	public String searchFamily(@RequestBody String comingReq) {
-//		String s;
-//		OutputResponse response = new OutputResponse();
-//		try {
-//			s = familyTagService.searchFamily(comingReq);
-//			response.setResponse(s);
-//		} catch (Exception e) {
-//			logger.error("Error while searching family" + e);
-//			response.setError(5000, "Error while searching family");
-//		}
-//		return response.toString();
-//	}
+	@CrossOrigin()
+	@ApiOperation(value = "edit beneficiary family details", consumes = "application/json", produces = "application/json")
+	@RequestMapping(value = { "/editFamilyTagging" }, method = { RequestMethod.POST })
+	public String editFamilyDetails(@RequestBody String comingReq) {
+		String s;
+		OutputResponse response = new OutputResponse();
+		try {
+			s = familyTagService.editFamilyDetails(comingReq);
+			response.setResponse(s);
+		} catch (Exception e) {
+			logger.error("Error in editing family details : " + e);
+			response.setError(5000, "Error in editing family details : " + e.getLocalizedMessage());
+		}
+		return response.toString();
+	}
 
 }

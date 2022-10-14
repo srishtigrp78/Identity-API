@@ -689,12 +689,20 @@ public class IdentityService {
 			// mbDetl.setBeneficiaryDetailsId(benMapping.getMBeneficiarydetail().getBeneficiaryDetailsId());
 
 			// getting correct beneficiaryDetailsId by passing vanSerialNo & vanID
-			BigInteger beneficiaryDetailsId = detailRepo.findIdByVanSerialNoAndVanID(
+			MBeneficiarydetail benDetails = detailRepo.findBenDetailsByVanSerialNoAndVanID(
 					benMapping.getMBeneficiarydetail().getBeneficiaryDetailsId(), benMapping.getVanID());
 			// next statement is new one, setting correct beneficiaryDetailsId
-			if (beneficiaryDetailsId != null)
-				mbDetl.setBeneficiaryDetailsId(beneficiaryDetailsId);
-			else
+			if (benDetails != null) {
+				mbDetl.setBeneficiaryDetailsId(benDetails.getBeneficiaryDetailsId());
+				if (benDetails.getFamilyId() != null)
+					mbDetl.setFamilyId(benDetails.getFamilyId());
+				if (benDetails.getHeadOfFamily_RelationID() != null)
+					mbDetl.setHeadOfFamily_RelationID(benDetails.getHeadOfFamily_RelationID());
+				if (benDetails.getHeadOfFamily_Relation() != null)
+					mbDetl.setHeadOfFamily_Relation(benDetails.getHeadOfFamily_Relation());
+				if (benDetails.getOther() != null)
+					mbDetl.setOther(benDetails.getOther());
+			} else
 				throw new MissingMandatoryFieldsException("Either of vanSerialNO or vanID is missing.");
 
 			/**

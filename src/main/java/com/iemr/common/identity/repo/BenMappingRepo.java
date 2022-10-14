@@ -162,12 +162,12 @@ public interface BenMappingRepo extends CrudRepository<MBeneficiarymapping, BigI
 			+ " t.createdBy, t.createdDate FROM MBeneficiarymapping t "
 			+ " WHERE t.benRegId IN :benRegIDList ORDER BY t.benMapId Desc ")
 	public List<Object[]> getBenMappingByRegIDList(@Param("benRegIDList") List<BigInteger> benRegIDList);
-	
-	@Query("SELECT t.benDetailsId FROM MBeneficiarymapping t WHERE t.benRegId =:benRegId")
-	public BigInteger getBenDetailsId(@Param("benRegId") BigInteger benRegId);
-	
-	@Query("SELECT t.benRegId FROM MBeneficiarymapping t WHERE t.benDetailsId =:benDetailsId")
-	public BigInteger getBenRegId(@Param("benDetailsId") BigInteger benDetailsId);
+
+	@Query("SELECT t FROM MBeneficiarymapping t WHERE t.benRegId =:benRegId")
+	public MBeneficiarymapping getBenDetailsId(@Param("benRegId") BigInteger benRegId);
+
+	@Query("SELECT t.benRegId FROM MBeneficiarymapping t WHERE t.benDetailsId =:benDetailsId AND vanID = :vanID")
+	public BigInteger getBenRegId(@Param("benDetailsId") BigInteger benDetailsId, @Param("vanID") Integer vanID);
 
 	// 12-09-2022
 	@Query("SELECT t.benMapId, t.benAddressId, t.benConsentId, t.benContactsId, t.benDetailsId, "

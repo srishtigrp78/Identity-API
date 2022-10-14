@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.iemr.common.identity.data.familyTagging.BenFamilyMapping;
 import com.iemr.common.identity.data.familyTagging.FamilyMembers;
 import com.iemr.common.identity.domain.MBeneficiarydetail;
+import com.iemr.common.identity.domain.MBeneficiarymapping;
 import com.iemr.common.identity.exception.IEMRException;
 import com.iemr.common.identity.repo.BenDetailRepo;
 import com.iemr.common.identity.repo.BenMappingRepo;
@@ -33,17 +34,23 @@ public class FamilyTagServiceImpl implements FamilyTagService {
 	public String addTag(String request) throws IEMRException {
 		try {
 			BenFamilyMapping benFamilyObj = InputMapper.gson().fromJson(request, BenFamilyMapping.class);
-			BigInteger benDetailsId = benMappingRepo
+			MBeneficiarymapping benMapping = benMappingRepo
 					.getBenDetailsId(BigInteger.valueOf(benFamilyObj.getBeneficiaryRegId()));
-			if (benDetailsId != null) {
-				int c = benDetailRepo.updateFamilyDetails(benFamilyObj.getFamilyId(), benDetailsId,
+			if (benMapping != null && benMapping.getBenDetailsId() != null && benMapping.getVanID() != null) {
+				int c = benDetailRepo.updateFamilyDetails(benFamilyObj.getFamilyId(),
 						benFamilyObj.getHeadofFamily_RelationID(), benFamilyObj.getHeadofFamily_Relation(),
-						benFamilyObj.getOther());
+						benFamilyObj.getOther(), benMapping.getBenDetailsId(), benMapping.getVanID());
 			}
 			benFamilyObj = familyTagRepo.searchFamilyByFamilyId(benFamilyObj.getFamilyId());
-			int noOfMembers = benFamilyObj.getNoOfmembers();
-			noOfMembers++;
-			benFamilyObj.setNoOfmembers(noOfMembers);
+//			int noOfMembers = benFamilyObj.getNoOfmembers();
+//			noOfMembers++;
+
+			if (benFamilyObj != null && benFamilyObj.getNoOfmembers() != null)
+				benFamilyObj.setNoOfmembers(benFamilyObj.getNoOfmembers() + 1);
+
+			if (benFamilyObj != null && benFamilyObj.getIsHeadOfTheFamily() && benFamilyObj.getMemberName() != null)
+				benFamilyObj.setFamilyHeadName(benFamilyObj.getMemberName());
+
 			benFamilyObj = familyTagRepo.save(benFamilyObj);
 			if (benFamilyObj != null && benFamilyObj.getBenFamilyTagId() != null)
 				return "Family Tagging successfully completed";
@@ -57,42 +64,76 @@ public class FamilyTagServiceImpl implements FamilyTagService {
 
 	@Override
 	public String doFamilyUntag(String request) throws IEMRException {
-		String response = null;
+
 		try {
 			BenFamilyMapping benFamilyObj = InputMapper.gson().fromJson(request, BenFamilyMapping.class);
-			List<String> benFamilyIdList = new ArrayList<String>();
-			int c = 0;
-			int noOfMembers = 0;
 			if (benFamilyObj != null && benFamilyObj.getMemberList() != null
 					&& benFamilyObj.getMemberList().length > 0) {
 				for (BenFamilyMapping obj : benFamilyObj.getMemberList()) {
-					c = 0;
-					noOfMembers = 0;
+
 					if (obj.getFamilyId() != null) {
-						BigInteger benDetailsId = benMappingRepo
+						MBeneficiarymapping benMapping = benMappingRepo
 								.getBenDetailsId(BigInteger.valueOf(obj.getBeneficiaryRegId()));
-						c = benDetailRepo.untagFamily(obj.getFamilyId(),benDetailsId,obj.getModifiedBy());
+
+						int i = benDetailRepo.untagFamily(obj.getModifiedBy(), benMapping.getBenDetailsId(),
+								benMapping.getVanID());
+
 						benFamilyObj = familyTagRepo.searchFamilyByFamilyId(obj.getFamilyId());
-						noOfMembers = benFamilyObj.getNoOfmembers();
-						if(noOfMembers >0)
-						noOfMembers--;
-						benFamilyObj.setNoOfmembers(noOfMembers);
+
+						if (benFamilyObj != null && benFamilyObj.getNoOfmembers() != null
+								&& benFamilyObj.getNoOfmembers() > 0)
+							benFamilyObj.setNoOfmembers(benFamilyObj.getNoOfmembers() - 1);
+
+						if (benFamilyObj != null && benFamilyObj.getIsHeadOfTheFamily())
+							benFamilyObj.setFamilyHeadName("");
+
 						benFamilyObj.setModifiedBy(obj.getModifiedBy());
 						benFamilyObj = familyTagRepo.save(benFamilyObj);
-						if (c > 0)
-							benFamilyIdList.add(obj.getFamilyId());
+
 					}
 				}
-				if (benFamilyIdList != null && benFamilyIdList.size() > 0)
-					response = benFamilyIdList.size() + " beneficiary untagged successfully";
-				else
-					response = "Error while untagging family";
+
 			} else
 				throw new IEMRException("Incorrect data received");
 		} catch (Exception e) {
 			throw new IEMRException("Error while untagging family :" + e.getLocalizedMessage());
 		}
-		return response;
+		return "Beneficiary untagged successfully";
+	}
+
+// edit family
+	@Override
+	public String editFamilyDetails(String request) throws IEMRException {
+
+		try {
+			BenFamilyMapping benFamilyObj = InputMapper.gson().fromJson(request, BenFamilyMapping.class);
+
+			BenFamilyMapping benFamilyRS = familyTagRepo.searchFamilyByFamilyId(benFamilyObj.getFamilyId());
+			if (benFamilyRS != null) {
+				if (benFamilyObj.getIsHeadOfTheFamily() != null && benFamilyObj.getIsHeadOfTheFamily()
+						&& benFamilyObj.getMemberName() != null)
+					benFamilyRS.setFamilyHeadName(benFamilyObj.getMemberName());
+
+				benFamilyRS = familyTagRepo.save(benFamilyRS);
+
+			} else
+				throw new IEMRException("Invalid Family ID");
+
+			MBeneficiarymapping benMapping = benMappingRepo
+					.getBenDetailsId(BigInteger.valueOf(benFamilyObj.getBeneficiaryRegId()));
+
+			if (benMapping != null && benMapping.getBenDetailsId() != null && benMapping.getVanID() != null) {
+				int i = benDetailRepo.editFamilyDetails(benFamilyObj.getHeadofFamily_RelationID(),
+						benFamilyObj.getHeadofFamily_Relation(), benFamilyObj.getOther(), benMapping.getBenDetailsId(),
+						benMapping.getVanID(), benFamilyObj.getFamilyId());
+			} else
+				throw new IEMRException(
+						"Error in getting beneficiary details. No mapping data found in DB for this ben_reg_id");
+
+		} catch (Exception e) {
+			throw new IEMRException("Error while editing family tagging details :" + e.getLocalizedMessage());
+		}
+		return "Beneficiary family tagging updateed successfully";
 	}
 
 	@Override
@@ -118,12 +159,12 @@ public class FamilyTagServiceImpl implements FamilyTagService {
 			benFamilyObj.setNoOfmembers(1);
 			benFamilyObj = familyTagRepo.save(benFamilyObj);
 			// update family details to beneficiary
-			BigInteger benDetailsId = benMappingRepo
+			MBeneficiarymapping benMapping = benMappingRepo
 					.getBenDetailsId(BigInteger.valueOf(benFamilyObj.getBeneficiaryRegId()));
-			if (benDetailsId != null) {
-				int c = benDetailRepo.updateFamilyDetails(benFamilyObj.getFamilyId(), benDetailsId,
+			if (benMapping != null && benMapping.getBenDetailsId() != null && benMapping.getVanID() != null) {
+				int c = benDetailRepo.updateFamilyDetails(benFamilyObj.getFamilyId(),
 						benFamilyObj.getHeadofFamily_RelationID(), benFamilyObj.getHeadofFamily_Relation(),
-						benFamilyObj.getOther());
+						benFamilyObj.getOther(), benMapping.getBenDetailsId(), benMapping.getVanID());
 			}
 			if (benFamilyObj != null && benFamilyObj.getBenFamilyTagId() != null)
 				return new Gson().toJson(benFamilyObj);
@@ -154,14 +195,15 @@ public class FamilyTagServiceImpl implements FamilyTagService {
 				for (MBeneficiarydetail obj : list) {
 					name = "";
 					FamilyMembers famObj = new FamilyMembers();
-					BigInteger benRegId = benMappingRepo.getBenRegId(obj.getBeneficiaryDetailsId());
+					BigInteger benRegId = benMappingRepo.getBenRegId(obj.getBeneficiaryDetailsId(), obj.getVanID());
 					if (benRegId != null)
 						famObj.setMemberId(benRegId.longValue());
-					name = name + (obj.getTitle() != null ? obj.getTitle() : "")
-							+ (obj.getFirstName() != null ? obj.getFirstName() : "")
+					name = name + (obj.getTitle() != null ? obj.getTitle() : "") + " "
+							+ (obj.getFirstName() != null ? obj.getFirstName() : "") + " "
 							+ (obj.getLastName() != null ? obj.getLastName() : "");
 					famObj.setMemberName(name);
 					famObj.setRelationWithHead(obj.getHeadOfFamily_Relation());
+
 					responseList.add(famObj);
 				}
 				Map<String, Object> map = new HashMap<String, Object>();

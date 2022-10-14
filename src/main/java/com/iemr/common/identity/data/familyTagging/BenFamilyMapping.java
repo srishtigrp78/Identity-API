@@ -93,24 +93,30 @@ public class BenFamilyMapping {
 	private Timestamp syncedDate;
 
 	@Transient
-	Integer districtId;
+	private Integer districtId;
 
 	@Transient
-	Integer blockId;
+	private Integer blockId;
 
 	@Transient
 	private BenFamilyMapping memberList[];
 
 	@Transient
-	Long beneficiaryRegId;
+	private Long beneficiaryRegId;
 
 	@Transient
 	private Integer headofFamily_RelationID;
 
 	@Transient
 	private String headofFamily_Relation;
-	
+
 	@Transient
 	private String other;
+
+	@Transient
+	private String memberName;
+
+	@Transient
+	private Boolean isHeadOfTheFamily;
 
 }
