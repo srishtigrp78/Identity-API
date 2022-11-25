@@ -65,9 +65,9 @@ public class IdentityController {
 	@PostMapping(path = "/advanceSearch", headers = "Authorization")
 	public @ResponseBody String getBeneficiaries(
 			@ApiParam(value = "{\"firstName\":\"String\",\"genderId\":\"Integer\",\"fatherName\":\"String\","
-					+ "\"currentAddress\":{\"stateId\":\"Integer\",\"districtId\":\"Integer\",\"villageId\":\"villageId\"},"
-					+ "\"permanentAddress\":{\"stateId\":\"Integer\",\"districtId\":\"Integer\",\"villageId\":\"villageId\"},"
-					+ "\"emergencyAddress\":{\"stateId\":\"Integer\",\"districtId\":\"Integer\",\"villageId\":\"villageId\"},"
+					+ "\"currentAddress\":{\"stateId\":\"Integer\",\"districtId\":\"Integer\",\"villageId\":\"Integer\", \"blockID\":\"Integer\"},"
+					+ "\"permanentAddress\":{\"stateId\":\"Integer\",\"districtId\":\"Integer\",\"villageId\":\"Integer\", \"blockID\":\"Integer\"},"
+					+ "\"emergencyAddress\":{\"stateId\":\"Integer\",\"districtId\":\"Integer\",\"villageId\":\"Integer\",\"blockID\":\"Integer\"},"
 					+ "\"dob\":\"Timestamp\"}") @RequestBody String searchFilter) {
 		logger.info("IdentityController.getBeneficiary - start");
 		String response;
