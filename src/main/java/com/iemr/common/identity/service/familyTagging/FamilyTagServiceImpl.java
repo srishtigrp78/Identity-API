@@ -137,10 +137,13 @@ public class FamilyTagServiceImpl implements FamilyTagService {
 
 			BenFamilyMapping benFamilyRS = familyTagRepo.searchFamilyByFamilyId(benFamilyObj.getFamilyId());
 			if (benFamilyRS != null) {
-				if (benFamilyObj.getIsHeadOfTheFamily() != null && benFamilyObj.getIsHeadOfTheFamily()
-						&& benFamilyObj.getMemberName() != null)
-					benFamilyRS.setFamilyHeadName(benFamilyObj.getMemberName());
-
+				if (benFamilyObj.getIsHeadOfTheFamily() != null
+						&& benFamilyObj.getMemberName() != null) {
+					if(benFamilyRS.getFamilyHeadName().trim().equals(benFamilyObj.getMemberName().trim()) && benFamilyObj.getIsHeadOfTheFamily() == false)
+						benFamilyRS.setFamilyHeadName("");
+					else 
+						benFamilyRS.setFamilyHeadName(benFamilyObj.getMemberName());		
+				}
 				benFamilyRS = familyTagRepo.save(benFamilyRS);
 
 			} else
@@ -229,7 +232,10 @@ public class FamilyTagServiceImpl implements FamilyTagService {
 							+ (obj.getFirstName() != null ? obj.getFirstName() : "") + " "
 							+ (obj.getLastName() != null ? obj.getLastName() : "");
 					famObj.setMemberName(name);
-					famObj.setRelationWithHead(obj.getHeadOfFamily_Relation());
+					if (obj.getOther() != null)
+						famObj.setRelationWithHead(obj.getHeadOfFamily_Relation() + "-" + obj.getOther());
+					else
+						famObj.setRelationWithHead(obj.getHeadOfFamily_Relation());
 
 					responseList.add(famObj);
 				}
