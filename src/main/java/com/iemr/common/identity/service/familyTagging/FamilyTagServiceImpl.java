@@ -205,7 +205,18 @@ public class FamilyTagServiceImpl implements FamilyTagService {
 	String getFamilyId(String username) throws IEMRException {
 		try {
 			Integer userId = familyTagRepo.getUserId(username);
-			return String.valueOf((System.currentTimeMillis())) + userId;
+			if (userId != null) {
+
+				// added dummy string to produce minimum 13 character timestamp
+				String timestamp = String.valueOf((System.currentTimeMillis())) + "0000000000000";
+				// added dummy string to produce minimum 3 character timestamp
+				String userIdStr = userId + "000";
+
+				String finalFId = timestamp.substring(0, 13) + userIdStr.substring(0, 3);
+
+				return finalFId;
+			} else
+				throw new Exception("invalid username");
 		} catch (Exception e) {
 			throw new IEMRException("Error while generating family Id :" + e.getLocalizedMessage());
 		}
