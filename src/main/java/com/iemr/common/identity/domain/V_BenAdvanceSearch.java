@@ -61,6 +61,9 @@ public class V_BenAdvanceSearch {
 	@Column(name = "CurrDistrictId")
 	private Integer districtID;
 	@Expose
+	@Column(name = "CurrSubDistrictId")
+	private Integer subDistrictID;
+	@Expose
 	@Column(name = "CurrVillageId")
 	private Integer villageID;
 	@Expose
@@ -241,6 +244,14 @@ public class V_BenAdvanceSearch {
 
 	public void setDistrictID(Integer districtID) {
 		this.districtID = districtID;
+	}
+
+	public Integer getSubDistrictID() {
+		return subDistrictID;
+	}
+
+	public void setSubDistrictID(Integer subDistrictID) {
+		this.subDistrictID = subDistrictID;
 	}
 
 	public Integer getStateID() {

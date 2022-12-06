@@ -360,6 +360,11 @@ public class BenMappingRepoImpl implements BenMappingRepoCustom {
 					.add(criteriaBuilder.equal(root.get("districtID"), searchDTO.getCurrentAddress().getDistrictId()));
 		}
 
+		if (searchDTO.getCurrentAddress() != null && searchDTO.getCurrentAddress().getSubDistrictId() != null) {
+			predicateList.add(
+					criteriaBuilder.equal(root.get("subDistrictID"), searchDTO.getCurrentAddress().getSubDistrictId()));
+		}
+
 		// if father Name is not null
 		if (searchDTO.getFatherName() != null) {
 			predicateList.add(criteriaBuilder.like(root.get("fatherName"), "%" + searchDTO.getFatherName() + "%"));

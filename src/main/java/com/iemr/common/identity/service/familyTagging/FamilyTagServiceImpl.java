@@ -137,10 +137,13 @@ public class FamilyTagServiceImpl implements FamilyTagService {
 
 			BenFamilyMapping benFamilyRS = familyTagRepo.searchFamilyByFamilyId(benFamilyObj.getFamilyId());
 			if (benFamilyRS != null) {
-				if (benFamilyObj.getIsHeadOfTheFamily() != null && benFamilyObj.getIsHeadOfTheFamily()
-						&& benFamilyObj.getMemberName() != null)
-					benFamilyRS.setFamilyHeadName(benFamilyObj.getMemberName());
-
+				if (benFamilyObj.getIsHeadOfTheFamily() != null
+						&& benFamilyObj.getMemberName() != null) {
+					if(benFamilyRS.getFamilyHeadName().trim().equals(benFamilyObj.getMemberName().trim()) && benFamilyObj.getIsHeadOfTheFamily() == false)
+						benFamilyRS.setFamilyHeadName("");
+					else 
+						benFamilyRS.setFamilyHeadName(benFamilyObj.getMemberName());		
+				}
 				benFamilyRS = familyTagRepo.save(benFamilyRS);
 
 			} else
@@ -211,7 +214,18 @@ public class FamilyTagServiceImpl implements FamilyTagService {
 	String getFamilyId(String username) throws IEMRException {
 		try {
 			Integer userId = familyTagRepo.getUserId(username);
-			return String.valueOf((System.currentTimeMillis())) + userId;
+			if (userId != null) {
+
+				// added dummy string to produce minimum 13 character timestamp
+				String timestamp = String.valueOf((System.currentTimeMillis())) + "0000000000000";
+				// added dummy string to produce minimum 3 character timestamp
+				String userIdStr = userId + "000";
+
+				String finalFId = timestamp.substring(0, 13) + userIdStr.substring(0, 3);
+
+				return finalFId;
+			} else
+				throw new Exception("invalid username");
 		} catch (Exception e) {
 			throw new IEMRException("Error while generating family Id :" + e.getLocalizedMessage());
 		}
@@ -235,7 +249,10 @@ public class FamilyTagServiceImpl implements FamilyTagService {
 							+ (obj.getFirstName() != null ? obj.getFirstName() : "") + " "
 							+ (obj.getLastName() != null ? obj.getLastName() : "");
 					famObj.setMemberName(name);
-					famObj.setRelationWithHead(obj.getHeadOfFamily_Relation());
+					if (obj.getOther() != null)
+						famObj.setRelationWithHead(obj.getHeadOfFamily_Relation() + "-" + obj.getOther());
+					else
+						famObj.setRelationWithHead(obj.getHeadOfFamily_Relation());
 
 					responseList.add(famObj);
 				}
