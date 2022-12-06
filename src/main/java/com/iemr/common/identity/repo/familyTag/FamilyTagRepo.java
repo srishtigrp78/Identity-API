@@ -25,6 +25,10 @@ public interface FamilyTagRepo extends CrudRepository<BenFamilyMapping,Long> {
 			+ " AND obj.noOfmembers >0)")
 	List<BenFamilyMapping> searchFamily(@Param("familyName") String familyName,@Param("villageId") Integer villageId);
 	
+	@Query("SELECT obj FROM BenFamilyMapping obj WHERE obj.familyName =:familyName AND obj.villageId =:villageId AND obj.familyId =:familyId AND (obj.noOfmembers is not null "
+			+ " AND obj.noOfmembers >0)")
+	List<BenFamilyMapping> searchFamilyWithFamilyId(@Param("familyName") String familyName,@Param("villageId") Integer villageId,@Param("familyId") String familyId);
+	
 	@Query("SELECT obj FROM BenFamilyMapping obj WHERE obj.familyId =:familyId")
 	BenFamilyMapping searchFamilyByFamilyId(@Param("familyId") String familyId);
 	

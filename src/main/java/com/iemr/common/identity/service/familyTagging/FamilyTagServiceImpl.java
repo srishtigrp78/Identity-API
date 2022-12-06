@@ -167,8 +167,14 @@ public class FamilyTagServiceImpl implements FamilyTagService {
 	public String searchFamily(String request) throws IEMRException {
 		try {
 			BenFamilyMapping benFamilyObj = InputMapper.gson().fromJson(request, BenFamilyMapping.class);
-			List<BenFamilyMapping> list = familyTagRepo.searchFamily(benFamilyObj.getFamilyName(),
-					benFamilyObj.getVillageId());
+			List<BenFamilyMapping> list = null;
+			if(benFamilyObj.getFamilyId() != null) 
+				 list = familyTagRepo.searchFamilyWithFamilyId(benFamilyObj.getFamilyName(),
+						benFamilyObj.getVillageId(), benFamilyObj.getFamilyId());
+			else 
+				 list = familyTagRepo.searchFamily(benFamilyObj.getFamilyName(),
+						benFamilyObj.getVillageId());
+			
 			if (list != null && list.size() > 0)
 				return new Gson().toJson(list);
 			else
