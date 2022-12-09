@@ -63,7 +63,7 @@ public class HTTPRequestInterceptor extends HandlerInterceptorAdapter {
 					status = false;
 					break;
 				default:
-					validator.checkKeyExists(authorization, request.getRemoteAddr());
+					//validator.checkKeyExists(authorization, request.getRemoteAddr());
 					break;
 				}
 			} catch (Exception e) {

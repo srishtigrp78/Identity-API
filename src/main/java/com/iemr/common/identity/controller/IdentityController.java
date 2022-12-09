@@ -64,7 +64,11 @@ public class IdentityController {
 	@CrossOrigin(origins = { "*commonapi*" })
 	@PostMapping(path = "/advanceSearch", headers = "Authorization")
 	public @ResponseBody String getBeneficiaries(
-			@ApiParam(value = "{\"firstName\":\"String\",\"genderId\":\"Integer\",\"fatherName\":\"String\",\"currentAddress\":{\"stateId\":\"Integer\",\"districtId\":\"Integer\"},\"permanentAddress\":{\"stateId\":\"Integer\",\"districtId\":\"Integer\"},\"emergencyAddress\":{\"stateId\":\"Integer\",\"districtId\":\"Integer\"},\"dob\":\"Timestamp\"}") @RequestBody String searchFilter) {
+			@ApiParam(value = "{\"firstName\":\"String\",\"genderId\":\"Integer\",\"fatherName\":\"String\","
+					+ "\"currentAddress\":{\"stateId\":\"Integer\",\"districtId\":\"Integer\",\"villageId\":\"Integer\", \"blockID\":\"Integer\"},"
+					+ "\"permanentAddress\":{\"stateId\":\"Integer\",\"districtId\":\"Integer\",\"villageId\":\"Integer\", \"blockID\":\"Integer\"},"
+					+ "\"emergencyAddress\":{\"stateId\":\"Integer\",\"districtId\":\"Integer\",\"villageId\":\"Integer\",\"blockID\":\"Integer\"},"
+					+ "\"dob\":\"Timestamp\"}") @RequestBody String searchFilter) {
 		logger.info("IdentityController.getBeneficiary - start");
 		String response;
 		try {
@@ -255,6 +259,68 @@ public class IdentityController {
 			response = getErrorResponseString(
 					"error in beneficiary search by Health ID No / ABHA Id No : " + e.getLocalizedMessage(), 5000,
 					"failure", "");
+		}
+		return response;
+	}
+
+	// search beneficiary by family id
+	@CrossOrigin(origins = { "*commonapi*" })
+	@PostMapping(path = "/searchByFamilyId", headers = "Authorization")
+	public @ResponseBody String searhBeneficiaryByFamilyId(
+			@ApiParam(value = "\"String\"") @RequestParam String familyId) {
+		logger.info("IdentityController.getBeneficiary - start. family id = " + familyId);
+		String response;
+		try {
+
+			JsonElement json = new JsonParser().parse(familyId);
+
+			if (json instanceof JsonNull) {
+				response = getErrorResponseString("Null/Empty Family Id.", 5000, "failure", "");
+				return response;
+			}
+
+			List<BeneficiariesDTO> list = svc.searhBeneficiaryByFamilyId(familyId);
+			// list.removeAll(null);
+			list.removeIf(Objects::isNull);
+			Collections.sort(list);
+			response = getSuccessResponseString(list, 200, "success", "getIdentityByAgent");
+
+			logger.info("IdentityController.getBeneficiary - end");
+		} catch (Exception e) {
+			logger.error("error in beneficiary search by Family Id : " + e.getLocalizedMessage());
+			response = getErrorResponseString("error in beneficiary search by Family Id  : " + e.getLocalizedMessage(),
+					5000, "failure", "");
+		}
+		return response;
+	}
+
+	// search beneficiary by gov identity - aadhar, pan, voter id etc
+	@CrossOrigin(origins = { "*commonapi*" })
+	@PostMapping(path = "/searhByGovIdentity", headers = "Authorization")
+	public @ResponseBody String searhBeneficiaryByGovIdentity(
+			@ApiParam(value = "\"String\"") @RequestParam String identity) {
+		logger.info("IdentityController.getBeneficiary - start. Gov Identity = " + identity);
+		String response;
+		try {
+
+			JsonElement json = new JsonParser().parse(identity);
+
+			if (json instanceof JsonNull) {
+				response = getErrorResponseString("Null/Empty Gov Identity No.", 5000, "failure", "");
+				return response;
+			}
+
+			List<BeneficiariesDTO> list = svc.searhBeneficiaryByGovIdentity(identity);
+			// list.removeAll(null);
+			list.removeIf(Objects::isNull);
+			Collections.sort(list);
+			response = getSuccessResponseString(list, 200, "success", "getIdentityByAgent");
+
+			logger.info("IdentityController.getBeneficiary - end");
+		} catch (Exception e) {
+			logger.error("error in beneficiary search by Gov Identity No : " + e.getLocalizedMessage());
+			response = getErrorResponseString(
+					"error in beneficiary search by GovIdentity No : " + e.getLocalizedMessage(), 5000, "failure", "");
 		}
 		return response;
 	}

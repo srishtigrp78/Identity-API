@@ -95,8 +95,46 @@ public interface BenDetailRepo extends CrudRepository<MBeneficiarydetail, BigInt
 	@Query("SELECT beneficiaryDetailsId FROM MBeneficiarydetail WHERE vanSerialNo =:vanSerialNo AND vanID =:vanID ")
 	BigInteger findIdByVanSerialNoAndVanID(@Param("vanSerialNo") BigInteger vanSerialNo, @Param("vanID") Integer vanID);
 
+	@Query("SELECT t FROM MBeneficiarydetail t WHERE t.vanSerialNo =:vanSerialNo AND t.vanID =:vanID ")
+	MBeneficiarydetail findBenDetailsByVanSerialNoAndVanID(@Param("vanSerialNo") BigInteger vanSerialNo,
+			@Param("vanID") Integer vanID);
+
 	@Query("SELECT a FROM MBeneficiarydetail a WHERE a.vanSerialNo =:vanSerialNo AND a.vanID =:vanID ")
 	MBeneficiarydetail getWith_vanSerialNo_vanID(@Param("vanSerialNo") BigInteger vanSerialNo,
 			@Param("vanID") Integer vanID);
+
+	@Query("SELECT a FROM MBeneficiarydetail a WHERE a.familyId =:familyId")
+	List<MBeneficiarydetail> getFamilyDetails(@Param("familyId") String familyId);
+
+	@Transactional
+	@Modifying
+	@Query("UPDATE MBeneficiarydetail c SET c.familyId = :familyId,c.headOfFamily_RelationID =:headofFamily_RelationID, "
+			+ " c.headOfFamily_Relation =:headofFamily_Relation,c.other =:other "
+			+ " WHERE c.vanSerialNo =:vanSerialNo AND c.vanID =:vanID ")
+	Integer updateFamilyDetails(@Param("familyId") String familyId,
+			@Param("headofFamily_RelationID") Integer headofFamily_RelationID,
+			@Param("headofFamily_Relation") String headofFamily_Relation, @Param("other") String other,
+			@Param("vanSerialNo") BigInteger vanSerialNo, @Param("vanID") Integer vanID);
+
+	@Transactional
+	@Modifying
+	@Query("UPDATE MBeneficiarydetail c SET c.headOfFamily_RelationID =:headofFamily_RelationID, "
+			+ " c.headOfFamily_Relation =:headofFamily_Relation,c.other =:other "
+			+ " WHERE c.vanSerialNo =:vanSerialNo AND c.vanID =:vanID AND c.familyId=:familyId ")
+	Integer editFamilyDetails(@Param("headofFamily_RelationID") Integer headofFamily_RelationID,
+			@Param("headofFamily_Relation") String headofFamily_Relation, @Param("other") String other,
+			@Param("vanSerialNo") BigInteger vanSerialNo, @Param("vanID") Integer vanID,
+			@Param("familyId") String familyId);
+
+	@Transactional
+	@Modifying
+	@Query("UPDATE MBeneficiarydetail c SET c.familyId = null,headofFamily_RelationID = null,other = null, "
+			+ " headofFamily_Relation = null,modifiedBy = :modifiedBy "
+			+ " WHERE c.vanSerialNo =:vanSerialNo AND c.vanID =:vanID ")
+	Integer untagFamily(@Param("modifiedBy") String modifiedBy, @Param("vanSerialNo") BigInteger vanSerialNo,
+			@Param("vanID") Integer vanID);
+
+	@Query("SELECT b FROM MBeneficiarydetail b WHERE b.familyId =:familyid  ")
+	List<MBeneficiarydetail> searchByFamilyId(@Param("familyid") String familyid);
 
 }

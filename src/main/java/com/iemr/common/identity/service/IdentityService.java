@@ -449,6 +449,76 @@ public class IdentityService {
 		return beneficiaryList;
 	}
 
+	public List<BeneficiariesDTO> searhBeneficiaryByFamilyId(String familyId)
+			throws NoResultException, QueryTimeoutException, Exception {
+		List<BeneficiariesDTO> beneficiaryList = new ArrayList<BeneficiariesDTO>();
+		try {
+
+			// find benmap ids
+			List<Object[]> benMapObjArr = new ArrayList<>();
+			List<BigInteger> benDetailsVanSerialNoList = new ArrayList<>();
+			int vanID = 0;
+
+			List<MBeneficiarydetail> benDetailsList = detailRepo.searchByFamilyId(familyId);
+
+			if (benDetailsList == null || benDetailsList.size() == 0)
+				return beneficiaryList;
+			else {
+				// considering as of now family creation is possible through facility modules
+				// only
+				vanID = benDetailsList.get(0).getVanID();
+
+				for (MBeneficiarydetail benDetails : benDetailsList) {
+					benDetailsVanSerialNoList.add(benDetails.getVanSerialNo());
+				}
+
+				benMapObjArr = mappingRepo.getBenMappingByBenDetailsIds(benDetailsVanSerialNoList, vanID);
+
+				for (Object[] benMapOBJ : benMapObjArr) {
+					beneficiaryList.add(this.getBeneficiariesDTO(this.getBeneficiariesDTONew(benMapOBJ)));
+				}
+
+			}
+
+		} catch (Exception e) {
+			logger.error(
+					"error in beneficiary search for familyId : " + familyId + " error : " + e.getLocalizedMessage());
+		}
+		return beneficiaryList;
+	}
+
+	public List<BeneficiariesDTO> searhBeneficiaryByGovIdentity(String identity)
+			throws NoResultException, QueryTimeoutException, Exception {
+		List<BeneficiariesDTO> beneficiaryList = new ArrayList<BeneficiariesDTO>();
+		try {
+
+			List<Object[]> benMapObjArr = new ArrayList<>();
+
+			// find identity no
+			List<MBeneficiaryidentity> benIdentityList = identityRepo.searchByIdentityNo(identity);
+
+			// find benmap ids
+			if (benIdentityList == null || benIdentityList.size() == 0)
+				return beneficiaryList;
+			else {
+				for (MBeneficiaryidentity identityObj : benIdentityList) {
+					benMapObjArr.addAll(
+							mappingRepo.getBenMappingByVanSerialNo(identityObj.getBenMapId(), identityObj.getVanID()));
+				}
+
+				for (Object[] benMapOBJ : benMapObjArr) {
+					beneficiaryList.add(this.getBeneficiariesDTO(this.getBeneficiariesDTONew(benMapOBJ)));
+				}
+
+			}
+
+		} catch (Exception e) {
+			logger.error("error in beneficiary search for gov identity : " + identity + " error : "
+					+ e.getLocalizedMessage());
+		}
+		return beneficiaryList;
+	}
+
 	private MBeneficiarymapping getBeneficiariesDTONew(Object[] benMapArr) {
 		MBeneficiarymapping benMapOBJ = new MBeneficiarymapping();
 
@@ -619,12 +689,20 @@ public class IdentityService {
 			// mbDetl.setBeneficiaryDetailsId(benMapping.getMBeneficiarydetail().getBeneficiaryDetailsId());
 
 			// getting correct beneficiaryDetailsId by passing vanSerialNo & vanID
-			BigInteger beneficiaryDetailsId = detailRepo.findIdByVanSerialNoAndVanID(
+			MBeneficiarydetail benDetails = detailRepo.findBenDetailsByVanSerialNoAndVanID(
 					benMapping.getMBeneficiarydetail().getBeneficiaryDetailsId(), benMapping.getVanID());
 			// next statement is new one, setting correct beneficiaryDetailsId
-			if (beneficiaryDetailsId != null)
-				mbDetl.setBeneficiaryDetailsId(beneficiaryDetailsId);
-			else
+			if (benDetails != null) {
+				mbDetl.setBeneficiaryDetailsId(benDetails.getBeneficiaryDetailsId());
+				if (benDetails.getFamilyId() != null)
+					mbDetl.setFamilyId(benDetails.getFamilyId());
+				if (benDetails.getHeadOfFamily_RelationID() != null)
+					mbDetl.setHeadOfFamily_RelationID(benDetails.getHeadOfFamily_RelationID());
+				if (benDetails.getHeadOfFamily_Relation() != null)
+					mbDetl.setHeadOfFamily_Relation(benDetails.getHeadOfFamily_Relation());
+				if (benDetails.getOther() != null)
+					mbDetl.setOther(benDetails.getOther());
+			} else
 				throw new MissingMandatoryFieldsException("Either of vanSerialNO or vanID is missing.");
 
 			/**

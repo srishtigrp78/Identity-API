@@ -67,4 +67,10 @@ public class BenDetailDTO implements Serializable {
 	private String guideLineID;
 	private String rchID;
 	// End 1097
+
+	// family tagging
+	private Integer headOfFamily_RelationID;
+	private String familyId;
+	private String other;
+	private String headOfFamily_Relation;
 }
