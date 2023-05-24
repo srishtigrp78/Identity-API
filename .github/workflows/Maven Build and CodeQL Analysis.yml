@@ -37,8 +37,8 @@ jobs:
       
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
-      with:
-        languages: Java   
+      #with:
+       # languages: Java   
         
         
     - name: Create WAR file 
