@@ -27,6 +27,8 @@ jobs:
         
     - name: Build with Maven
       run: |
+        git config --global user.name Vidyaaa24
+        git config --global user.email vidyadevi.salunkhe@wipro.com
         git init 
         git add .
         git commit -m "Initial Commit"
