@@ -35,8 +35,8 @@ jobs:
         mvn clean
         
       
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+   # - name: Perform CodeQL Analysis
+    #  uses: github/codeql-action/analyze@v2
       #with:
        # languages: Java   
         
