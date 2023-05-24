@@ -25,12 +25,10 @@ jobs:
         languages: Java    
         
     - name: Auto-commit and build with Maven
-      uses: stefanzweifel/git-auto-commit@v4
+      uses: EndBug/add-and-commit@v7
       with:
-        commit_message: 'Initial commit'
-        commit_options: '--no-verify'
-        files: '.'
-    
+        message: 'Initial commit'
+        add: '.'
     
     - name: Build with Maven
       run: mvn clean install
