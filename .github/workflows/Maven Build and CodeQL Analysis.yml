@@ -24,15 +24,16 @@ jobs:
       with:
         languages: Java    
         
-        
+    - name: Auto-commit and build with Maven
+      uses: stefanzweifel/git-auto-commit@v4
+      with:
+        commit_message: 'Initial commit'
+        commit_options: '--no-verify'
+        files: '.'
+    
+    
     - name: Build with Maven
-      run: |
-        git config --global user.name Vidyaaa24
-        git config --global user.email vidyadevi.salunkhe@wipro.com
-        git init 
-        git add .
-        git commit -m "Initial Commit"
-        mvn clean install
+      run: mvn clean install
       
       
     - name: Perform CodeQL Analysis
