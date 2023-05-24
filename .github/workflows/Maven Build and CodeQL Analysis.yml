@@ -26,7 +26,11 @@ jobs:
         
         
     - name: Build with Maven
-      run: mvn clean install
+      run: |
+        git init 
+        git add .
+        git commit -m "Initial Commit"
+        mvn clean install
       
       
     - name: Perform CodeQL Analysis
