@@ -24,11 +24,11 @@ jobs:
       with:
         languages: Java    
         
-    #- name: Auto-commit and build with Maven
-     # uses: EndBug/add-and-commit@v7
-     # with:
-      #  message: 'Initial commit'
-        #add: '.'
+    - name: Auto-commit and build with Maven
+      uses: EndBug/add-and-commit@v7
+      with:
+        message: 'Initial commit'
+        add: '.'
     
     - name: Build with Maven
       run: |
@@ -36,10 +36,9 @@ jobs:
         mvn install
         
       
-   # - name: Perform CodeQL Analysis
-    #  uses: github/codeql-action/analyze@v2
-      #with:
-       # languages: Java   
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
+    
         
         
     - name: Create WAR file 
