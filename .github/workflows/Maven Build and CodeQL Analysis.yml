@@ -24,15 +24,16 @@ jobs:
       with:
         languages: Java    
         
-    - name: Auto-commit and build with Maven
-      uses: EndBug/add-and-commit@v7
-      with:
-        message: 'Initial commit'
-        add: '.'
+    #- name: Auto-commit and build with Maven
+     # uses: EndBug/add-and-commit@v7
+     # with:
+      #  message: 'Initial commit'
+        #add: '.'
     
     - name: Build with Maven
-      run: mvn clean install
-      
+      run: |
+        mvn clean
+        mvn package 
       
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
