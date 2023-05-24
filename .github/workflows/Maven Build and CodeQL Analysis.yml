@@ -19,28 +19,21 @@ jobs:
         java-version: 8
         distribution: 'adopt'
         
+        
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
         languages: Java    
         
-    - name: Auto-commit and build with Maven
-      uses: EndBug/add-and-commit@v7
-      with:
-        message: 'Initial commit'
-        add: '.'
     
     - name: Build with Maven
-      run: |
-        mvn clean
-        mvn install
+      run: mvn clean install
         
       
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
     
-        
-        
+           
     - name: Create WAR file 
       run: mvn -B package --file pom.xml
       
