@@ -42,5 +42,5 @@ jobs:
       uses: actions/upload-artifact@v2 
       with:
         name: Identity-API
-        path: target/identityapi-v1.0.war  
+        path: target/identity-0.0.1.war  
         
