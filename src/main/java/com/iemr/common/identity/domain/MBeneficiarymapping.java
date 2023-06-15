@@ -162,18 +162,6 @@ public class MBeneficiarymapping implements Serializable {
 	@JoinColumn(referencedColumnName = "benMapId", name = "benMapId", insertable = false, updatable = false)
 	private List<TBendataaccess> tBendataaccesses;
 
-	// public MBeneficiarymapping(BigInteger benMapId, String firstName)
-	// {
-	// this.mBeneficiarydetail.setFirstName(firstName);
-	// this.mBeneficiarydetail.setFirstName(firstName);
-	// this.mBeneficiarydetail.setFirstName(firstName);
-	// }
-
-	// public MBeneficiarymapping()
-	// {
-	//
-	// }
-
 	/*
 	 * New columns added for MMU integration 11-04-2018
 	 */

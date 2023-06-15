@@ -41,10 +41,6 @@ import com.google.gson.annotations.Expose;
 
 import lombok.Data;
 
-/**
- * The persistent class for the m_beneficiarydetails database table.
- * 
- */
 @Entity
 @Table(name = "i_beneficiarydetails")
 @NamedQuery(name = "MBeneficiarydetail.findAll", query = "SELECT m FROM MBeneficiarydetail m order by beneficiaryDetailsId asc")
@@ -62,7 +58,6 @@ public class MBeneficiarydetail implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(unique = true, nullable = false)
-	// @OrderBy(value = "beneficiaryDetailsId asc")
 	private BigInteger beneficiaryDetailsId;
 
 	private Integer areaId;
@@ -124,8 +119,6 @@ public class MBeneficiarydetail implements Serializable {
 
 	@Column(length = 50)
 	private String modifiedBy;
-
-	// private Integer parkingPlaceID;
 
 	private Integer occupationId;
 
@@ -238,21 +231,10 @@ public class MBeneficiarydetail implements Serializable {
 	@Column(name = "VanSerialNo", updatable = false)
 	private BigInteger vanSerialNo;
 
-//	@Expose
-//	@Column(name = "familyid", updatable = true)
-//	private String familyid;
-
-	// END OF new column added for data sync
-	/**
-	 * Default constructor
-	 */
 	public MBeneficiarydetail() {
 
 	}
 
-	/**
-	 * Constructor for retrieving partial beneficiary details
-	 */
 	public MBeneficiarydetail(BigInteger beneficiaryDetailsId, String firstName, String lastName, String middleName,
 			String fatherName, String spouseName) {
 
@@ -342,9 +324,4 @@ public class MBeneficiarydetail implements Serializable {
 		return isHIVPositive;
 	}
 
-	// public static void main(String[] args)
-	// {
-	// Timestamp dob = new Timestamp(10, 07, 10,0,0,0,0);
-	// System.out.println(calculateAge(dob));
-	// }
 }

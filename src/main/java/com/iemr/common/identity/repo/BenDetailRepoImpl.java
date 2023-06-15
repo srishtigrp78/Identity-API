@@ -37,8 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.iemr.common.identity.domain.MBeneficiarydetail;
 import com.iemr.common.identity.dto.IdentitySearchDTO;
 
-public class BenDetailRepoImpl implements BenDetailRepoCustom
-{
+public class BenDetailRepoImpl implements BenDetailRepoCustom {
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -48,19 +47,22 @@ public class BenDetailRepoImpl implements BenDetailRepoCustom
 	/**
 	 * Search Criteria: the following are necessary to conduct a finite search
 	 * 
-	 * 1. beneficiary ID 2. beneficiary Reg ID 3. Contact Number 4. Name (First, Middle, Last), Age, Gender 5. Village
-	 * Name 6. District State Zone Coordinates 7. Pin Code 8. Father Name 9. Spouse Name
+	 * 1. beneficiary ID 2. beneficiary Reg ID 3. Contact Number 4. Name (First,
+	 * Middle, Last), Age, Gender 5. Village Name 6. District State Zone Coordinates
+	 * 7. Pin Code 8. Father Name 9. Spouse Name
 	 * 
-	 * Allowed Single Parameters: - beneficiary Id - beneficiary Reg Id - Contact Number
+	 * Allowed Single Parameters: - beneficiary Id - beneficiary Reg Id - Contact
+	 * Number
 	 * 
-	 * Allowed Multi-Parameters: - Name (First, Middle, Last), Age, Gender - Contact Number & Name (First, Middle, Last)
-	 * - Pin Code & Name (First, Middle, Last) - Village, Father Name & Name (First, Middle, Last) - Village, Spouse
-	 * Name & Name (First, Middle, Last) - Village, District, State - Govt identities(keys, values)
+	 * Allowed Multi-Parameters: - Name (First, Middle, Last), Age, Gender - Contact
+	 * Number & Name (First, Middle, Last) - Pin Code & Name (First, Middle, Last) -
+	 * Village, Father Name & Name (First, Middle, Last) - Village, Spouse Name &
+	 * Name (First, Middle, Last) - Village, District, State - Govt identities(keys,
+	 * values)
 	 */
 
 	@Override
-	public List<MBeneficiarydetail> advanceFilterSearch(IdentitySearchDTO searchDTO)
-	{
+	public List<MBeneficiarydetail> advanceFilterSearch(IdentitySearchDTO searchDTO) {
 
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<MBeneficiarydetail> criteriaQuery = criteriaBuilder.createQuery(MBeneficiarydetail.class);
@@ -70,112 +72,79 @@ public class BenDetailRepoImpl implements BenDetailRepoCustom
 		List<Predicate> predicates = new ArrayList<Predicate>();
 
 		/**
-		 * Beneficiary ID is present, no need for other criteria
-		 */
-		// if(filterDTO.getBeneficiaryId().isPresent()) {
-		// //filterDTO.getBeneficiaryId().get();
-		// MBeneficiaryregidmapping regId = regIdRepo.findByBeneficiaryID(filterDTO.getBeneficiaryId().get());
-		// predicates.add(criteriaBuilder.equal(root.get("beneficiaryRegID"), regId.getBenRegId()));
-		// }
-
-		/**
-		 * Beneficiary Reg ID is present, no need for other criteria
-		 */
-		// if(filterDTO.getBeneficiaryRegId().isPresent()) {
-		// //filterDTO.getBeneficiaryRegId().get();
-		// predicates.add(criteriaBuilder.equal(root.get("beneficiaryRegID"), filterDTO.getBeneficiaryRegId().get()));
-		// }
-
-		/**
 		 * First Name is present, additional criteria needed
 		 */
-		if (searchDTO.getFirstName() != null)
-		{
+		if (searchDTO.getFirstName() != null) {
 
-			predicates.add(criteriaBuilder.like(root.<String> get("firstName"), "%" + searchDTO.getFirstName() + "%"));
+			predicates.add(criteriaBuilder.like(root.<String>get("firstName"), "%" + searchDTO.getFirstName() + "%"));
 		}
 
 		/**
 		 * Middle Name is present, additional criteria needed
 		 */
-		if (searchDTO.getMiddleName() != null)
-		{
-			predicates
-					.add(criteriaBuilder.like(root.<String> get("middleName"), "%" + searchDTO.getMiddleName() + "%"));
+		if (searchDTO.getMiddleName() != null) {
+			predicates.add(criteriaBuilder.like(root.<String>get("middleName"), "%" + searchDTO.getMiddleName() + "%"));
 		}
 
 		/**
 		 * Last Name is present, additional criteria needed
 		 */
-		if (searchDTO.getLastName() != null)
-		{
-			predicates.add(criteriaBuilder.like(root.<String> get("lastName"), "%" + searchDTO.getLastName() + "%"));
+		if (searchDTO.getLastName() != null) {
+			predicates.add(criteriaBuilder.like(root.<String>get("lastName"), "%" + searchDTO.getLastName() + "%"));
 		}
 
 		/**
 		 * Age Id is present, additional criteria needed
 		 */
-		if (searchDTO.getAgeId() != null)
-		{
+		if (searchDTO.getAgeId() != null) {
 			predicates.add(criteriaBuilder.equal(root.get("ageId"), searchDTO.getAgeId()));
 		}
 
 		/**
 		 * Age is present, additional criteria needed
 		 */
-		if (searchDTO.getAge() != null)
-		{
+		if (searchDTO.getAge() != null) {
 			predicates.add(criteriaBuilder.equal(root.get("age"), searchDTO.getAge()));
 		}
 
 		/**
 		 * Gender Id is present, additional criteria needed
 		 */
-		if (searchDTO.getGenderId() != null)
-		{
+		if (searchDTO.getGenderId() != null) {
 			predicates.add(criteriaBuilder.equal(root.get("genderId"), searchDTO.getGenderId()));
 		}
 
 		/**
 		 * Gender Name is present, additional criteria needed
 		 */
-		if (searchDTO.getGenderName() != null)
-		{
+		if (searchDTO.getGenderName() != null) {
 			predicates.add(criteriaBuilder.equal(root.get("genderName"), searchDTO.getGenderName()));
 		}
 
 		/**
 		 * Spouse Name is present, additional criteria needed
 		 */
-		if (searchDTO.getSpouseName() != null)
-		{
-			predicates
-					.add(criteriaBuilder.like(root.<String> get("spouseName"), "%" + searchDTO.getSpouseName() + "%"));
+		if (searchDTO.getSpouseName() != null) {
+			predicates.add(criteriaBuilder.like(root.<String>get("spouseName"), "%" + searchDTO.getSpouseName() + "%"));
 		}
 
 		/**
 		 * Father Name present, additional criteria needed
 		 */
-		if (searchDTO.getFatherName() != null)
-		{
-			predicates
-					.add(criteriaBuilder.like(root.<String> get("fatherName"), "%" + searchDTO.getFatherName() + "%"));
+		if (searchDTO.getFatherName() != null) {
+			predicates.add(criteriaBuilder.like(root.<String>get("fatherName"), "%" + searchDTO.getFatherName() + "%"));
 		}
 
 		/**
 		 * Pin Code is present, additional criteria needed
 		 */
-		if (searchDTO.getPinCode() != null)
-		{
+		if (searchDTO.getPinCode() != null) {
 			predicates.add(criteriaBuilder.equal(root.get("pinCode"), searchDTO.getPinCode()));
 		}
 
 		/**
 		 * Contact Number is present, additional criteria needed
 		 */
-		// if(filterDTO.getContactNumber().isPresent()){
-		// predicates.add(criteriaBuilder.equal(root.get("contactNumber"), filterDTO.getPinCode().get()));
-		// }
 
 		criteriaQuery.select(root).where(predicates.toArray(new Predicate[] {}))
 				.orderBy(criteriaBuilder.asc(root.get("benMapId")));

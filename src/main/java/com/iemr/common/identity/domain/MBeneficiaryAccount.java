@@ -92,8 +92,6 @@ public class MBeneficiaryAccount {
 	@Column(name = "VehicalNo", length = 30)
 	private String vehicleNo;
 
-	// @Column(name = "ParkingPlaceID")
-	// private Integer parkingPlaceID;
 
 	@Column(name = "SyncedBy", length = 30)
 	private String syncedBy;
