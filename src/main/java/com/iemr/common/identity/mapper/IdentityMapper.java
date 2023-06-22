@@ -262,10 +262,10 @@ public interface IdentityMapper {
 			@Mapping(source = "benFamilyDTO.associatedBenRegId", target = "associatedBenRegId"),
 			@Mapping(source = "createdBy", target = "createdBy"),
 			@Mapping(source = "createdDate", target = "createdDate") })
-	MBeneficiaryfamilymapping IdentityDTOToMBeneficiaryfamilymapping(BenFamilyDTO benFamilyDTO, String createdBy,
+	MBeneficiaryfamilymapping identityDTOToMBeneficiaryfamilymapping(BenFamilyDTO benFamilyDTO, String createdBy,
 			Timestamp createdDate);
 
-	List<MBeneficiaryfamilymapping> IdentityDTOListToMBeneficiaryfamilymappingList(List<BenFamilyDTO> list);
+	List<MBeneficiaryfamilymapping> identityDTOListToMBeneficiaryfamilymappingList(List<BenFamilyDTO> list);
 
 	@Mappings({ @Mapping(source = "identity.identityNo", target = "identityNo"),
 			@Mapping(source = "identity.identityNameId", target = "identityNameId"),
@@ -278,9 +278,9 @@ public interface IdentityMapper {
 			@Mapping(source = "identity.identityFilePath", target = "identityFilePath"),
 			@Mapping(source = "createdBy", target = "createdBy"),
 			@Mapping(source = "createdDate", target = "createdDate") })
-	MBeneficiaryidentity IdentityToMBeneficiaryidentity(Identity identity, String createdBy, Timestamp createdDate);
+	MBeneficiaryidentity identityToMBeneficiaryidentity(Identity identity, String createdBy, Timestamp createdDate);
 
-	List<MBeneficiaryidentity> IdentityDTOListToMBeneficiaryidentityList(List<Identity> list);
+	List<MBeneficiaryidentity> identityDTOListToMBeneficiaryidentityList(List<Identity> list);
 
 	@Mappings({ @Mapping(source = "dto.serviceId", target = "serviceId"),
 			@Mapping(source = "dto.serviceName", target = "serviceName"),
@@ -483,10 +483,10 @@ public interface IdentityMapper {
 			// End 1097
 
 	})
-	BeneficiariesDTO MBeneficiarymappingToBeneficiariesDTO(MBeneficiarymapping map);
+	BeneficiariesDTO mBeneficiarymappingToBeneficiariesDTO(MBeneficiarymapping map);
 
 	@IterableMapping(elementTargetType = BeneficiariesDTO.class)
-	List<BeneficiariesDTO> MBeneficiarymappingToBeneficiariesDTO(List<MBeneficiarymapping> map);
+	List<BeneficiariesDTO> mbeneficiarymappingToBeneficiariesDTO(List<MBeneficiarymapping> map);
 
 	@Mappings({ @Mapping(source = "beneficiaryDetailsId", target = "beneficiaryDetailsId"),
 			@Mapping(source = "areaId", target = "areaId"),
@@ -514,7 +514,7 @@ public interface IdentityMapper {
 			@Mapping(source = "spouseName", target = "spouseName"), @Mapping(source = "status", target = "status"),
 			@Mapping(source = "title", target = "title"), @Mapping(source = "zoneId", target = "zoneId"),
 			@Mapping(expression = "java(MBeneficiarydetail.getIsHIVPositive(detail.getIsHIVPositive()))", target = "isHIVPositive"), })
-	BenDetailDTO MBeneficiarydetailToBenDetailDTO(MBeneficiarydetail detail);
+	BenDetailDTO mBeneficiarydetailToBenDetailDTO(MBeneficiarydetail detail);
 
 	@Mappings({ @Mapping(source = "family.benFamilyMapId", target = "benFamilyMapId"),
 			@Mapping(source = "family.associatedBenRegId", target = "associatedBenRegId"),
@@ -525,7 +525,7 @@ public interface IdentityMapper {
 			@Mapping(source = "family.lastModDate", target = "lastModDate"),
 			@Mapping(source = "family.modifiedBy", target = "modifiedBy"),
 			@Mapping(source = "family.relationshipToSelf", target = "relationshipToSelf") })
-	BenFamilyDTO MBeneficiaryfamilymappingToBenFamilyDTO(MBeneficiaryfamilymapping family);
+	BenFamilyDTO mBeneficiaryfamilymappingToBenFamilyDTO(MBeneficiaryfamilymapping family);
 
 	List<BenFamilyDTO> mBeneficiaryfamilymappingListToBenFamilyDTOList(List<MBeneficiaryfamilymapping> families);
 

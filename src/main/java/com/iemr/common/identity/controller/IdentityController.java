@@ -231,7 +231,7 @@ public class IdentityController {
 
 			healthIDValue = healthID;
 
-			List<BeneficiariesDTO> list = svc.getBeneficiaryByHealthID_AbhaAddress(healthIDValue);
+			List<BeneficiariesDTO> list = svc.getBeneficiaryByHealthIDAbhaAddress(healthIDValue);
 			list.removeIf(Objects::isNull);
 			Collections.sort(list);
 			response = getSuccessResponseString(list, 200, "success", "getIdentityByAgent");
@@ -264,7 +264,7 @@ public class IdentityController {
 
 			healthIDNoValue = healthIDNo;
 
-			List<BeneficiariesDTO> list = svc.getBeneficiaryByHealthIDNo_AbhaIdNo(healthIDNoValue);
+			List<BeneficiariesDTO> list = svc.getBeneficiaryByHealthIDNoAbhaIdNo(healthIDNoValue);
 			list.removeIf(Objects::isNull);
 			Collections.sort(list);
 			response = getSuccessResponseString(list, 200, "success", "getIdentityByAgent");
@@ -707,7 +707,7 @@ public class IdentityController {
 	private String getSuccessResponseString(MBeneficiarymapping map, Integer statusCode, String statusMsg,
 			String methodName) {
 		logger.info("IdentityController.getResponseString of map parameter - start");
-		BeneficiariesDTO bdto = mapper.MBeneficiarymappingToBeneficiariesDTO(map);
+		BeneficiariesDTO bdto = mapper.mBeneficiarymappingToBeneficiariesDTO(map);
 		bdto.setBeneficiaryFamilyTags(
 				mapper.mBeneficiaryfamilymappingListToBenFamilyDTOList(map.getMBeneficiaryfamilymappings()));
 		bdto.setBeneficiaryIdentites(

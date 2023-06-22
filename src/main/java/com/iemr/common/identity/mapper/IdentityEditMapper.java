@@ -162,7 +162,7 @@ public interface IdentityEditMapper {
 			@Mapping(source = "defaultYes", target = "sharePersonalDetailsWithSpouse"),
 			@Mapping(source = "dto.agentName", target = "createdBy"),
 			@Mapping(source = "dto.eventTypeDate", target = "createdDate") })
-	MBeneficiaryconsent IdentityEditDTOToDefaultMBeneficiaryconsent(IdentityEditDTO dto, Boolean defaultYes,
+	MBeneficiaryconsent identityEditDTOToDefaultMBeneficiaryconsent(IdentityEditDTO dto, Boolean defaultYes,
 			Boolean defaultNo);
 
 	@Mappings({ @Mapping(source = "dto.contact.preferredPhoneNum", target = "preferredPhoneNum"),
@@ -247,7 +247,7 @@ public interface IdentityEditMapper {
 	MBeneficiaryfamilymapping identityEditDTOToMBeneficiaryfamilymapping(BenFamilyDTO benFamilyDTO, String createdBy,
 			Timestamp createdDate);
 
-	List<MBeneficiaryfamilymapping> IdentityEditDTOListToMBeneficiaryfamilymappingList(List<BenFamilyDTO> list);
+	List<MBeneficiaryfamilymapping> identityEditDTOListToMBeneficiaryfamilymappingList(List<BenFamilyDTO> list);
 
 	@Mappings({ @Mapping(source = "identity.identityNo", target = "identityNo"),
 			@Mapping(source = "identity.identityName", target = "identityName"),

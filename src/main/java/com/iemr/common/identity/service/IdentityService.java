@@ -417,7 +417,7 @@ public class IdentityService {
 	 * @throws Exception
 	 */
 
-	public List<BeneficiariesDTO> getBeneficiaryByHealthID_AbhaAddress(String healthID)
+	public List<BeneficiariesDTO> getBeneficiaryByHealthIDAbhaAddress(String healthID)
 			throws NoResultException, QueryTimeoutException, Exception {
 		List<BeneficiariesDTO> beneficiaryList = new ArrayList<BeneficiariesDTO>();
 		try {
@@ -448,7 +448,7 @@ public class IdentityService {
 	 * @throws Exception
 	 */
 
-	public List<BeneficiariesDTO> getBeneficiaryByHealthIDNo_AbhaIdNo(String healthIDNo)
+	public List<BeneficiariesDTO> getBeneficiaryByHealthIDNoAbhaIdNo(String healthIDNo)
 			throws NoResultException, QueryTimeoutException, Exception {
 		List<BeneficiariesDTO> beneficiaryList = new ArrayList<BeneficiariesDTO>();
 		try {
@@ -821,7 +821,7 @@ public class IdentityService {
 		logger.debug("identity.getChangeInFamilyDetails = " + identity.getChangeInFamilyDetails());
 		if (Boolean.TRUE.equals(identity.getChangeInFamilyDetails())) {
 			List<MBeneficiaryfamilymapping> fbMaps = editMapper
-					.IdentityEditDTOListToMBeneficiaryfamilymappingList(identity.getBenFamilyDTOs());
+					.identityEditDTOListToMBeneficiaryfamilymappingList(identity.getBenFamilyDTOs());
 
 			logger.debug("family map to upsert = " + OutputMapper.gson().toJson(fbMaps));
 
@@ -1043,7 +1043,7 @@ public class IdentityService {
 
 		// new logic (18-09-2018, Neeraj kumar)
 		if (null != identity.getBenFamilyDTOs()) {
-			fIdenList = mapper.IdentityDTOListToMBeneficiaryfamilymappingList(identity.getBenFamilyDTOs());
+			fIdenList = mapper.identityDTOListToMBeneficiaryfamilymappingList(identity.getBenFamilyDTOs());
 			if (fIdenList != null) {
 				for (MBeneficiaryfamilymapping bfMapping : fIdenList) {
 					bfMapping.setBenMapId(benMapping2.getBenMapId());
@@ -1085,7 +1085,7 @@ public class IdentityService {
 		List<MBeneficiaryidentity> mIdenList2 = new ArrayList<MBeneficiaryidentity>();
 		if (null != identity.getIdentities()) {
 			List<MBeneficiaryidentity> mIdenList = mapper
-					.IdentityDTOListToMBeneficiaryidentityList(identity.getIdentities());
+					.identityDTOListToMBeneficiaryidentityList(identity.getIdentities());
 			mIdenList.forEach(mIden -> {
 				mIden.setBenMapId(benMapping2.getBenMapId());
 				mIden.setCreatedBy(identity.getAgentName());
@@ -1187,22 +1187,21 @@ public class IdentityService {
 	 * Get partial details of beneficiaries (first name middle name and last name)
 	 * list on benId's list
 	 * 
-	 * @param BenRegIds
+	 * @param benRegIds
 	 * @return {@link List} Beneficiaries
 	 */
-	public List<BeneficiariesDTO> getBeneficiariesDeatilsByBenRegIdList(List<BigInteger> BenRegIds) {
+	public List<BeneficiariesDTO> getBeneficiariesDeatilsByBenRegIdList(List<BigInteger> benRegIds) {
 
 		logger.info("IdentityService.getBeneficiariesDeatilsByBenRegIdList - end");
 		List<BeneficiariesDTO> list = new ArrayList<BeneficiariesDTO>();
 
 		// new logic, 19-12-2018
 		List<Object[]> benMapObjArr = new ArrayList<>();
-		if (BenRegIds != null && BenRegIds.size() > 0) {
-			benMapObjArr = mappingRepo.getBenMappingByRegIDList(BenRegIds);
+		if (benRegIds != null && benRegIds.size() > 0) {
+			benMapObjArr = mappingRepo.getBenMappingByRegIDList(benRegIds);
 			if (benMapObjArr != null && benMapObjArr.size() > 0) {
 				for (Object[] objArr : benMapObjArr) {
 					MBeneficiarymapping benMap = this.getBeneficiariesDTONew(objArr);
-//					logger.info("benMap " + benMap);
 
 					list.add(this.getBeneficiariesDTO(benMap));
 				}
@@ -1224,7 +1223,7 @@ public class IdentityService {
 	 */
 	private BeneficiariesDTO getBeneficiariesDTO(MBeneficiarymapping benMap) {
 
-		BeneficiariesDTO bdto = mapper.MBeneficiarymappingToBeneficiariesDTO(benMap);
+		BeneficiariesDTO bdto = mapper.mBeneficiarymappingToBeneficiariesDTO(benMap);
 		bdto.setBeneficiaryFamilyTags(
 				mapper.mapToMBeneficiaryfamilymappingWithBenFamilyDTOList(benMap.getMBeneficiaryfamilymappings()));
 		bdto.setBeneficiaryIdentites(

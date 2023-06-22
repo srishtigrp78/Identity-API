@@ -337,10 +337,10 @@ public class RmnchDataSyncServiceImpl implements RmnchDataSyncService {
 
 	private String getMappingsForAddressIDs(List<RMNCHMBeneficiaryaddress> addressList, int totalPage,
 			String authorisation) {
-		RMNCHHouseHoldDetails benHouseHoldRMNCH_ROBJ;
-		RMNCHBeneficiaryDetailsRmnch benDetailsRMNCH_OBJ;
-		RMNCHBornBirthDetails benBotnBirthRMNCH_ROBJ;
-		RMNCHCBACdetails benCABCRMNCH_ROBJ;
+		RMNCHHouseHoldDetails benHouseHoldRMNCHROBJ;
+		RMNCHBeneficiaryDetailsRmnch benDetailsRMNCHOBJ;
+		RMNCHBornBirthDetails benBotnBirthRMNCHROBJ;
+		RMNCHCBACdetails benCABCRMNCHROBJ;
 
 		RMNCHMBeneficiarydetail benDetailsOBJ;
 		RMNCHMBeneficiaryAccount benAccountOBJ;
@@ -356,10 +356,10 @@ public class RmnchDataSyncServiceImpl implements RmnchDataSyncService {
 			try {
 				RMNCHMBeneficiarymapping m = rMNCHMBenMappingRepo.getByAddressIDAndVanID(a.getId(), a.getVanID());
 				if (m != null) {
-					benHouseHoldRMNCH_ROBJ = new RMNCHHouseHoldDetails();
-					benDetailsRMNCH_OBJ = new RMNCHBeneficiaryDetailsRmnch();
-					benBotnBirthRMNCH_ROBJ = new RMNCHBornBirthDetails();
-					benCABCRMNCH_ROBJ = new RMNCHCBACdetails();
+					benHouseHoldRMNCHROBJ = new RMNCHHouseHoldDetails();
+					benDetailsRMNCHOBJ = new RMNCHBeneficiaryDetailsRmnch();
+					benBotnBirthRMNCHROBJ = new RMNCHBornBirthDetails();
+					benCABCRMNCHROBJ = new RMNCHCBACdetails();
 
 					benDetailsOBJ = new RMNCHMBeneficiarydetail();
 					benAccountOBJ = new RMNCHMBeneficiaryAccount();
@@ -388,105 +388,105 @@ public class RmnchDataSyncServiceImpl implements RmnchDataSyncService {
 						benID = rMNCHMBenRegIdMapRepo.getBenIdFromRegID(m.getBenRegId().longValue());
 
 					if (m.getBenRegId() != null) {
-						benDetailsRMNCH_OBJ = rMNCHBeneficiaryDetailsRmnchRepo
+						benDetailsRMNCHOBJ = rMNCHBeneficiaryDetailsRmnchRepo
 								.getByRegID((m.getBenRegId()).longValue());
-						benBotnBirthRMNCH_ROBJ = rMNCHBornBirthDetailsRepo.getByRegID((m.getBenRegId()).longValue());
+						benBotnBirthRMNCHROBJ = rMNCHBornBirthDetailsRepo.getByRegID((m.getBenRegId()).longValue());
 
-						benCABCRMNCH_ROBJ = rMNCHCBACDetailsRepo.getByRegID((m.getBenRegId()).longValue());
+						benCABCRMNCHROBJ = rMNCHCBACDetailsRepo.getByRegID((m.getBenRegId()).longValue());
 						// 20-09-2021,start
 						NcdTbHrpData res = getHRP_NCD_TB_SuspectedStatus(m.getBenRegId().longValue(), authorisation,
 								benDetailsOBJ);
-						if (res != null && benCABCRMNCH_ROBJ != null) {
+						if (res != null && benCABCRMNCHROBJ != null) {
 							if (res.getConfirmed_hrp() != null)
-								benCABCRMNCH_ROBJ.setConfirmed_hrp(res.getConfirmed_hrp());
+								benCABCRMNCHROBJ.setConfirmed_hrp(res.getConfirmed_hrp());
 							if (res.getConfirmed_ncd() != null)
-								benCABCRMNCH_ROBJ.setConfirmed_ncd(res.getConfirmed_ncd());
+								benCABCRMNCHROBJ.setConfirmed_ncd(res.getConfirmed_ncd());
 							if (res.getConfirmed_tb() != null)
-								benCABCRMNCH_ROBJ.setConfirmed_tb(res.getConfirmed_tb());
+								benCABCRMNCHROBJ.setConfirmed_tb(res.getConfirmed_tb());
 							if (res.getConfirmed_ncd_diseases() != null)
-								benCABCRMNCH_ROBJ.setConfirmed_ncd_diseases(res.getConfirmed_ncd_diseases());
+								benCABCRMNCHROBJ.setConfirmed_ncd_diseases(res.getConfirmed_ncd_diseases());
 							if (res.getDiagnosis_status() != null)
-								benCABCRMNCH_ROBJ.setDiagnosis_status(res.getDiagnosis_status());
-							benCABCRMNCH_ROBJ = rMNCHCBACDetailsRepo.save(benCABCRMNCH_ROBJ);
+								benCABCRMNCHROBJ.setDiagnosis_status(res.getDiagnosis_status());
+							benCABCRMNCHROBJ = rMNCHCBACDetailsRepo.save(benCABCRMNCHROBJ);
 
 						}
 
 						// 20-09-2021,end
-						if (benDetailsRMNCH_OBJ != null && benDetailsRMNCH_OBJ.getHouseoldId() != null)
-							benHouseHoldRMNCH_ROBJ = rMNCHHouseHoldDetailsRepo
-									.getByHouseHoldID(benDetailsRMNCH_OBJ.getHouseoldId());
+						if (benDetailsRMNCHOBJ != null && benDetailsRMNCHOBJ.getHouseoldId() != null)
+							benHouseHoldRMNCHROBJ = rMNCHHouseHoldDetailsRepo
+									.getByHouseHoldID(benDetailsRMNCHOBJ.getHouseoldId());
 
 					}
-					if (benDetailsRMNCH_OBJ == null)
-						benDetailsRMNCH_OBJ = new RMNCHBeneficiaryDetailsRmnch();
+					if (benDetailsRMNCHOBJ == null)
+						benDetailsRMNCHOBJ = new RMNCHBeneficiaryDetailsRmnch();
 
 					// new mapping 30-06-2021
 					if (benDetailsOBJ.getMotherName() != null)
-						benDetailsRMNCH_OBJ.setMotherName(benDetailsOBJ.getMotherName());
+						benDetailsRMNCHOBJ.setMotherName(benDetailsOBJ.getMotherName());
 					if (benDetailsOBJ.getLiteracyStatus() != null)
-						benDetailsRMNCH_OBJ.setLiteracyStatus(benDetailsOBJ.getLiteracyStatus());
+						benDetailsRMNCHOBJ.setLiteracyStatus(benDetailsOBJ.getLiteracyStatus());
 
 					// bank
 					if (benAccountOBJ.getNameOfBank() != null)
-						benDetailsRMNCH_OBJ.setNameOfBank(benAccountOBJ.getNameOfBank());
+						benDetailsRMNCHOBJ.setNameOfBank(benAccountOBJ.getNameOfBank());
 					if (benAccountOBJ.getBranchName() != null)
-						benDetailsRMNCH_OBJ.setBranchName(benAccountOBJ.getBranchName());
+						benDetailsRMNCHOBJ.setBranchName(benAccountOBJ.getBranchName());
 					if (benAccountOBJ.getIfscCode() != null)
-						benDetailsRMNCH_OBJ.setIfscCode(benAccountOBJ.getIfscCode());
+						benDetailsRMNCHOBJ.setIfscCode(benAccountOBJ.getIfscCode());
 					if (benAccountOBJ.getBankAccount() != null)
-						benDetailsRMNCH_OBJ.setBankAccount(benAccountOBJ.getBankAccount());
+						benDetailsRMNCHOBJ.setBankAccount(benAccountOBJ.getBankAccount());
 
 					// location
 					if (benAddressOBJ.getCountyid() != null)
-						benDetailsRMNCH_OBJ.setCountryId(benAddressOBJ.getCountyid());
+						benDetailsRMNCHOBJ.setCountryId(benAddressOBJ.getCountyid());
 					if (benAddressOBJ.getPermCountry() != null)
-						benDetailsRMNCH_OBJ.setCountryName(benAddressOBJ.getPermCountry());
+						benDetailsRMNCHOBJ.setCountryName(benAddressOBJ.getPermCountry());
 
 					if (benAddressOBJ.getStatePerm() != null)
-						benDetailsRMNCH_OBJ.setStateId(benAddressOBJ.getStatePerm());
+						benDetailsRMNCHOBJ.setStateId(benAddressOBJ.getStatePerm());
 					if (benAddressOBJ.getPermState() != null)
-						benDetailsRMNCH_OBJ.setStateName(benAddressOBJ.getPermState());
+						benDetailsRMNCHOBJ.setStateName(benAddressOBJ.getPermState());
 
 					if (benAddressOBJ.getDistrictidPerm() != null) {
-						benDetailsRMNCH_OBJ.setDistrictid(benAddressOBJ.getDistrictidPerm());
+						benDetailsRMNCHOBJ.setDistrictid(benAddressOBJ.getDistrictidPerm());
 
 					}
 					if (benAddressOBJ.getDistrictnamePerm() != null) {
-						benDetailsRMNCH_OBJ.setDistrictname(benAddressOBJ.getDistrictnamePerm());
+						benDetailsRMNCHOBJ.setDistrictname(benAddressOBJ.getDistrictnamePerm());
 
 					}
 
 					if (benAddressOBJ.getPermSubDistrictId() != null)
-						benDetailsRMNCH_OBJ.setBlockId(benAddressOBJ.getPermSubDistrictId());
+						benDetailsRMNCHOBJ.setBlockId(benAddressOBJ.getPermSubDistrictId());
 					if (benAddressOBJ.getPermSubDistrict() != null)
-						benDetailsRMNCH_OBJ.setBlockName(benAddressOBJ.getPermSubDistrict());
+						benDetailsRMNCHOBJ.setBlockName(benAddressOBJ.getPermSubDistrict());
 
 					if (benAddressOBJ.getVillageidPerm() != null)
-						benDetailsRMNCH_OBJ.setVillageId(benAddressOBJ.getVillageidPerm());
+						benDetailsRMNCHOBJ.setVillageId(benAddressOBJ.getVillageidPerm());
 					if (benAddressOBJ.getVillagenamePerm() != null)
-						benDetailsRMNCH_OBJ.setVillageName(benAddressOBJ.getVillagenamePerm());
+						benDetailsRMNCHOBJ.setVillageName(benAddressOBJ.getVillagenamePerm());
 
 					if (benAddressOBJ.getPermServicePointId() != null)
-						benDetailsRMNCH_OBJ.setServicePointID(benAddressOBJ.getPermServicePointId());
+						benDetailsRMNCHOBJ.setServicePointID(benAddressOBJ.getPermServicePointId());
 					if (benAddressOBJ.getPermServicePoint() != null)
-						benDetailsRMNCH_OBJ.setServicePointName(benAddressOBJ.getPermServicePoint());
+						benDetailsRMNCHOBJ.setServicePointName(benAddressOBJ.getPermServicePoint());
 
 					if (benAddressOBJ.getPermZoneID() != null)
-						benDetailsRMNCH_OBJ.setZoneID(benAddressOBJ.getPermZoneID());
+						benDetailsRMNCHOBJ.setZoneID(benAddressOBJ.getPermZoneID());
 					if (benAddressOBJ.getPermZone() != null)
-						benDetailsRMNCH_OBJ.setZoneName(benAddressOBJ.getPermZone());
+						benDetailsRMNCHOBJ.setZoneName(benAddressOBJ.getPermZone());
 
 					if (benAddressOBJ.getPermAddrLine1() != null)
-						benDetailsRMNCH_OBJ.setAddressLine1(benAddressOBJ.getPermAddrLine1());
+						benDetailsRMNCHOBJ.setAddressLine1(benAddressOBJ.getPermAddrLine1());
 					if (benAddressOBJ.getPermAddrLine2() != null)
-						benDetailsRMNCH_OBJ.setAddressLine2(benAddressOBJ.getPermAddrLine2());
+						benDetailsRMNCHOBJ.setAddressLine2(benAddressOBJ.getPermAddrLine2());
 					if (benAddressOBJ.getPermAddrLine3() != null)
-						benDetailsRMNCH_OBJ.setAddressLine3(benAddressOBJ.getPermAddrLine3());
+						benDetailsRMNCHOBJ.setAddressLine3(benAddressOBJ.getPermAddrLine3());
 
 					// related benids
-					if (benDetailsRMNCH_OBJ.getRelatedBeneficiaryIdsDB() != null) {
+					if (benDetailsRMNCHOBJ.getRelatedBeneficiaryIdsDB() != null) {
 
-						String[] relatedBenIDsString = benDetailsRMNCH_OBJ.getRelatedBeneficiaryIdsDB().split(",");
+						String[] relatedBenIDsString = benDetailsRMNCHOBJ.getRelatedBeneficiaryIdsDB().split(",");
 						Long[] relatedBenIDs = new Long[relatedBenIDsString.length];
 						int pointer = 0;
 						for (String s : relatedBenIDsString) {
@@ -494,59 +494,59 @@ public class RmnchDataSyncServiceImpl implements RmnchDataSyncService {
 							pointer++;
 						}
 
-						benDetailsRMNCH_OBJ.setRelatedBeneficiaryIds(relatedBenIDs);
+						benDetailsRMNCHOBJ.setRelatedBeneficiaryIds(relatedBenIDs);
 					}
 
 					if (benDetailsOBJ.getCommunity() != null)
-						benDetailsRMNCH_OBJ.setCommunity(benDetailsOBJ.getCommunity());
+						benDetailsRMNCHOBJ.setCommunity(benDetailsOBJ.getCommunity());
 					if (benDetailsOBJ.getCommunityId() != null)
-						benDetailsRMNCH_OBJ.setCommunityId(benDetailsOBJ.getCommunityId());
+						benDetailsRMNCHOBJ.setCommunityId(benDetailsOBJ.getCommunityId());
 					if (benContactOBJ.getPreferredPhoneNum() != null)
-						benDetailsRMNCH_OBJ.setContact_number(benContactOBJ.getPreferredPhoneNum());
+						benDetailsRMNCHOBJ.setContact_number(benContactOBJ.getPreferredPhoneNum());
 
 					if (benDetailsOBJ.getDob() != null)
-						benDetailsRMNCH_OBJ.setDob(benDetailsOBJ.getDob());
+						benDetailsRMNCHOBJ.setDob(benDetailsOBJ.getDob());
 					if (benDetailsOBJ.getFatherName() != null)
-						benDetailsRMNCH_OBJ.setFatherName(benDetailsOBJ.getFatherName());
+						benDetailsRMNCHOBJ.setFatherName(benDetailsOBJ.getFatherName());
 					if (benDetailsOBJ.getFirstName() != null)
-						benDetailsRMNCH_OBJ.setFirstName(benDetailsOBJ.getFirstName());
+						benDetailsRMNCHOBJ.setFirstName(benDetailsOBJ.getFirstName());
 					if (benDetailsOBJ.getGender() != null)
-						benDetailsRMNCH_OBJ.setGender(benDetailsOBJ.getGender());
+						benDetailsRMNCHOBJ.setGender(benDetailsOBJ.getGender());
 					if (benDetailsOBJ.getGenderId() != null)
-						benDetailsRMNCH_OBJ.setGenderId(benDetailsOBJ.getGenderId());
+						benDetailsRMNCHOBJ.setGenderId(benDetailsOBJ.getGenderId());
 
 					if (benDetailsOBJ.getMaritalstatus() != null)
-						benDetailsRMNCH_OBJ.setMaritalstatus(benDetailsOBJ.getMaritalstatus());
+						benDetailsRMNCHOBJ.setMaritalstatus(benDetailsOBJ.getMaritalstatus());
 					if (benDetailsOBJ.getMaritalstatusId() != null)
-						benDetailsRMNCH_OBJ.setMaritalstatusId(benDetailsOBJ.getMaritalstatusId());
+						benDetailsRMNCHOBJ.setMaritalstatusId(benDetailsOBJ.getMaritalstatusId());
 					if (benDetailsOBJ.getMarriageDate() != null)
-						benDetailsRMNCH_OBJ.setMarriageDate(benDetailsOBJ.getMarriageDate());
+						benDetailsRMNCHOBJ.setMarriageDate(benDetailsOBJ.getMarriageDate());
 
 					if (benDetailsOBJ.getReligion() != null)
-						benDetailsRMNCH_OBJ.setReligion(benDetailsOBJ.getReligion());
+						benDetailsRMNCHOBJ.setReligion(benDetailsOBJ.getReligion());
 					if (benDetailsOBJ.getReligionID() != null)
-						benDetailsRMNCH_OBJ.setReligionID(benDetailsOBJ.getReligionID());
+						benDetailsRMNCHOBJ.setReligionID(benDetailsOBJ.getReligionID());
 					if (benDetailsOBJ.getSpousename() != null)
-						benDetailsRMNCH_OBJ.setSpousename(benDetailsOBJ.getSpousename());
+						benDetailsRMNCHOBJ.setSpousename(benDetailsOBJ.getSpousename());
 
 					if (benImageOBJ != null && benImageOBJ.getUser_image() != null)
-						benDetailsRMNCH_OBJ.setUser_image(benImageOBJ.getUser_image());
+						benDetailsRMNCHOBJ.setUser_image(benImageOBJ.getUser_image());
 
 					// new fields
-					benDetailsRMNCH_OBJ.setRegistrationDate(benDetailsOBJ.getCreatedDate());
+					benDetailsRMNCHOBJ.setRegistrationDate(benDetailsOBJ.getCreatedDate());
 					if (benID != null)
-						benDetailsRMNCH_OBJ.setBenficieryid(benID.longValue());
+						benDetailsRMNCHOBJ.setBenficieryid(benID.longValue());
 
 					if (benDetailsOBJ.getLastName() != null)
-						benDetailsRMNCH_OBJ.setLastName(benDetailsOBJ.getLastName());
+						benDetailsRMNCHOBJ.setLastName(benDetailsOBJ.getLastName());
 
-					if (benDetailsRMNCH_OBJ.getCreatedBy() == null)
+					if (benDetailsRMNCHOBJ.getCreatedBy() == null)
 						if (benDetailsOBJ.getCreatedBy() != null)
-							benDetailsRMNCH_OBJ.setCreatedBy(benDetailsOBJ.getCreatedBy());
+							benDetailsRMNCHOBJ.setCreatedBy(benDetailsOBJ.getCreatedBy());
 
 					// age calculation
 					String ageDetails = "";
-					int age_val = 0;
+					int ageVal = 0;
 					String ageUnit = null;
 					if (benDetailsOBJ.getDob() != null) {
 
@@ -569,47 +569,47 @@ public class RmnchDataSyncServiceImpl implements RmnchDataSyncService {
 
 						if (y > 0) {
 							ageDetails = y + " years - " + mo + " months";
-							age_val = y;
-							ageUnit = (age_val > 1) ? "Years" : "Year";
+							ageVal = y;
+							ageUnit = (ageVal > 1) ? "Years" : "Year";
 						} else {
 							if (mo > 0) {
 								ageDetails = mo + " months - " + d + " days";
-								age_val = mo;
-								ageUnit = (age_val > 1) ? "Months" : "Month";
+								ageVal = mo;
+								ageUnit = (ageVal > 1) ? "Months" : "Month";
 							} else {
 								ageDetails = d + " days";
-								age_val = d;
-								ageUnit = (age_val > 1) ? "Days" : "Day";
+								ageVal = d;
+								ageUnit = (ageVal > 1) ? "Days" : "Day";
 							}
 						}
 
 					}
 
-					benDetailsRMNCH_OBJ.setAgeFull(ageDetails);
-					benDetailsRMNCH_OBJ.setAge(age_val);
+					benDetailsRMNCHOBJ.setAgeFull(ageDetails);
+					benDetailsRMNCHOBJ.setAge(ageVal);
 					if (ageUnit != null)
-						benDetailsRMNCH_OBJ.setAge_unit(ageUnit);
+						benDetailsRMNCHOBJ.setAge_unit(ageUnit);
 
 					resultMap = new HashMap<>();
-					if (benHouseHoldRMNCH_ROBJ != null)
-						resultMap.put("householdDetails", benHouseHoldRMNCH_ROBJ);
+					if (benHouseHoldRMNCHROBJ != null)
+						resultMap.put("householdDetails", benHouseHoldRMNCHROBJ);
 					else
 						resultMap.put("householdDetails", new HashMap<String, Object>());
 
-					if (benBotnBirthRMNCH_ROBJ != null)
-						resultMap.put("bornbirthDeatils", benBotnBirthRMNCH_ROBJ);
+					if (benBotnBirthRMNCHROBJ != null)
+						resultMap.put("bornbirthDeatils", benBotnBirthRMNCHROBJ);
 					else
 						resultMap.put("bornbirthDeatils", new HashMap<String, Object>());
 
-					if (benCABCRMNCH_ROBJ != null)
-						resultMap.put("cbacDetails", benCABCRMNCH_ROBJ);
+					if (benCABCRMNCHROBJ != null)
+						resultMap.put("cbacDetails", benCABCRMNCHROBJ);
 					else
 						resultMap.put("cbacDetails", new HashMap<String, Object>());
 
-					resultMap.put("beneficiaryDetails", benDetailsRMNCH_OBJ);
+					resultMap.put("beneficiaryDetails", benDetailsRMNCHOBJ);
 
-					resultMap.put("houseoldId", benDetailsRMNCH_OBJ.getHouseoldId());
-					resultMap.put("benficieryid", benDetailsRMNCH_OBJ.getBenficieryid());
+					resultMap.put("houseoldId", benDetailsRMNCHOBJ.getHouseoldId());
+					resultMap.put("benficieryid", benDetailsRMNCHOBJ.getBenficieryid());
 					resultMap.put("BenRegId", m.getBenRegId());
 
 					// adding asha id / created by - user id
@@ -624,7 +624,7 @@ public class RmnchDataSyncServiceImpl implements RmnchDataSyncService {
 						if (healthID != null)
 							resultMap.put("HealthID", healthID);
 					}
-					resultMap.put("ProviderServiceMapID", benDetailsRMNCH_OBJ.getProviderServiceMapID());
+					resultMap.put("ProviderServiceMapID", benDetailsRMNCHOBJ.getProviderServiceMapID());
 					resultMap.put("VanID", m.getVanID());
 
 					resultList.add(resultMap);
@@ -893,7 +893,7 @@ public class RmnchDataSyncServiceImpl implements RmnchDataSyncService {
 		String dp = null;
 		if (visitCode != null && benRegID != null) {
 			try {
-				List<Object> obj = rMNCHCBACDetailsRepo.getDiagnosisProvidedNCD_Care(benRegID, visitCode);
+				List<Object> obj = rMNCHCBACDetailsRepo.getDiagnosisProvidedNCDCare(benRegID, visitCode);
 				if (obj != null && obj.size() > 0 && obj.get(0) != null) {
 					dp = obj.get(0).toString();
 					if (dp != null) {
