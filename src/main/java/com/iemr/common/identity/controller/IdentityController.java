@@ -231,7 +231,7 @@ public class IdentityController {
 
 			healthIDValue = healthID;
 
-			List<BeneficiariesDTO> list = svc.getBeneficiaryByHealthID_AbhaAddress(healthIDValue);
+			List<BeneficiariesDTO> list = svc.getBeneficiaryByHealthIDAbhaAddress(healthIDValue);
 			list.removeIf(Objects::isNull);
 			Collections.sort(list);
 			response = getSuccessResponseString(list, 200, "success", "getIdentityByAgent");
@@ -264,7 +264,7 @@ public class IdentityController {
 
 			healthIDNoValue = healthIDNo;
 
-			List<BeneficiariesDTO> list = svc.getBeneficiaryByHealthIDNo_AbhaIdNo(healthIDNoValue);
+			List<BeneficiariesDTO> list = svc.getBeneficiaryByHealthIDNoAbhaIdNo(healthIDNoValue);
 			list.removeIf(Objects::isNull);
 			Collections.sort(list);
 			response = getSuccessResponseString(list, 200, "success", "getIdentityByAgent");
@@ -707,7 +707,7 @@ public class IdentityController {
 	private String getSuccessResponseString(MBeneficiarymapping map, Integer statusCode, String statusMsg,
 			String methodName) {
 		logger.info("IdentityController.getResponseString of map parameter - start");
-		BeneficiariesDTO bdto = mapper.MBeneficiarymappingToBeneficiariesDTO(map);
+		BeneficiariesDTO bdto = mapper.mBeneficiarymappingToBeneficiariesDTO(map);
 		bdto.setBeneficiaryFamilyTags(
 				mapper.mBeneficiaryfamilymappingListToBenFamilyDTOList(map.getMBeneficiaryfamilymappings()));
 		bdto.setBeneficiaryIdentites(
@@ -1005,17 +1005,17 @@ public class IdentityController {
 					+ "        \"benIDRequired\": \"Integer\"\r\n" + "       }") @RequestBody String regIDList) {
 		com.iemr.common.identity.utils.response.OutputResponse response = new com.iemr.common.identity.utils.response.OutputResponse();
 		try {
-			BenIdImportDTO[] BenIdImportDTOArr = InputMapper.getInstance().gson().fromJson(regIDList,
+			BenIdImportDTO[] benIdImportDTOArr = InputMapper.getInstance().gson().fromJson(regIDList,
 					BenIdImportDTO[].class);
 
-			List<BenIdImportDTO> BenIdImportDTOList = Arrays.asList(BenIdImportDTOArr);
+			List<BenIdImportDTO> benIdImportDTOList = Arrays.asList(benIdImportDTOArr);
 
-			int i = svc.importBenIdToLocalServer(BenIdImportDTOList);
+			int i = svc.importBenIdToLocalServer(benIdImportDTOList);
 			if (i > 0)
 				response.setResponse(i + " Unique benid imported to local server");
 			else {
 				response.setResponse("Empty or invalid data");
-				logger.error("Empty or invalid data. Data Size is : " + BenIdImportDTOList.size());
+				logger.error("Empty or invalid data. Data Size is : " + benIdImportDTOList.size());
 			}
 		} catch (Exception e) {
 			logger.error("Exception in importing benID to local server : " + e);

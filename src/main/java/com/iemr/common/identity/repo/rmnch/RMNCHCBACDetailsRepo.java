@@ -51,6 +51,6 @@ public interface RMNCHCBACDetailsRepo extends CrudRepository<RMNCHCBACdetails, L
 	
 	@Query(value = "select NCD_Condition from db_iemr.t_ncddiagnosis where BeneficiaryRegID=:benRegID AND visitcode=:visitCode AND NCD_Condition is not null AND NCD_Condition <> '' "
 	, nativeQuery = true)
-	public List<Object> getDiagnosisProvidedNCD_Care(@Param("benRegID") Long benRegID, @Param("visitCode") Long visitCode);
+	public List<Object> getDiagnosisProvidedNCDCare(@Param("benRegID") Long benRegID, @Param("visitCode") Long visitCode);
 	
 }
