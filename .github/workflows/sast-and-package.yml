@@ -27,6 +27,8 @@ jobs:
         languages: Java    
     - name: Build with Maven
       run: mvn clean install
+      env:
+        ENV_VAR: test
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
       with:
