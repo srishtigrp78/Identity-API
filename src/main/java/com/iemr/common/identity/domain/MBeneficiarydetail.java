@@ -39,12 +39,15 @@ import javax.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "i_beneficiarydetails")
 @NamedQuery(name = "MBeneficiarydetail.findAll", query = "SELECT m FROM MBeneficiarydetail m order by beneficiaryDetailsId asc")
 @Data
+@AllArgsConstructor
 public class MBeneficiarydetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final int START_YEAR = 1970;
@@ -230,6 +233,9 @@ public class MBeneficiarydetail implements Serializable {
 	@Expose
 	@Column(name = "VanSerialNo", updatable = false)
 	private BigInteger vanSerialNo;
+	
+	@Column(name = "MonthlyFamilyIncome")
+	private String monthlyFamilyIncome;
 
 	public MBeneficiarydetail() {
 

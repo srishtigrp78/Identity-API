@@ -120,6 +120,7 @@ public class IdentityDTO {
 	private Integer ageAtMarriage;
 	private Integer incomeStatusId;
 	private String incomeStatus;
+	private String monthlyFamilyIncome;
 
 	@Expose
 	private Integer vanID;
