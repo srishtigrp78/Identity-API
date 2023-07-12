@@ -38,8 +38,8 @@ import com.iemr.common.identity.domain.MBeneficiaryregidmapping;
 @Repository
 public interface BenRegIdMappingRepo extends CrudRepository<MBeneficiaryregidmapping, BigInteger> {
 	List<MBeneficiaryregidmapping> findByBenRegIdOrderByBenRegIdAsc(BigInteger benRegId);
-
-	MBeneficiaryregidmapping findByBeneficiaryID(BigInteger beneficiaryID);
+	@Query("SELECT a FROM MBeneficiaryregidmapping a WHERE a.beneficiaryID =:beneficiaryID")
+	MBeneficiaryregidmapping findByBeneficiaryID(@Param("beneficiaryID") BigInteger beneficiaryID);
 
 	List<MBeneficiaryregidmapping> findByCreatedDateBetweenOrderByBenRegIdAsc(Timestamp fromDate, Timestamp toDate);
 

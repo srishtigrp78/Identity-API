@@ -56,7 +56,7 @@ public class MBeneficiaryconsent implements Serializable {
 	@Column(nullable = false, length = 50)
 	private String createdBy;
 
-	@Column(name = "CreatedDate")
+	@Column(name = "CreatedDate",updatable = false)
 	private Timestamp createdDate;
 
 	private Boolean deleted = false;
