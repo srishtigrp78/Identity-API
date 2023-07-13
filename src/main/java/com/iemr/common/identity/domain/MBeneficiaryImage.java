@@ -53,7 +53,7 @@ public class MBeneficiaryImage {
 	private String processed;
 	@Column(name = "CreatedBy", updatable = false)
 	private String createdBy;
-	@Column(name = "CreatedDate")
+	@Column(name = "CreatedDate",updatable = false)
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private Timestamp createdDate;
 	@Column(name = "Reserved")
