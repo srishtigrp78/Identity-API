@@ -73,6 +73,7 @@ public class BenDetailDTO implements Serializable {
 	private Integer titleId;
 	private Integer communityId;
 	private Integer educationId;
+	private String monthlyFamilyIncome;
 
 	// Start 1097
 	private Integer beneficiaryAge;

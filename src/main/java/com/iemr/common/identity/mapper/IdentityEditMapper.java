@@ -206,6 +206,7 @@ public interface IdentityEditMapper {
 			@Mapping(source = "dto.gender", target = "gender"), @Mapping(source = "dto.genderId", target = "genderId"),
 			@Mapping(source = "dto.incomeStatusId", target = "incomeStatusId"),
 			@Mapping(source = "dto.incomeStatus", target = "incomeStatus"),
+			@Mapping(source = "dto.monthlyFamilyIncome", target = "monthlyFamilyIncome"),
 			@Mapping(source = "dto.lastName", target = "lastName"),
 			@Mapping(source = "dto.maritalStatusId", target = "maritalStatusId"),
 			@Mapping(source = "dto.maritalStatus", target = "maritalStatus"),

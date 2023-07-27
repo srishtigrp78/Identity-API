@@ -104,6 +104,7 @@ public class IdentityEditDTO {
 	private String placeOfWork;
 	private Integer healthCareWorkerId;
 	private String healthCareWorker;
+	private String monthlyFamilyIncome;
 
 	// family details
 	private Boolean changeInFamilyDetails = false;

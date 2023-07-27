@@ -221,6 +221,7 @@ public interface IdentityMapper {
 			@Mapping(source = "dto.firstName", target = "firstName"),
 			@Mapping(source = "dto.gender", target = "gender"), @Mapping(source = "dto.genderId", target = "genderId"),
 			@Mapping(source = "dto.incomeStatus", target = "incomeStatus"),
+			@Mapping(source = "dto.monthlyFamilyIncome", target = "monthlyFamilyIncome"),
 			@Mapping(source = "dto.incomeStatusId", target = "incomeStatusId"),
 			@Mapping(source = "dto.lastName", target = "lastName"),
 			@Mapping(source = "dto.maritalStatusId", target = "maritalStatusId"),
@@ -374,6 +375,7 @@ public interface IdentityMapper {
 			@Mapping(target = "beneficiaryDetails.firstName", source = "map.MBeneficiarydetail.firstName"),
 			@Mapping(target = "beneficiaryDetails.gender", source = "map.MBeneficiarydetail.gender"),
 			@Mapping(target = "beneficiaryDetails.incomeStatus", source = "map.MBeneficiarydetail.incomeStatus"),
+			@Mapping(target = "beneficiaryDetails.monthlyFamilyIncome", source = "map.MBeneficiarydetail.monthlyFamilyIncome"),
 			@Mapping(target = "beneficiaryDetails.lastModDate", source = "map.MBeneficiarydetail.lastModDate"),
 			@Mapping(target = "beneficiaryDetails.lastName", source = "map.MBeneficiarydetail.lastName"),
 			@Mapping(target = "beneficiaryDetails.maritalStatus", source = "map.MBeneficiarydetail.maritalStatus"),
@@ -464,6 +466,7 @@ public interface IdentityMapper {
 			@Mapping(source = "map.MBeneficiarydetail.occupationId", target = "occupationId"),
 			@Mapping(source = "map.MBeneficiarydetail.occupation", target = "occupation"),
 			@Mapping(source = "map.MBeneficiarydetail.incomeStatus", target = "incomeStatus"),
+			@Mapping(source = "map.MBeneficiarydetail.monthlyFamilyIncome", target = "monthlyFamilyIncome"),
 			@Mapping(source = "map.MBeneficiarydetail.religionId", target = "religionId"),
 			@Mapping(source = "map.MBeneficiarydetail.religion", target = "religion"),
 			// End
