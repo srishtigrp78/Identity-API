@@ -82,7 +82,8 @@ public class MBeneficiarydetail implements Serializable {
 
 	@Column(length = 45)
 	private String education;
-
+    
+	@Column(name = "EmergencyRegistration")
 	private Boolean emergencyRegistration;
 
 	@Column(length = 50)

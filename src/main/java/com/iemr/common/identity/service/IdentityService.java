@@ -742,6 +742,11 @@ public class IdentityService {
 			 */
 
 			logger.debug("Beneficiary details to update = " + new OutputMapper().gson().toJson(mbDetl));
+			if(benDetails.getEmergencyRegistration() != null && benDetails.getEmergencyRegistration()) {
+				mbDetl.setEmergencyRegistration(true);
+			}else {
+				mbDetl.setEmergencyRegistration(false);
+			}
 			detailRepo.save(mbDetl);
 		}
 
