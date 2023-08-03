@@ -145,4 +145,5 @@ public class IdentityEditDTO {
 
 	private Integer vanID;
 	private Integer parkingPlaceId;
+	private boolean emergencyRegistration;
 }
