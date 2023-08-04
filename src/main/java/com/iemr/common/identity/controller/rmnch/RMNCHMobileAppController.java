@@ -40,23 +40,21 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 /**
- * @date : 13-02-2019,
  * @apiNote API will be exposed to public domain for RMNCH mobile data sync to
  *          AMRIT platform
- * @author NE298657
  */
 @RestController
 @RequestMapping(value = "/rmnch", headers = "Authorization")
-public class RmnchMobileAppController {
+public class RMNCHMobileAppController {
 
-	private Logger logger = LoggerFactory.getLogger(RmnchMobileAppController.class);
+	private Logger logger = LoggerFactory.getLogger(RMNCHMobileAppController.class);
 
 	@Autowired
 	@Qualifier("rmnchServiceImpl")
 	RmnchDataSyncService rmnchDataSyncService;
 
 	@RequestMapping(value = "/syncDataToAmrit", method = RequestMethod.POST)
-	@ApiOperation(value = "sync data to amrit for already regestered beneficiary with AMRIT beneficiary id ", consumes = "application/json", produces = "application/json")
+	@ApiOperation(value = "Sync data to AMRIT for already regestered beneficiary with AMRIT beneficiary id ", consumes = "application/json", produces = "application/json")
 	public String syncDataToAmrit(@ApiParam(value = "{\r\n" + "  \"beneficiaryDetails\": [\r\n" + "    {\r\n"
 			+ "      \"BenRegId\": \"Long\",\r\n" + "      \"Countyid\": \"Integer\",\r\n"
 			+ "      \"Processed\": \"String\",\r\n" + "      \"ProviderServiceMapID\": \"Integer\",\r\n"
@@ -136,7 +134,7 @@ public class RmnchMobileAppController {
 
 //	@Deprecated
 	@RequestMapping(value = "/getBeneficiaryDataForVillage", method = RequestMethod.POST)
-	@ApiOperation(value = "get beneficiary data for given village ", consumes = "application/json", produces = "application/json")
+	@ApiOperation(value = "Get beneficiary data for given village ", consumes = "application/json", produces = "application/json")
 	public String getBeneficiaryData(
 			@ApiParam(value = "{\r\n" + "\"villageID\":\"Integer\",\r\n" + "\"fromDate\":\"DateTime\",\r\n"
 					+ "\"toDate\":\"DateTime\",\r\n" + "\"pageNo\":\"Integer\"\r\n"

@@ -48,7 +48,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.iemr.common.identity.controller.rmnch.RmnchMobileAppController;
+import com.iemr.common.identity.controller.rmnch.RMNCHMobileAppController;
 import com.iemr.common.identity.data.rmnch.BenHealthIDDetails;
 import com.iemr.common.identity.data.rmnch.GetBenRequestHandler;
 import com.iemr.common.identity.data.rmnch.NcdTbHrpData;
@@ -83,7 +83,7 @@ import com.iemr.common.identity.utils.mapper.InputMapper;
 @PropertySource("classpath:application.properties")
 public class RmnchDataSyncServiceImpl implements RmnchDataSyncService {
 
-	private Logger logger = LoggerFactory.getLogger(RmnchMobileAppController.class);
+	private Logger logger = LoggerFactory.getLogger(RMNCHMobileAppController.class);
 	private ConfigProperties properties;
 	@Value("${door-to-door-page-size}")
 	private String door_to_door_page_size;
