@@ -54,6 +54,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.iemr.common.identity.domain.MBeneficiarymapping;
+import com.iemr.common.identity.dto.BenIdImportDTO;
+import com.iemr.common.identity.dto.BeneficiariesDTO;
+import com.iemr.common.identity.dto.BeneficiariesPartialDTO;
+import com.iemr.common.identity.dto.BeneficiaryCreateResp;
+import com.iemr.common.identity.dto.IdentityDTO;
+import com.iemr.common.identity.dto.IdentityEditDTO;
+import com.iemr.common.identity.dto.IdentitySearchDTO;
+import com.iemr.common.identity.dto.ReserveIdentityDTO;
 import com.iemr.common.identity.exception.MissingMandatoryFieldsException;
 import com.iemr.common.identity.mapper.IdentityMapper;
 import com.iemr.common.identity.mapper.InputMapper;
@@ -77,6 +85,7 @@ public class IdentityController {
 	IdentityMapper mapper;
 
 	@CrossOrigin(origins = { "*commonapi*" })
+	@ApiOperation(value = "Get beneficiaries by advance search")
 	@PostMapping(path = "/advanceSearch", headers = "Authorization")
 	public @ResponseBody String getBeneficiaries(
 			@ApiParam(value = "{\"firstName\":\"String\",\"genderId\":\"Integer\",\"fatherName\":\"String\","
@@ -105,6 +114,7 @@ public class IdentityController {
 	}
 
 	@CrossOrigin(origins = { "*commonapi*" })
+	@ApiOperation(value = "Search beneficiary based on beneficiary registration id")
 	@PostMapping(path = "/getByBenRegId", headers = "Authorization")
 	public @ResponseBody String getBeneficiariesByBeneficiaryRegId(
 			@ApiParam(value = "\"Integer\"") @RequestParam String benRegId) {
@@ -141,6 +151,7 @@ public class IdentityController {
 	}
 
 	@CrossOrigin(origins = { "*commonapi*" })
+	@ApiOperation(value = "Search identity based on beneficiary registration id")
 	@PostMapping(path = "/getByBenId", headers = "Authorization")
 	public @ResponseBody String getBeneficiariesByBeneficiaryId(
 			@ApiParam(value = "\"Integer\"") @RequestParam String benId) {
@@ -177,6 +188,7 @@ public class IdentityController {
 	}
 
 	@CrossOrigin(origins = { "*commonapi*" })
+	@ApiOperation(value = "Search beneficiary based on phone number")
 	@PostMapping(path = "/getByPhoneNum", headers = "Authorization")
 	public @ResponseBody String getBeneficiariesByPhoneNum(
 			@ApiParam(value = "\"String\"") @RequestParam String phoneNum) {
@@ -207,8 +219,8 @@ public class IdentityController {
 		return response;
 	}
 
-	// search beneficiary by healthid / ABHA_Address
 	@CrossOrigin(origins = { "*commonapi*" })
+	@ApiOperation(value = "Search beneficiary based on health ID / ABHA Address")
 	@PostMapping(path = "/getByAbhaAddress", headers = "Authorization")
 	public @ResponseBody String searhBeneficiaryByABHAAddress(
 			@ApiParam(value = "\"String\"") @RequestParam String healthID) {
@@ -240,8 +252,8 @@ public class IdentityController {
 		return response;
 	}
 
-	// search beneficiary by healthid / ABHA_Address
 	@CrossOrigin(origins = { "*commonapi*" })
+	@ApiOperation(value = "Search beneficiary based on health ID number / ABHA ID number")
 	@PostMapping(path = "/getByAbhaIdNo", headers = "Authorization")
 	public @ResponseBody String searhBeneficiaryByABHAIdNo(
 			@ApiParam(value = "\"String\"") @RequestParam String healthIDNo) {
@@ -273,8 +285,8 @@ public class IdentityController {
 		return response;
 	}
 
-	// search beneficiary by family id
 	@CrossOrigin(origins = { "*commonapi*" })
+	@ApiOperation(value = "Search beneficiary based on family id")
 	@PostMapping(path = "/searchByFamilyId", headers = "Authorization")
 	public @ResponseBody String searhBeneficiaryByFamilyId(
 			@ApiParam(value = "\"String\"") @RequestParam String familyId) {
@@ -329,8 +341,8 @@ public class IdentityController {
 		return response;
 	}
 
-	// search beneficiary by gov identity - aadhar, pan, voter id etc
 	@CrossOrigin(origins = { "*commonapi*" })
+	@ApiOperation(value = "Search beneficiary based on government identity number")
 	@PostMapping(path = "/searhByGovIdentity", headers = "Authorization")
 	public @ResponseBody String searhBeneficiaryByGovIdentity(
 			@ApiParam(value = "\"String\"") @RequestParam String identity) {
@@ -365,6 +377,7 @@ public class IdentityController {
 	 * @return
 	 */
 	@CrossOrigin(origins = { "*commonapi*" })
+	@ApiOperation(value = "Edit identity by agent")
 	@PostMapping(path = "/edit", headers = "Authorization")
 	public @ResponseBody String editIdentity(@ApiParam(value = "{\r\n" + "  \"eventTypeName\": \"String\",\r\n"
 			+ "  \"eventTypeDate\": \"Timestamp\",\r\n" + "  \"agentId\": \"Integer\",\r\n"
@@ -497,6 +510,7 @@ public class IdentityController {
 	 * @return
 	 */
 	@CrossOrigin(origins = { "*commonapi*" })
+	@ApiOperation(value = "Create identity by agent")
 	@PostMapping(path = "/create", headers = "Authorization")
 	public @ResponseBody String createIdentity(@ApiParam(value = "{\r\n" + "  \"eventTypeName\": \"String\",\r\n"
 			+ "  \"eventTypeDate\": \"Timestamp\",\r\n" + "  \"agentId\": \"Integer\",\r\n"
@@ -615,6 +629,7 @@ public class IdentityController {
 	}
 
 	@CrossOrigin(origins = { "*commonapi*" })
+	@ApiOperation(value = "Reserve identity by agent")
 	@PostMapping(path = "/reserve", headers = "Authorization")
 	public @ResponseBody String reserveIdentity(@RequestBody String reserveIdentity) {
 		logger.info("IdentityController.reserveIdentity - start");
@@ -635,6 +650,7 @@ public class IdentityController {
 	}
 
 	@CrossOrigin(origins = { "*commonapi*" })
+	@ApiOperation(value = "Unreserve identity by agent")
 	@PostMapping(path = "/unreserve", headers = "Authorization")
 	public @ResponseBody String unreserveIdentity(@RequestBody String unreserve) {
 		logger.info("IdentityController.unreserveIdentity - start");
@@ -661,6 +677,7 @@ public class IdentityController {
 	 * @return
 	 */
 	@CrossOrigin(origins = { "*commonapi*" })
+	@ApiOperation(value = "Get beneficiaries partial details by beneficiary registration id list")
 	@PostMapping(path = "/getByPartialBenRegIdList", headers = "Authorization")
 	public @ResponseBody String getPartialBeneficiariesByBenRegIds(
 			@ApiParam(value = "[Integer,Integer…..(array of benRegId)]") @RequestBody String benRegIds) {
@@ -693,6 +710,7 @@ public class IdentityController {
 	 * @return
 	 */
 	@CrossOrigin(origins = { "*commonapi*" })
+	@ApiOperation(value = "Get beneficiaries by beneficiary registration id")
 	@PostMapping(path = "/getByBenRegIdList", headers = "Authorization")
 	public @ResponseBody String getBeneficiariesByBenRegIds(
 			@ApiParam(value = " {\"beneficiaryRegID\": \"Long\"}") @RequestBody String benRegIds) {
@@ -832,6 +850,7 @@ public class IdentityController {
 	}
 
 	@CrossOrigin(origins = { "*commonapi*" })
+	@ApiOperation(value = "Get finite beneficiaries")
 	@PostMapping(path = "/finiteSearch", headers = "Authorization")
 	public @ResponseBody String getFiniteBeneficiaries(@RequestBody String searchFilter) {
 		logger.info("IdentityController.getFiniteBeneficiaries - start");
@@ -862,6 +881,7 @@ public class IdentityController {
 
 	// New API for getting beneficiary image only.
 	@CrossOrigin(origins = { "*commonapi*" })
+	@ApiOperation(value = "Get beneficiary image by beneficiary registration id")
 	@PostMapping(path = "/benImageByBenRegID", headers = "Authorization")
 	public @ResponseBody String getBeneficiaryImageByBenRegID(@RequestBody String identityData) {
 		String benImage = null;
@@ -876,6 +896,7 @@ public class IdentityController {
 	}
 
 	@CrossOrigin(origins = { "*commonapi*" })
+	@ApiOperation(value = "Edit education or community by agent")
 	@PostMapping(path = "/editEducationOrCommunity", headers = "Authorization")
 	public @ResponseBody String editIdentityEducationOrCommunity(@ApiParam(value = "{\r\n"
 			+ "  \"eventTypeName\": \"String\",\r\n" + "  \"eventTypeDate\": \"Timestamp\",\r\n"
@@ -1003,7 +1024,7 @@ public class IdentityController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Check available BENID in local", consumes = "application/json", produces = "application/json")
+	@ApiOperation(value = "Check available beneficary id in local server", consumes = "application/json", produces = "application/json")
 	@GetMapping(path = "/checkAvailablBenIDLocalServer", headers = "Authorization")
 	public @ResponseBody String checkAvailablBenIDLocalServer() {
 		com.iemr.common.identity.utils.response.OutputResponse response = new com.iemr.common.identity.utils.response.OutputResponse();
@@ -1018,7 +1039,7 @@ public class IdentityController {
 	}
 
 	@CrossOrigin(origins = { "*commonapi*" })
-	@ApiOperation(value = "Save Server generated BeneficiaryID & BenRegID to local server", consumes = "application/json", produces = "application/json")
+	@ApiOperation(value = "Save server generated beneficiary ID & beneficiary registration ID to local server", consumes = "application/json", produces = "application/json")
 	@PostMapping(path = "/saveGeneratedBenIDToLocalServer", headers = "Authorization")
 	public @ResponseBody String saveGeneratedBenIDToLocalServer(
 			@ApiParam(value = "{\r\n" + "        \"vanID\": \"Integer\",\r\n"
