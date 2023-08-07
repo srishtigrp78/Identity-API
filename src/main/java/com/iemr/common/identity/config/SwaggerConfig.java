@@ -47,7 +47,7 @@ public class SwaggerConfig
 	{
 		ApiInfoBuilder builder = new ApiInfoBuilder();
 		builder.contact(new Contact("AMRIT", "https://psmri.github.io/PSMRI/", "amrit@piramalswasthya.org"));
-		builder.description("A microservice for the creation and management of beneficaries.");
+		builder.description("A microservice for the creation and management of beneficiaries.");
 		builder.version("1.0");
 		builder.title("Identity API");
 		return builder.build();

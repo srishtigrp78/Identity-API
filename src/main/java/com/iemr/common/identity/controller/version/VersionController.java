@@ -35,12 +35,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.iemr.common.identity.utils.response.OutputResponse;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 public class VersionController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	
 	@CrossOrigin()
+	@ApiOperation(value = "Get version information", consumes = "application/json", produces = "application/json")
 	@RequestMapping(value = "/version", method = { RequestMethod.GET })
 	public String versionInformation() {
 		OutputResponse output = new OutputResponse();
