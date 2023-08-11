@@ -508,6 +508,29 @@ public class IdentityService {
 		return beneficiaryList;
 	}
 
+	public List<BeneficiariesDTO> searchBeneficiaryByBlockIdAndLastModifyDate(Integer blockID, Timestamp lastModDate) {
+
+		List<BeneficiariesDTO> beneficiaryList = new ArrayList<BeneficiariesDTO>();
+		try {
+			// find benmap ids
+			List<MBeneficiarymapping> benMappingsList = mappingRepo.findByBeneficiaryDetailsByBlockIDAndLastModifyDate(blockID, lastModDate);
+			if (benMappingsList == null || benMappingsList.size() == 0){
+				return beneficiaryList;
+			}
+			else {
+				for (MBeneficiarymapping benMapOBJ : benMappingsList) {
+					beneficiaryList.add(this.getBeneficiariesDTO(benMapOBJ));
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(
+					"error in beneficiary search for familyId : " + blockID + " error : " + e.getLocalizedMessage());
+		}
+		return beneficiaryList;
+	}
+
 	public List<BeneficiariesDTO> searhBeneficiaryByGovIdentity(String identity)
 			throws NoResultException, QueryTimeoutException, Exception {
 		List<BeneficiariesDTO> beneficiaryList = new ArrayList<BeneficiariesDTO>();
