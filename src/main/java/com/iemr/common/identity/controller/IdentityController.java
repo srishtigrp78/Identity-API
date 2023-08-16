@@ -321,7 +321,7 @@ public class IdentityController {
 	@PostMapping(path = "/searchByDistrictId")
 	public @ResponseBody String searchBeneficiaryByBlockIdAndLastModDate(
 			@ApiParam(value = "\"String\"") @RequestBody String object) {
-		logger.info("IdentityController.getBeneficiary - start. family id = " + object);
+		logger.info("IdentityController.getBeneficiary - start. search object = " + object);
 		String response;
 		try {
 
@@ -335,7 +335,7 @@ public class IdentityController {
 			logger.info("IdentityController.getBeneficiary - end");
 		} catch (Exception e) {
 			logger.error("error in beneficiary search by Family Id : " + e.getLocalizedMessage());
-			response = getErrorResponseString("error in beneficiary search by Family Id  : " + e.getLocalizedMessage(),
+			response = getErrorResponseString("error in beneficiary search by block Id  : " + e.getLocalizedMessage(),
 					5000, "failure", "");
 		}
 		return response;
