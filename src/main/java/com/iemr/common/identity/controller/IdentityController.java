@@ -23,6 +23,7 @@ package com.iemr.common.identity.controller;
 
 import java.lang.reflect.Type;
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -31,6 +32,7 @@ import java.util.Objects;
 import javax.persistence.NoResultException;
 import javax.persistence.QueryTimeoutException;
 
+import com.iemr.common.identity.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,14 +54,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.iemr.common.identity.domain.MBeneficiarymapping;
-import com.iemr.common.identity.dto.BenIdImportDTO;
-import com.iemr.common.identity.dto.BeneficiariesDTO;
-import com.iemr.common.identity.dto.BeneficiariesPartialDTO;
-import com.iemr.common.identity.dto.BeneficiaryCreateResp;
-import com.iemr.common.identity.dto.IdentityDTO;
-import com.iemr.common.identity.dto.IdentityEditDTO;
-import com.iemr.common.identity.dto.IdentitySearchDTO;
-import com.iemr.common.identity.dto.ReserveIdentityDTO;
 import com.iemr.common.identity.exception.MissingMandatoryFieldsException;
 import com.iemr.common.identity.mapper.IdentityMapper;
 import com.iemr.common.identity.mapper.InputMapper;
@@ -304,6 +298,32 @@ public class IdentityController {
 		} catch (Exception e) {
 			logger.error("error in beneficiary search by Family Id : " + e.getLocalizedMessage());
 			response = getErrorResponseString("error in beneficiary search by Family Id  : " + e.getLocalizedMessage(),
+					5000, "failure", "");
+		}
+		return response;
+	}
+
+	// search beneficiary by lastModDate and districtID
+	@CrossOrigin(origins = { "*commonapi*" })
+//	@PostMapping(path = "/searchByDistrictId", headers = "Authorization")
+	@PostMapping(path = "/searchByDistrictId")
+	public @ResponseBody String searchBeneficiaryByBlockIdAndLastModDate(
+			@ApiParam(value = "\"String\"") @RequestBody String object) {
+		logger.info("IdentityController.getBeneficiary - start. search object = " + object);
+		String response;
+		try {
+
+			JsonElement json = new JsonParser().parse(object);
+
+			SearchSyncDTO search = InputMapper.getInstance().gson().fromJson(json, SearchSyncDTO.class);
+			List<BeneficiariesDTO> list = svc.searchBeneficiaryByBlockIdAndLastModifyDate(search.getBlockID(), new Timestamp(search.getLastModifDate()));
+
+			response = getSuccessResponseString(list, 200, "success", "getIdentityByAgent");
+
+			logger.info("IdentityController.getBeneficiary - end");
+		} catch (Exception e) {
+			logger.error("error in beneficiary search by Family Id : " + e.getLocalizedMessage());
+			response = getErrorResponseString("error in beneficiary search by block Id  : " + e.getLocalizedMessage(),
 					5000, "failure", "");
 		}
 		return response;

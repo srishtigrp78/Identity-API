@@ -22,6 +22,7 @@
 package com.iemr.common.identity.repo;
 
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -124,5 +125,11 @@ public interface BenMappingRepo extends CrudRepository<MBeneficiarymapping, BigI
 			+ "  WHERE t.vanSerialNo =:benMapIds AND t.vanID = :vanID ")
 	public List<Object[]> getBenMappingByVanSerialNo(@Param("benMapIds") BigInteger benMapIds,
 			@Param("vanID") Integer vanID);
+
+	@Query(value = "select m from MBeneficiarymapping m where m.mBeneficiaryaddress.permVillageId = :blockID and (m.mBeneficiaryAccount.lastModDate > :lastModDate "
+			+ "or m.mBeneficiaryaddress.lastModDate > :lastModDate or m.mBeneficiaryconsent.lastModDate > :lastModDate "
+			+ "or m.mBeneficiarycontact.lastModDate > :lastModDate or m.mBeneficiarydetail.lastModDate > :lastModDate ) "
+			+ "order by m.benMapId Desc")
+	List<MBeneficiarymapping> findByBeneficiaryDetailsByBlockIDAndLastModifyDate(@Param("blockID") int blockID, @Param("lastModDate") Timestamp lastModDate);
 
 }
