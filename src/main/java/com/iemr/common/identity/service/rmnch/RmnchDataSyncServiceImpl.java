@@ -141,10 +141,12 @@ public class RmnchDataSyncServiceImpl implements RmnchDataSyncService {
 					List<RMNCHBeneficiaryDetailsRmnch> benDetailsExtraList = Arrays.asList(objArr);
 
 					if (benDetailsExtraList != null && benDetailsExtraList.size() > 0) {
-						benRegID = rMNCHMBenRegIdMapRepo.getRegID(benDetailsExtraList.get(0).getBenficieryid());
-
-						if (benRegID != null) {
+//						benRegID = rMNCHMBenRegIdMapRepo.getRegID(benDetailsExtraList.get(0).getBenficieryid());
+//
+//						if (benRegID != null) {
+						
 							for (RMNCHBeneficiaryDetailsRmnch obj : benDetailsExtraList) {
+								benRegID = rMNCHMBenRegIdMapRepo.getRegID(obj.getBenficieryid());
 								obj.setBenRegId(benRegID);
 								RMNCHBeneficiaryDetailsRmnch temp = rMNCHBeneficiaryDetailsRmnchRepo
 										.getByRegID(benRegID);
@@ -164,6 +166,7 @@ public class RmnchDataSyncServiceImpl implements RmnchDataSyncService {
 									}
 									obj.setRelatedBeneficiaryIdsDB(sb.toString());
 								}
+							
 
 							}
 
@@ -171,15 +174,16 @@ public class RmnchDataSyncServiceImpl implements RmnchDataSyncService {
 									.save(benDetailsExtraList);
 
 							benDetailsExtraList.forEach((n) -> beneficiaryDetailsIds.add(n.getId()));
-						} else
-							throw new Exception("invalid/empty beneficiary request data.");
+//						} else
+//							throw new Exception("invalid/empty beneficiary request data.");
 
 						// born birth details
-						if (jsnOBJ != null && jsnOBJ.has("bornBirthDeatils") && benRegID != null) {
+						if (jsnOBJ != null && jsnOBJ.has("bornBirthDeatils")) {
 							RMNCHBornBirthDetails[] objArr1 = InputMapper.gson()
 									.fromJson(jsnOBJ.get("bornBirthDeatils"), RMNCHBornBirthDetails[].class);
 							List<RMNCHBornBirthDetails> bornBirthList = Arrays.asList(objArr1);
 							for (RMNCHBornBirthDetails obj : bornBirthList) {
+								benRegID = rMNCHMBenRegIdMapRepo.getRegID(obj.getBenficieryid());
 								obj.setBenRegId(benRegID);
 								RMNCHBornBirthDetails temp = rMNCHBornBirthDetailsRepo.getByRegID(benRegID);
 								if (temp != null)
@@ -197,6 +201,7 @@ public class RmnchDataSyncServiceImpl implements RmnchDataSyncService {
 							List<RMNCHCBACdetails> cbacList = Arrays.asList(objArr2);
 
 							for (RMNCHCBACdetails obj : cbacList) {
+								benRegID = rMNCHMBenRegIdMapRepo.getRegID(obj.getBenficieryid());
 								obj.setBenRegId(benRegID);
 								obj.setConfirmed_hrp("Not checked");
 								obj.setConfirmed_ncd("Not checked");

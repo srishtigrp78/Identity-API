@@ -380,7 +380,7 @@ public class RMNCHCBACdetails {
 
 	@Expose
 	@Column(name = "beneficiaryId")
-	private Integer beneficiaryid;
+	private Long benficieryid;
 
 	// new fields, 16-09-2021
 	@Expose

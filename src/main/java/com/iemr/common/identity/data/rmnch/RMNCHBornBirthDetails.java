@@ -57,7 +57,7 @@ public class RMNCHBornBirthDetails {
 
 	@Expose
 	@Column(name = "beneficiaryId")
-	private Integer beneficiaryId;
+	private Long benficieryid;
 
 	@Expose
 	@Column(name = "countryid")
