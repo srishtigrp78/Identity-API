@@ -63,29 +63,29 @@ public class QuerySelector {
 		 * Beneficiary ID is present, no need for other criteria 
 		 */
 		if(search.getBeneficiaryId().isPresent()) {
-			search.getBeneficiaryId().get();
+			search.getBeneficiaryId();
 		}
 		
 		/**
 		 * Beneficiary Reg ID is present, no need for other criteria 
 		 */
 		if(search.getBeneficiaryRegId().isPresent()) {
-			search.getBeneficiaryRegId().get();
+			search.getBeneficiaryRegId();
 		}
 		
 		/**
 		 * First Name is present, additional criteria needed 
 		 */
 		if(search.getFirstName().isPresent()) {
-			search.getFirstName().get();
+			search.getFirstName();
 		}
 		
 		if(search.getPinCode().isPresent()){
-			search.getPinCode().get();
+			search.getPinCode();
 		}
 		
 		if(search.getContactNumber().isPresent()){
-			search.getContactNumber().get();
+			search.getContactNumber();
 		}
 	}
 }

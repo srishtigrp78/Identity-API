@@ -29,19 +29,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-
-import com.iemr.common.identity.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,7 +48,6 @@ import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
-import com.iemr.common.identity.domain.MBeneficiarymapping;
 import com.iemr.common.identity.dto.BenIdImportDTO;
 import com.iemr.common.identity.dto.BeneficiariesDTO;
 import com.iemr.common.identity.dto.BeneficiariesPartialDTO;
@@ -60,6 +56,7 @@ import com.iemr.common.identity.dto.IdentityDTO;
 import com.iemr.common.identity.dto.IdentityEditDTO;
 import com.iemr.common.identity.dto.IdentitySearchDTO;
 import com.iemr.common.identity.dto.ReserveIdentityDTO;
+import com.iemr.common.identity.dto.SearchSyncDTO;
 import com.iemr.common.identity.exception.MissingMandatoryFieldsException;
 import com.iemr.common.identity.mapper.IdentityMapper;
 import com.iemr.common.identity.mapper.InputMapper;
@@ -70,12 +67,10 @@ import com.iemr.common.identity.utils.exception.IEMRException;
 
 import io.lettuce.core.dynamic.annotation.Param;
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.QueryTimeoutException;
 
 
 
-@Controller
+@RestController
 @RequestMapping(path = "/id")
 public class IdentityController {
 	private Logger logger = LoggerFactory.getLogger(IdentityController.class);
@@ -89,7 +84,7 @@ public class IdentityController {
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary = "Get beneficiaries by advance search")
 	@PostMapping(path = "/advanceSearch", headers = "Authorization")
-	public @ResponseBody String getBeneficiaries(
+	public String getBeneficiaries(
 			@Param(value = "{\"firstName\":\"String\",\"genderId\":\"Integer\",\"fatherName\":\"String\","
 					+ "\"currentAddress\":{\"stateId\":\"Integer\",\"districtId\":\"Integer\",\"villageId\":\"Integer\", \"blockID\":\"Integer\"},"
 					+ "\"permanentAddress\":{\"stateId\":\"Integer\",\"districtId\":\"Integer\",\"villageId\":\"Integer\", \"blockID\":\"Integer\"},"
@@ -98,7 +93,7 @@ public class IdentityController {
 		logger.info("IdentityController.getBeneficiary - start");
 		String response;
 		try {
-			JsonElement json = new JsonParser().parse(searchFilter);
+			JsonElement json = JsonParser.parseString(searchFilter);
 			IdentitySearchDTO searchParams = InputMapper.getInstance().gson().fromJson(json, IdentitySearchDTO.class);
 
 			List<BeneficiariesDTO> list = svc.getBeneficiaries(searchParams);
@@ -118,17 +113,17 @@ public class IdentityController {
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary = "Search beneficiary based on beneficiary registration id")
 	@PostMapping(path = "/getByBenRegId", headers = "Authorization")
-	public @ResponseBody String getBeneficiariesByBeneficiaryRegId(
+	public String getBeneficiariesByBeneficiaryRegId(
 			@Param(value = "\"Integer\"") @RequestParam String benRegId) {
 		logger.info("IdentityController.getBeneficiary - start. benId = " + benRegId);
 		String response;
 		try {
 			String benRegIdValue = "";
-			JsonElement json = new JsonParser().parse(benRegId);
+			JsonElement json = JsonParser.parseString(benRegId);
 
 			if (json instanceof JsonNull) {
-				response = getErrorResponseString("Null/Empty Beneficiary Id.", 5000, "failure", "");
-				return response;
+				return getErrorResponseString("Null/Empty Beneficiary Id.", 5000, "failure", "");
+				
 			}
 
 			if (json instanceof JsonPrimitive) {
@@ -155,14 +150,14 @@ public class IdentityController {
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary = "Search identity based on beneficiary registration id")
 	@PostMapping(path = "/getByBenId", headers = "Authorization")
-	public @ResponseBody String getBeneficiariesByBeneficiaryId(
+	public String getBeneficiariesByBeneficiaryId(
 			@Param(value = "\"Integer\"") @RequestParam String benId) {
 		logger.info("IdentityController.getBeneficiary - start. benId = " + benId);
 
 		String response;
 		try {
 			String benIdValue = "";
-			JsonElement json = new JsonParser().parse(benId);
+			JsonElement json = JsonParser.parseString(benId);
 
 			if (json instanceof JsonNull) {
 				response = getErrorResponseString("Null/Empty Beneficiary Id.", 5000, "failure", "");
@@ -192,17 +187,17 @@ public class IdentityController {
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary = "Search beneficiary based on phone number")
 	@PostMapping(path = "/getByPhoneNum", headers = "Authorization")
-	public @ResponseBody String getBeneficiariesByPhoneNum(
+	public String getBeneficiariesByPhoneNum(
 			@Param(value = "\"String\"") @RequestParam String phoneNum) {
 		logger.info("IdentityController.getBeneficiary - start. phoneNum = " + phoneNum);
 		String response;
 		try {
 			String phoneNumValue = "";
-			JsonElement json = new JsonParser().parse(phoneNum);
+			JsonElement json = JsonParser.parseString(phoneNum);
 
 			if (json instanceof JsonNull) {
-				response = getErrorResponseString("Null/Empty Phone Number.", 200, "success", "");
-				return response;
+				return getErrorResponseString("Null/Empty Phone Number.", 200, "success", "");
+				
 			}
 
 			phoneNumValue = phoneNum;
@@ -224,17 +219,17 @@ public class IdentityController {
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary = "Search beneficiary based on health ID / ABHA Address")
 	@PostMapping(path = "/getByAbhaAddress", headers = "Authorization")
-	public @ResponseBody String searhBeneficiaryByABHAAddress(
+	public String searhBeneficiaryByABHAAddress(
 			@Param(value = "\"String\"") @RequestParam String healthID) {
 		logger.info("IdentityController.getBeneficiary - start. Health ID / ABHA Address = " + healthID);
 		String response;
 		try {
 			String healthIDValue = "";
-			JsonElement json = new JsonParser().parse(healthID);
+			JsonElement json = JsonParser.parseString(healthID);
 
 			if (json instanceof JsonNull) {
-				response = getErrorResponseString("Null/Empty Health ID / ABHA Address.", 5000, "failure", "");
-				return response;
+				return getErrorResponseString("Null/Empty Health ID / ABHA Address.", 5000, "failure", "");
+				
 			}
 
 			healthIDValue = healthID;
@@ -257,13 +252,13 @@ public class IdentityController {
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary = "Search beneficiary based on health ID number / ABHA ID number")
 	@PostMapping(path = "/getByAbhaIdNo", headers = "Authorization")
-	public @ResponseBody String searhBeneficiaryByABHAIdNo(
+	public String searhBeneficiaryByABHAIdNo(
 			@Param(value = "\"String\"") @RequestParam String healthIDNo) {
 		logger.info("IdentityController.getBeneficiary - start. HealthIDNo / ABHA Id No = " + healthIDNo);
 		String response;
 		try {
 			String healthIDNoValue = "";
-			JsonElement json = new JsonParser().parse(healthIDNo);
+			JsonElement json = JsonParser.parseString(healthIDNo);
 
 			if (json instanceof JsonNull) {
 				response = getErrorResponseString("Null/Empty Health ID No / ABHA Id No.", 5000, "failure", "");
@@ -290,13 +285,13 @@ public class IdentityController {
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary = "Search beneficiary based on family id")
 	@PostMapping(path = "/searchByFamilyId", headers = "Authorization")
-	public @ResponseBody String searhBeneficiaryByFamilyId(
+	public String searhBeneficiaryByFamilyId(
 			@Param(value = "\"String\"") @RequestParam String familyId) {
 		logger.info("IdentityController.getBeneficiary - start. family id = " + familyId);
 		String response;
 		try {
 
-			JsonElement json = new JsonParser().parse(familyId);
+			JsonElement json = JsonParser.parseString(familyId);
 
 			if (json instanceof JsonNull) {
 				response = getErrorResponseString("Null/Empty Family Id.", 5000, "failure", "");
@@ -321,13 +316,13 @@ public class IdentityController {
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary ="Search beneficiary by blockId and last modified date")
 	@PostMapping(path = "/searchByDistrictId")
-	public @ResponseBody String searchBeneficiaryByBlockIdAndLastModDate(
+	public String searchBeneficiaryByBlockIdAndLastModDate(
 			@Param(value = "\"String\"") @RequestBody String object) {
 		logger.info("IdentityController.getBeneficiary - start. search object = " + object);
 		String response;
 		try {
 
-			JsonElement json = new JsonParser().parse(object);
+			JsonElement json = JsonParser.parseString(object);
 
 			SearchSyncDTO search = InputMapper.getInstance().gson().fromJson(json, SearchSyncDTO.class);
 			List<BeneficiariesDTO> list = svc.searchBeneficiaryByBlockIdAndLastModifyDate(search.getBlockID(), new Timestamp(search.getLastModifDate()));
@@ -346,13 +341,13 @@ public class IdentityController {
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary = "Search beneficiary based on government identity number")
 	@PostMapping(path = "/searhByGovIdentity", headers = "Authorization")
-	public @ResponseBody String searhBeneficiaryByGovIdentity(
+	public String searhBeneficiaryByGovIdentity(
 			@Param(value = "\"String\"") @RequestParam String identity) {
 		logger.info("IdentityController.getBeneficiary - start. Gov Identity = " + identity);
 		String response;
 		try {
 
-			JsonElement json = new JsonParser().parse(identity);
+			JsonElement json = JsonParser.parseString(identity);
 
 			if (json instanceof JsonNull) {
 				response = getErrorResponseString("Null/Empty Gov Identity No.", 5000, "failure", "");
@@ -381,7 +376,7 @@ public class IdentityController {
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary = "Edit identity by agent")
 	@PostMapping(path = "/edit", headers = "Authorization")
-	public @ResponseBody String editIdentity(@Param(value = "{\r\n" + "  \"eventTypeName\": \"String\",\r\n"
+	public String editIdentity(@Param(value = "{\r\n" + "  \"eventTypeName\": \"String\",\r\n"
 			+ "  \"eventTypeDate\": \"Timestamp\",\r\n" + "  \"agentId\": \"Integer\",\r\n"
 			+ "  \"agentName\": \"String\",\r\n" + "  \"agentPSMapId\": \"Integer\",\r\n"
 			+ "  \"agentComment\": \"String\",\r\n" + "  \"serviceId\": \"Integer\",\r\n"
@@ -485,11 +480,10 @@ public class IdentityController {
 			+ "  \"vanID\": \"Integer\",\r\n" + "  \"parkingPlaceId\": \"Integer\"\r\n"
 			+ "}") @RequestBody String identityEditData) {
 		logger.info("IdentityController.editIdentity - start");
-		JsonElement json = new JsonParser().parse(identityEditData);
+		JsonElement json = JsonParser.parseString(identityEditData);
 
 		if (json instanceof JsonNull || json instanceof JsonPrimitive) {
-			String response = getErrorResponseString("Null/Empty Identity Edit Data.", 200, "success", "");
-			return response;
+			return getErrorResponseString("Null/Empty Identity Edit Data.", 200, "success", "");
 		}
 
 		IdentityEditDTO identity = InputMapper.getInstance().gson().fromJson(json, IdentityEditDTO.class);
@@ -514,7 +508,7 @@ public class IdentityController {
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary = "Create identity by agent")
 	@PostMapping(path = "/create", headers = "Authorization")
-	public @ResponseBody String createIdentity(@Param(value = "{\r\n" + "  \"eventTypeName\": \"String\",\r\n"
+	public String createIdentity(@Param(value = "{\r\n" + "  \"eventTypeName\": \"String\",\r\n"
 			+ "  \"eventTypeDate\": \"Timestamp\",\r\n" + "  \"agentId\": \"Integer\",\r\n"
 			+ "  \"agentName\": \"String\",\r\n" + "  \"agentPSMapId\": \"Integer\",\r\n"
 			+ "  \"agentComment\": \"String\",\r\n" + "  \"serviceId\": \"Integer\",\r\n"
@@ -604,26 +598,19 @@ public class IdentityController {
 			+ "  \"marriageDate\": \"Timestamp\",\r\n" + "  \"literacyStatus\": \"String\",\r\n"
 			+ "  \"isHIVPositive\": \"String\",\r\n" + "  \"sexualOrientationID\": \"Integer\",\r\n"
 			+ "  \"sexualOrientationType\": \"String\",\r\n" + "  \"vanID\": \"Integer\",\r\n"
-			+ "  \"createdDate\": \"Timestamp\"\r\n" + "}") @RequestBody String identityData) {
+			+ "  \"createdDate\": \"Timestamp\"\r\n" + "}") @RequestBody String identityData) throws IEMRException {
 		logger.info("IdentityController.createIdentity - start");
-		JsonElement json = new JsonParser().parse(identityData);
+		JsonElement json = JsonParser.parseString(identityData);
 
 		if (json instanceof JsonNull || json instanceof JsonPrimitive) {
-			String response = getErrorResponseString("Null/Empty Identity Create Data.", 200, "success", "");
-			return response;
+			return getErrorResponseString("Null/Empty Identity Create Data.", 200, "success", "");
 		}
 
 		IdentityDTO identity = InputMapper.getInstance().gson().fromJson(json, IdentityDTO.class);
 		logger.info("identity hit: " + identity);
 		BeneficiaryCreateResp map;
-		try {
-			map = svc.createIdentity(identity);
-		} catch (IEMRException e) {
-			logger.info("IEMRException: " + e.getMessage());
-			return getErrorResponseString(e.getMessage(), 5000, "error", "");
-
-		}
-		String data = InputMapper.getInstance().gson().toJson(map).toString();
+		map = svc.createIdentity(identity);
+		String data = InputMapper.getInstance().gson().toJson(map);
 		String response = getSuccessResponseString(data, 200, "success", "createIdentityByAgent");
 
 		logger.info("IdentityController.createIdentity - end " + response);
@@ -633,14 +620,13 @@ public class IdentityController {
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary = "Reserve identity by agent")
 	@PostMapping(path = "/reserve", headers = "Authorization")
-	public @ResponseBody String reserveIdentity(@RequestBody String reserveIdentity) {
+	public String reserveIdentity(@RequestBody String reserveIdentity) {
 		logger.info("IdentityController.reserveIdentity - start");
 
-		JsonElement json = new JsonParser().parse(reserveIdentity);
+		JsonElement json = JsonParser.parseString(reserveIdentity);
 
 		if (json instanceof JsonNull || json instanceof JsonPrimitive) {
-			String response = getErrorResponseString("Null/Empty Identity Create Data.", 200, "success", "");
-			return response;
+			return getErrorResponseString("Null/Empty Identity Create Data.", 200, "success", "");
 		}
 
 		ReserveIdentityDTO reserveIdentityDTO = InputMapper.getInstance().gson().fromJson(json,
@@ -654,14 +640,13 @@ public class IdentityController {
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary = "Unreserve identity by agent")
 	@PostMapping(path = "/unreserve", headers = "Authorization")
-	public @ResponseBody String unreserveIdentity(@RequestBody String unreserve) {
+	public String unreserveIdentity(@RequestBody String unreserve) {
 		logger.info("IdentityController.unreserveIdentity - start");
 
-		JsonElement json = new JsonParser().parse(unreserve);
+		JsonElement json = JsonParser.parseString(unreserve);
 
 		if (json instanceof JsonNull || json instanceof JsonPrimitive) {
-			String response = getErrorResponseString("Null/Empty Identity Create Data.", 200, "success", "");
-			return response;
+			return getErrorResponseString("Null/Empty Identity Create Data.", 200, "success", "");
 		}
 
 		ReserveIdentityDTO unreserveDTO = InputMapper.getInstance().gson().fromJson(json, ReserveIdentityDTO.class);
@@ -681,15 +666,14 @@ public class IdentityController {
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary = "Get beneficiaries partial details by beneficiary registration id list")
 	@PostMapping(path = "/getByPartialBenRegIdList", headers = "Authorization")
-	public @ResponseBody String getPartialBeneficiariesByBenRegIds(
+	public String getPartialBeneficiariesByBenRegIds(
 			@Param(value = "[Integer,Integer…..(array of benRegId)]") @RequestBody String benRegIds) {
 		logger.info("IdentityController.getBeneficiariesByBenRegIds - start. benRegIdList = " + benRegIds);
 		BigInteger[] benRegIdarray = null;
-		JsonElement json = new JsonParser().parse(benRegIds);
+		JsonElement json = JsonParser.parseString(benRegIds);
 
 		if (json instanceof JsonNull) {
-			String response = getErrorResponseString("Null/Empty Phone Number.", 200, "success", "");
-			return response;
+			return getErrorResponseString("Null/Empty Phone Number.", 200, "success", "");
 		}
 
 		benRegIdarray = InputMapper.getInstance().gson().fromJson(json, BigInteger[].class);
@@ -698,7 +682,7 @@ public class IdentityController {
 				.getBeneficiariesPartialDeatilsByBenRegIdList(Arrays.asList(benRegIdarray));
 		list.removeIf(Objects::isNull);
 		Collections.sort(list);
-		String data = InputMapper.getInstance().gson().toJson(list).toString();
+		String data = InputMapper.getInstance().gson().toJson(list);
 		String response = getSuccessResponseString(data, 200, "success", "getBeneficiariesByBenRegIds");
 
 		logger.info("IdentityController.getBeneficiariesByBenRegIds - end ");
@@ -714,15 +698,14 @@ public class IdentityController {
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary = "Get beneficiaries by beneficiary registration id")
 	@PostMapping(path = "/getByBenRegIdList", headers = "Authorization")
-	public @ResponseBody String getBeneficiariesByBenRegIds(
+	public String getBeneficiariesByBenRegIds(
 			@Param(value = " {\"beneficiaryRegID\": \"Long\"}") @RequestBody String benRegIds) {
 		logger.info("IdentityController.getBeneficiariesByBenRegIds - start. benRegIdList = " + benRegIds);
 		BigInteger[] benRegIdarray = null;
-		JsonElement json = new JsonParser().parse(benRegIds);
+		JsonElement json = JsonParser.parseString(benRegIds);
 
 		if (json instanceof JsonNull) {
-			String response = getErrorResponseString("Null/Empty Phone Number.", 200, "success", "");
-			return response;
+			return getErrorResponseString("Null/Empty Phone Number.", 200, "success", "");
 		}
 
 		benRegIdarray = InputMapper.getInstance().gson().fromJson(json, BigInteger[].class);
@@ -734,37 +717,6 @@ public class IdentityController {
 
 		logger.info("IdentityController.getBeneficiariesByBenRegIds - end : ");
 		return response;
-	}
-
-	/**
-	 * 
-	 * @param map
-	 * @param statusCode
-	 * @param statusMsg
-	 * @param methodName
-	 * @return
-	 */
-	private String getSuccessResponseString(MBeneficiarymapping map, Integer statusCode, String statusMsg,
-			String methodName) {
-		logger.info("IdentityController.getResponseString of map parameter - start");
-		BeneficiariesDTO bdto = mapper.mBeneficiarymappingToBeneficiariesDTO(map);
-		bdto.setBeneficiaryFamilyTags(
-				mapper.mBeneficiaryfamilymappingListToBenFamilyDTOList(map.getMBeneficiaryfamilymappings()));
-		bdto.setBeneficiaryIdentites(
-				mapper.mBeneficiaryidentityListToBenIdentityDTOList(map.getMBeneficiaryidentities()));
-		bdto.setBeneficiaryServiceMap(
-				mapper.mBeneficiaryservicemappingListToBenServiceDTOList(map.getMBeneficiaryservicemappings()));
-
-		String data = InputMapper.getInstance().gson().toJson(bdto).toString();
-		logger.info("data: " + data);
-
-		OutputResponse response = new OutputResponse.Builder().setDataJsonType("JsonObject.class")
-				.setStatusCode(statusCode).setStatusMessage(statusMsg)
-				.setDataObjectType(this.getClass().getSimpleName()).setMethodName(methodName).setData(data).build();
-
-		logger.info("IdentityController.getResponseString of map parameter - end");
-
-		return response.toString();
 	}
 
 	/**
@@ -811,23 +763,11 @@ public class IdentityController {
 	 * @param methodName
 	 * @return
 	 */
-	private String getErrorResponseString(MBeneficiarymapping map, String errorMsg, Integer statusCode,
-			String statusMsg, String methodName) {
-		String data = InputMapper.getInstance().gson().toJson(errorMsg).toString();
-		logger.info("data: " + data);
-		OutputResponse response = new OutputResponse.Builder().setDataJsonType("JsonObject.class")
-				.setStatusCode(statusCode).setStatusMessage(statusMsg)
-				.setDataObjectType(this.getClass().getSimpleName()).setMethodName(methodName).setData(data).build();
-
-		logger.info("IdentityController.getResponseString - end");
-
-		return response.toString();
-	}
 
 	private String getErrorResponseString(String errorMsg, Integer statusCode, String statusMsg, String methodName) {
 		JsonObject dta = new JsonObject();
 		dta.addProperty("error", errorMsg);
-		String data = OutputMapper.getInstance().gson().toJson(errorMsg).toString();
+		String data = OutputMapper.getInstance().gson().toJson(errorMsg);
 		logger.info("data: " + data);
 
 		OutputResponse response = new OutputResponse.Builder().setDataJsonType("JsonObject.class")
@@ -840,44 +780,36 @@ public class IdentityController {
 	}
 
 	public String getJsonAsString(Object obj) {
-		ObjectMapper mapper = new ObjectMapper();
+		ObjectMapper objectmapper = new ObjectMapper();
 		StringBuilder sb = new StringBuilder();
 		try {
-			sb.append(mapper.writeValueAsString(obj));
+			sb.append(objectmapper.writeValueAsString(obj));
 		} catch (JsonProcessingException e) {
 			logger.error(e.getMessage());
 		}
-
 		return sb.toString();
 	}
 
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary = "Get finite beneficiaries")
 	@PostMapping(path = "/finiteSearch", headers = "Authorization")
-	public @ResponseBody String getFiniteBeneficiaries(@RequestBody String searchFilter) {
+	public String getFiniteBeneficiaries(@RequestBody String searchFilter) {
 		logger.info("IdentityController.getFiniteBeneficiaries - start");
 
 		String response;
 
 		try {
 			List<BeneficiariesDTO> list;
-			JsonElement json = new JsonParser().parse(searchFilter);
+			JsonElement json = JsonParser.parseString(searchFilter);
 			IdentitySearchDTO searchParams = InputMapper.getInstance().gson().fromJson(json, IdentitySearchDTO.class);
 
 			list = svc.getBeneficiaries(searchParams);
 			response = getSuccessResponseString(list, 200, "success", "getFiniteBeneficiaries");
 			logger.info("IdentityController.getFiniteBeneficiaries - end");
-		} catch (NoResultException e) {
-			logger.error(e.getMessage());
-			response = getErrorResponseString(e.getLocalizedMessage(), 5000, "failure", "");
-		} catch (QueryTimeoutException e) {
-			logger.error(e.getMessage());
-			response = getErrorResponseString(e.getLocalizedMessage(), 5000, "failure", "");
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			response = getErrorResponseString(e.getLocalizedMessage(), 5000, "failure", "");
-		}
-
+		} 
 		return response;
 	}
 
@@ -885,22 +817,21 @@ public class IdentityController {
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary = "Get beneficiary image by beneficiary registration id")
 	@PostMapping(path = "/benImageByBenRegID", headers = "Authorization")
-	public @ResponseBody String getBeneficiaryImageByBenRegID(@RequestBody String identityData) {
+	public String getBeneficiaryImageByBenRegID(@RequestBody String identityData) {
 		String benImage = null;
 		try {
 			logger.info("IdentityController.createIdentity - start. Request Object = " + identityData);
 			benImage = svc.getBeneficiaryImage(identityData);
 		} catch (Exception e) {
-
+			logger.error("Error while getBeneficiaryImageByBenRegID : " ,e.getMessage());
 		}
-
 		return benImage;
 	}
 
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary = "Edit education or community by agent")
 	@PostMapping(path = "/editEducationOrCommunity", headers = "Authorization")
-	public @ResponseBody String editIdentityEducationOrCommunity(@Param(value = "{\r\n"
+	public String editIdentityEducationOrCommunity(@Param(value = "{\r\n"
 			+ "  \"eventTypeName\": \"String\",\r\n" + "  \"eventTypeDate\": \"Timestamp\",\r\n"
 			+ "  \"agentId\": \"Integer\",\r\n" + "  \"agentName\": \"String\",\r\n"
 			+ "  \"agentPSMapId\": \"Integer\",\r\n" + "  \"agentComment\": \"String\",\r\n"
@@ -1004,11 +935,10 @@ public class IdentityController {
 			+ "  \"vanID\": \"Integer\",\r\n" + "  \"parkingPlaceId\": \"Integer\"\r\n"
 			+ "}") @RequestBody String identityEditData) {
 		logger.info("IdentityController.editIdentity - start");
-		JsonElement json = new JsonParser().parse(identityEditData);
+		JsonElement json = JsonParser.parseString(identityEditData);
 
 		if (json instanceof JsonNull || json instanceof JsonPrimitive) {
-			String response = getErrorResponseString("Null/Empty Identity Edit Data.", 200, "success", "");
-			return response;
+			return getErrorResponseString("Null/Empty Identity Edit Data.", 200, "success", "");
 		}
 
 		IdentityEditDTO identity = InputMapper.getInstance().gson().fromJson(json, IdentityEditDTO.class);
@@ -1028,7 +958,7 @@ public class IdentityController {
 	@CrossOrigin()
 	@Operation(summary = "Check available beneficary id in local server")
 	@GetMapping(path = "/checkAvailablBenIDLocalServer", headers = "Authorization")
-	public @ResponseBody String checkAvailablBenIDLocalServer() {
+	public String checkAvailablBenIDLocalServer() {
 		com.iemr.common.identity.utils.response.OutputResponse response = new com.iemr.common.identity.utils.response.OutputResponse();
 		try {
 			Long l = svc.checkBenIDAvailabilityLocal();
@@ -1043,7 +973,7 @@ public class IdentityController {
 	@CrossOrigin(origins = { "*commonapi*" })
 	@Operation(summary = "Save server generated beneficiary ID & beneficiary registration ID to local server")
 	@PostMapping(path = "/saveGeneratedBenIDToLocalServer", headers = "Authorization", consumes = "application/json", produces = "application/json")
-	public @ResponseBody String saveGeneratedBenIDToLocalServer(
+	public String saveGeneratedBenIDToLocalServer(
 			@Param(value = "{\r\n" + "        \"vanID\": \"Integer\",\r\n"
 					+ "        \"benIDRequired\": \"Integer\"\r\n" + "       }") @RequestBody String regIDList) {
 		com.iemr.common.identity.utils.response.OutputResponse response = new com.iemr.common.identity.utils.response.OutputResponse();

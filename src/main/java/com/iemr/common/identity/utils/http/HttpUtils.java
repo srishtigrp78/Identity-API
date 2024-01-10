@@ -24,7 +24,7 @@ package com.iemr.common.identity.utils.http;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
 
@@ -34,28 +34,20 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.iemr.common.identity.controller.IdentityController;
 import com.sun.jersey.multipart.FormDataBodyPart;
 import com.sun.jersey.multipart.FormDataMultiPart;
 
 @Component
 public class HttpUtils {
 	public static final String AUTHORIZATION = "Authorization";
-	private String server;
-	// @Autowired
 	private RestTemplate rest;
-	// @Autowired
 	private HttpHeaders headers;
-	// @Autowired
 	private HttpStatus status;
 
-	// @Autowired(required = true)
-	// @Qualifier("hibernateCriteriaBuilder")
 	public HttpUtils() {
 		if (rest == null) {
 			rest = new RestTemplate();
@@ -64,29 +56,29 @@ public class HttpUtils {
 		}
 	}
 
-	private Logger logger = LoggerFactory.getLogger(IdentityController.class);
+	private Logger logger = LoggerFactory.getLogger(HttpUtils.class);
 
 	public String get(String uri) {
 		String body;
-		HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
+		HttpEntity<String> requestEntity = new HttpEntity<>("", headers);
 		ResponseEntity<String> responseEntity = rest.exchange(uri, HttpMethod.GET, requestEntity, String.class);
 		setStatus((HttpStatus) responseEntity.getStatusCode());
 		body = responseEntity.getBody();
 		return body;
 	}
 
-	public String get(String uri, HashMap<String, Object> header) {
+	public String get(String uri, Map<String, Object> header) {
 		String body;
 		HttpHeaders headers = new HttpHeaders();
-		if (header.containsKey(headers.AUTHORIZATION)) {
-			headers.add(headers.AUTHORIZATION, header.get(headers.AUTHORIZATION).toString());
+		if (header.containsKey(HttpHeaders.AUTHORIZATION)) {
+			headers.add(HttpHeaders.AUTHORIZATION, header.get(HttpHeaders.AUTHORIZATION).toString());
 		}
-		if (header.containsKey(headers.CONTENT_TYPE)) {
-			headers.add(headers.CONTENT_TYPE, header.get(headers.CONTENT_TYPE).toString());
+		if (header.containsKey(HttpHeaders.CONTENT_TYPE)) {
+			headers.add(HttpHeaders.CONTENT_TYPE, header.get(HttpHeaders.CONTENT_TYPE).toString());
 		} else {
 			headers.add("Content-Type", MediaType.APPLICATION_JSON);
 		}
-		HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
+		HttpEntity<String> requestEntity = new HttpEntity<>("", headers);
 		ResponseEntity<String> responseEntity = rest.exchange(uri, HttpMethod.GET, requestEntity, String.class);
 		setStatus((HttpStatus) responseEntity.getStatusCode());
 		body = responseEntity.getBody();
@@ -95,29 +87,28 @@ public class HttpUtils {
 
 	public String post(String uri, String json) {
 		String body;
-		HttpEntity<String> requestEntity = new HttpEntity<String>(json, headers);
+		HttpEntity<String> requestEntity = new HttpEntity<>(json, headers);
 		ResponseEntity<String> responseEntity = rest.exchange(uri, HttpMethod.POST, requestEntity, String.class);
 		setStatus((HttpStatus) responseEntity.getStatusCode());
 		body = responseEntity.getBody();
 		return body;
 	}
 
-	public String post(String uri, String data, HashMap<String, Object> header) {
+	public String post(String uri, String data, Map<String, Object> header) {
 		String body;
 		HttpHeaders headers = new HttpHeaders();
 		if (header.containsKey(headers.AUTHORIZATION)) {
 			headers.add(headers.AUTHORIZATION, header.get(headers.AUTHORIZATION).toString());
 		}
-		ResponseEntity<String> responseEntity = new ResponseEntity(HttpStatus.BAD_REQUEST);
 		HttpEntity<String> requestEntity;
-		requestEntity = new HttpEntity<String>(data, headers);
-		responseEntity = rest.exchange(uri, HttpMethod.POST, requestEntity, String.class);
+		requestEntity = new HttpEntity<>(data, headers);
+		ResponseEntity<String> responseEntity = rest.exchange(uri, HttpMethod.POST, requestEntity, String.class);
 		setStatus((HttpStatus) responseEntity.getStatusCode());
 		body = responseEntity.getBody();
 		return body;
 	}
 
-	public String uploadFile(String uri, String data, HashMap<String, Object> header) throws IOException {
+	public String uploadFile(String uri, String data, Map<String, Object> header) throws IOException {
 		String body;
 		HttpHeaders headers = new HttpHeaders();
 		if (header.containsKey(headers.AUTHORIZATION)) {
@@ -128,33 +119,28 @@ public class HttpUtils {
 		} else {
 			headers.add("Content-Type", MediaType.APPLICATION_JSON);
 		}
-		ResponseEntity<String> responseEntity = new ResponseEntity(HttpStatus.BAD_REQUEST);
+		ResponseEntity<String> responseEntity = null;
 		if (headers.getContentType().toString().equals(MediaType.MULTIPART_FORM_DATA_TYPE.toString())) {
 			HttpEntity<FormDataMultiPart> requestEntity;
-			FileInputStream is = null;
-			FormDataMultiPart multiPart = null;
-
-			try {
-				multiPart = new FormDataMultiPart();
-				is = new FileInputStream(data);
+			
+			try(FormDataMultiPart multiPart = new FormDataMultiPart();
+					FileInputStream is = new FileInputStream(data)) {
+				
 				FormDataBodyPart filePart = new FormDataBodyPart("content", is,
 						MediaType.APPLICATION_OCTET_STREAM_TYPE);
 				multiPart.bodyPart(filePart);
 				multiPart.field("docPath", data);
 				headers.add("Content-Type", MediaType.APPLICATION_JSON);
-				requestEntity = new HttpEntity<FormDataMultiPart>(multiPart, headers);// new
+				requestEntity = new HttpEntity<>(multiPart, headers);
 				responseEntity = rest.exchange(uri, HttpMethod.POST, requestEntity, String.class);
 			} catch (FileNotFoundException e) {
 				logger.error(e.getMessage());
-			} finally {
-				if (multiPart != null)
-					multiPart.close();
-				if (is != null)
-					is.close();
+			}catch (IOException e) {
+				logger.error(e.getMessage());
 			}
 		} else {
 			HttpEntity<String> requestEntity;
-			requestEntity = new HttpEntity<String>(data, headers);
+			requestEntity = new HttpEntity<>(data, headers);
 			responseEntity = rest.exchange(uri, HttpMethod.POST, requestEntity, String.class);
 		}
 		setStatus((HttpStatus) responseEntity.getStatusCode());

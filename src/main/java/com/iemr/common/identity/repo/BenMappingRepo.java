@@ -32,11 +32,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.iemr.common.identity.domain.MBeneficiaryaddress;
-import com.iemr.common.identity.domain.MBeneficiarycontact;
-import com.iemr.common.identity.domain.MBeneficiarydetail;
 import com.iemr.common.identity.domain.MBeneficiarymapping;
-import com.iemr.common.identity.domain.MBeneficiaryregidmapping;
 import com.iemr.common.identity.domain.VBenAdvanceSearch;
 import com.iemr.common.identity.dto.IdentityDTO;
 import com.iemr.common.identity.dto.IdentitySearchDTO;
@@ -46,26 +42,7 @@ public interface BenMappingRepo extends CrudRepository<MBeneficiarymapping, BigI
 	MBeneficiarymapping findByBenMapIdOrderByBenMapIdAsc(BigInteger benMapId);
 
 	MBeneficiarymapping findByBenRegIdOrderByBenMapIdAsc(BigInteger benRegId);
-	/*
-	MBeneficiarymapping findByMBeneficiarycontactOrderByBenMapIdAsc(MBeneficiarycontact mBeneficiarycontact);
-
 	
-	  List<MBeneficiarymapping> findByMBeneficiaryregidmappingOrderByBenMapIdAsc(
-	  MBeneficiaryregidmapping mBeneficiaryregidmapping);
-	 */
-
-
-	/*	List<MBeneficiarymapping> findByMBeneficiarydetailOrderByBenMapIdAsc(MBeneficiarydetail mBeneficiarydetail);
-
-	List<MBeneficiarymapping> findByMBeneficiarydetailAndMBeneficiaryaddressOrderByBenMapIdAsc(
-			MBeneficiarydetail mBeneficiarydetail, MBeneficiaryaddress mBeneficiaryaddress);
-
-	
-	List<MBeneficiarymapping> findByMBeneficiarydetailAndMBeneficiaryaddressAndMBeneficiarycontactOrderByBenMapIdAsc(
-			MBeneficiarydetail mBeneficiarydetail, MBeneficiaryaddress mBeneficiaryaddress,
-			MBeneficiarycontact mBeneficiarycontact);
-*/	 
-
 	@Query("select m from MBeneficiarymapping m where m.mBeneficiarydetail.beneficiaryDetailsId = :beneficiaryDetailsId"
 			+ " order by m.benMapId Asc")
 	MBeneficiarymapping findByBeneficiaryDetailsId(@Param("beneficiaryDetailsId") BigInteger beneficiaryDetailsId);

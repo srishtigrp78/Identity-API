@@ -32,21 +32,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.iemr.common.identity.utils.response.OutputResponse;
 import com.iemr.common.identity.utils.sessionobject.SessionObject;
-import com.iemr.common.identity.utils.validator.Validator;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class HTTPRequestInterceptor implements HandlerInterceptor {
-	private Validator validator;
 
 	Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
-
-	@Autowired
-	public void setValidator(Validator validator) {
-		this.validator = validator;
-	}
 
 	private SessionObject sessionObject;
 
@@ -67,18 +60,9 @@ public class HTTPRequestInterceptor implements HandlerInterceptor {
 				String[] requestURIParts = request.getRequestURI().split("/");
 				String requestAPI = requestURIParts[requestURIParts.length - 1];
 				switch (requestAPI) {
-				case "userAuthenticate":
-				case "userAuthenticateNew":
-				case "userAuthenticateV1":
-				case "forgetPassword":
-				case "setForgetPassword":
-				case "changePassword":
-				case "saveUserSecurityQuesAns":
-				case "swagger-ui.html":
-				case "ui":
-				case "swagger-resources":
-				case "version":
-				case "api-docs":
+				case "userAuthenticate", "userAuthenticateNew", "userAuthenticateV1", "forgetPassword",
+						"setForgetPassword", "changePassword", "saveUserSecurityQuesAns", "swagger-ui.html", "ui",
+						"swagger-resources", "version", "api-docs":
 
 					break;
 				case "error":
@@ -99,7 +83,7 @@ public class HTTPRequestInterceptor implements HandlerInterceptor {
 		}
 		return status;
 	}
-
+	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object object, ModelAndView model)
 			throws Exception {
 		try {

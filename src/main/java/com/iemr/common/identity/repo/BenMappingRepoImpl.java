@@ -82,7 +82,7 @@ public class BenMappingRepoImpl implements BenMappingRepoCustom {
 		CriteriaQuery<MBeneficiarymapping> criteriaQuery = criteriaBuilder.createQuery(MBeneficiarymapping.class);
 		Root<MBeneficiarymapping> root = criteriaQuery.from(MBeneficiarymapping.class);
 		// add predicates to see more parameters
-		List<Predicate> predicates = new ArrayList<Predicate>();
+		List<Predicate> predicates = new ArrayList<>();
 
 		// for joining the tables whose column appears on where clause
 		Join<MBeneficiarymapping, MBeneficiarydetail> benDetail = root.join("mBeneficiarydetail", JoinType.INNER);
@@ -193,7 +193,7 @@ public class BenMappingRepoImpl implements BenMappingRepoCustom {
 		CriteriaQuery<MBeneficiarymapping> criteriaQuery = criteriaBuilder.createQuery(MBeneficiarymapping.class);
 		Root<MBeneficiarymapping> root = criteriaQuery.from(MBeneficiarymapping.class);
 		// add predicates to see more parameters
-		List<Predicate> predicates = new ArrayList<Predicate>();
+		List<Predicate> predicates = new ArrayList<>();
 
 		// for joining the tables whose column appears on where clause
 		Join<MBeneficiarymapping, MBeneficiarydetail> benDetail = root.join("mBeneficiarydetail", JoinType.INNER);
@@ -351,7 +351,7 @@ public class BenMappingRepoImpl implements BenMappingRepoCustom {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<VBenAdvanceSearch> criteriaQuery = criteriaBuilder.createQuery(VBenAdvanceSearch.class);
 		Root<VBenAdvanceSearch> root = criteriaQuery.from(VBenAdvanceSearch.class);
-		List<Predicate> predicateList = new ArrayList<Predicate>();
+		List<Predicate> predicateList = new ArrayList<>();
 
 		// if firstName is not null
 		if (searchDTO.getFirstName() != null) {
@@ -391,7 +391,7 @@ public class BenMappingRepoImpl implements BenMappingRepoCustom {
 
 		// if DOB is not null
 		if (searchDTO.getDob() != null) {
-			Date d = new Date((long) searchDTO.getDob().getTime());
+			Date d = new Date(searchDTO.getDob().getTime());
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(d);
 			calendar.add(Calendar.DATE, 1);

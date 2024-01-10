@@ -28,24 +28,17 @@ import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-@Configuration /*
-				 * (defaultAutowire = Autowire.BY_TYPE, defaultLazy = Lazy.FALSE
-				 */
+@Configuration 
 @PropertySource("classpath:/application.properties")
-// @Component
 @Component
 public class ConfigProperties {
 	private static Properties properties;
 	private static Logger logger = LoggerFactory.getLogger(ConfigProperties.class);
-
-	private static Environment environment;
 
 	public ConfigProperties() {
 		initalizeProperties();
@@ -62,12 +55,6 @@ public class ConfigProperties {
 				logger.error("Loading of config file failed with error " + e.getLocalizedMessage(), e);
 			}
 		}
-	}
-
-	@Autowired
-	//@Required
-	public void setEnvironment(Environment environment) {
-		this.environment = environment;
 	}
 
 	@Value("${iemr.extend.expiry.time:false}")
@@ -171,6 +158,4 @@ public class ConfigProperties {
 		}
 		return password;
 	}
-
-	private static Class<ConfigProperties> configProperties = ConfigProperties.class;
 }

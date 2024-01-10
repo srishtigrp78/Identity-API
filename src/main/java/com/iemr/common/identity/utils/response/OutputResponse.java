@@ -24,6 +24,7 @@ package com.iemr.common.identity.utils.response;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -145,8 +146,9 @@ public class OutputResponse {
 
 	/**
 	 * @return the data
+	 * @throws JSONException 
 	 */
-	public String getData() {
+	public String getData() throws JSONException {
 		JSONObject obj = new JSONObject(toString());
 		if (obj.has("data")) {
 			return obj.get("data").toString();

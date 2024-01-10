@@ -24,7 +24,6 @@ package com.iemr.common.identity.service;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -186,8 +185,7 @@ public class IdentityService {
 		 */
 		if (searchDTO.getBeneficiaryId() != null) {
 			logger.info("getting beneficiaries by ID for " + searchDTO.getBeneficiaryId());
-			List<BeneficiariesDTO> list1 = this.getBeneficiariesByBenId(searchDTO.getBeneficiaryId());
-			return list1;
+			return this.getBeneficiariesByBenId(searchDTO.getBeneficiaryId());
 		}
 
 		/**
@@ -195,8 +193,7 @@ public class IdentityService {
 		 */
 		if (searchDTO.getBeneficiaryRegId() != null) {
 			logger.info("getting beneficiaries by reg ID for " + searchDTO.getBeneficiaryRegId());
-			List<BeneficiariesDTO> list2 = this.getBeneficiariesByBenRegId(searchDTO.getBeneficiaryRegId());
-			return list2;
+			return this.getBeneficiariesByBenRegId(searchDTO.getBeneficiaryRegId());
 		}
 
 		/**
@@ -205,9 +202,9 @@ public class IdentityService {
 		if (searchDTO.getContactNumber() != null) {
 			logger.info("getting beneficiaries by contact no for " + searchDTO.getContactNumber());
 			List<BeneficiariesDTO> list3 = this.getBeneficiariesByPhoneNum(searchDTO.getContactNumber());
-			if (list3.size() > 0 && searchDTO.getIsD2D() != null && searchDTO.getIsD2D() == true) {
+			if (!list3.isEmpty() && searchDTO.getIsD2D() != null && Boolean.TRUE.equals(searchDTO.getIsD2D())) {
 
-				for (int i = 0; i < list3.size(); i++) {
+				for(int i = 0; i < list3.size(); i++) {
 					if (searchDTO.getFirstName() != null) {
 						if (list3.get(i) == null || list3.get(i).getBeneficiaryDetails() == null
 								|| list3.get(i).getBeneficiaryDetails().getFirstName() == null
@@ -354,11 +351,11 @@ public class IdentityService {
 			List<Object[]> benMapObjArr = mappingRepo.getBenMappingByRegID(benRegId);
 
 			// new logic, 27-08-2018
-			if (benMapObjArr != null && benMapObjArr.size() > 0) {
+			if (benMapObjArr != null && !benMapObjArr.isEmpty()) {
 				MBeneficiarymapping benMap = this.getBeneficiariesDTONew(benMapObjArr.get(0));
 				list.add(this.getBeneficiariesDTO(benMap));
 			}
-			logger.info("benMap size" + (list.size() == 0 ? "No Beneficiary Found" : list.size()));
+			logger.info("benMap size" + (list.isEmpty() ? "No Beneficiary Found" : list.size()));
 			// end new logic
 
 			logger.info("IdentityService.getBeneficiariesByBenRegId - end for benRegId " + benRegId);
@@ -380,9 +377,9 @@ public class IdentityService {
 	 */
 
 	public List<BeneficiariesDTO> getBeneficiariesByPhoneNum(String phoneNum)
-			throws NoResultException, QueryTimeoutException, Exception {
+			throws NoResultException, QueryTimeoutException {
 		// new logic, 27-09-2018
-		List<BeneficiariesDTO> list = new ArrayList<BeneficiariesDTO>();
+		List<BeneficiariesDTO> list = new ArrayList<>();
 		try {
 			List<MBeneficiarycontact> benContact = contactRepo.findByAnyPhoneNum(phoneNum);
 
@@ -422,10 +419,10 @@ public class IdentityService {
 
 	public List<BeneficiariesDTO> getBeneficiaryByHealthIDAbhaAddress(String healthID)
 			throws NoResultException, QueryTimeoutException, Exception {
-		List<BeneficiariesDTO> beneficiaryList = new ArrayList<BeneficiariesDTO>();
+		List<BeneficiariesDTO> beneficiaryList = new ArrayList<>();
 		try {
 			List<BigInteger> regIDList = v_BenAdvanceSearchRepo.getBenRegIDByHealthIDAbhaAddress(healthID);
-			if (regIDList != null && regIDList.size() > 0) {
+			if (regIDList != null && !regIDList.isEmpty()) {
 				for (BigInteger benRegID : regIDList) {
 					if (benRegID != null) {
 						List<BeneficiariesDTO> searchList = this.getBeneficiariesByBenRegId(benRegID);
@@ -453,10 +450,10 @@ public class IdentityService {
 
 	public List<BeneficiariesDTO> getBeneficiaryByHealthIDNoAbhaIdNo(String healthIDNo)
 			throws NoResultException, QueryTimeoutException, Exception {
-		List<BeneficiariesDTO> beneficiaryList = new ArrayList<BeneficiariesDTO>();
+		List<BeneficiariesDTO> beneficiaryList = new ArrayList<>();
 		try {
 			List<BigInteger> regIDList = v_BenAdvanceSearchRepo.getBenRegIDByHealthIDNoAbhaIdNo(healthIDNo);
-			if (regIDList != null && regIDList.size() > 0) {
+			if (regIDList != null && !regIDList.isEmpty()) {
 				for (BigInteger benRegID : regIDList) {
 					if (benRegID != null) {
 						List<BeneficiariesDTO> searchList = this.getBeneficiariesByBenRegId(benRegID);
@@ -472,18 +469,18 @@ public class IdentityService {
 	}
 
 	public List<BeneficiariesDTO> searhBeneficiaryByFamilyId(String familyId)
-			throws NoResultException, QueryTimeoutException, Exception {
-		List<BeneficiariesDTO> beneficiaryList = new ArrayList<BeneficiariesDTO>();
+			throws NoResultException, QueryTimeoutException {
+		List<BeneficiariesDTO> beneficiaryList = new ArrayList<>();
 		try {
 
 			// find benmap ids
-			List<Object[]> benMapObjArr = new ArrayList<>();
+			List<Object[]> benMapObjArr = null;
 			List<BigInteger> benDetailsVanSerialNoList = new ArrayList<>();
 			int vanID = 0;
 
 			List<MBeneficiarydetail> benDetailsList = detailRepo.searchByFamilyId(familyId);
 
-			if (benDetailsList == null || benDetailsList.size() == 0)
+			if (benDetailsList == null || benDetailsList.isEmpty())
 				return beneficiaryList;
 			else {
 				// considering as of now family creation is possible through facility modules
@@ -511,11 +508,11 @@ public class IdentityService {
 
 	public List<BeneficiariesDTO> searchBeneficiaryByBlockIdAndLastModifyDate(Integer blockID, Timestamp lastModDate) {
 
-		List<BeneficiariesDTO> beneficiaryList = new ArrayList<BeneficiariesDTO>();
+		List<BeneficiariesDTO> beneficiaryList = new ArrayList<>();
 		try {
 			// find benmap ids
 			List<MBeneficiarymapping> benMappingsList = mappingRepo.findByBeneficiaryDetailsByBlockIDAndLastModifyDate(blockID, lastModDate);
-			if (benMappingsList == null || benMappingsList.size() == 0){
+			if (benMappingsList == null || benMappingsList.isEmpty()){
 				return beneficiaryList;
 			}
 			else {
@@ -532,8 +529,8 @@ public class IdentityService {
 	}
 
 	public List<BeneficiariesDTO> searhBeneficiaryByGovIdentity(String identity)
-			throws NoResultException, QueryTimeoutException, Exception {
-		List<BeneficiariesDTO> beneficiaryList = new ArrayList<BeneficiariesDTO>();
+			throws NoResultException, QueryTimeoutException {
+		List<BeneficiariesDTO> beneficiaryList = new ArrayList<>();
 		try {
 
 			List<Object[]> benMapObjArr = new ArrayList<>();
@@ -542,7 +539,7 @@ public class IdentityService {
 			List<MBeneficiaryidentity> benIdentityList = identityRepo.searchByIdentityNo(identity);
 
 			// find benmap ids
-			if (benIdentityList == null || benIdentityList.size() == 0)
+			if (benIdentityList == null || benIdentityList.isEmpty())
 				return beneficiaryList;
 			else {
 				for (MBeneficiaryidentity identityObj : benIdentityList) {
@@ -614,7 +611,7 @@ public class IdentityService {
 		benMapOBJ.setCreatedBy(String.valueOf(benMapArr[10]));
 		benMapOBJ.setCreatedDate((Timestamp) benMapArr[11]);
 
-		if (benMapArr != null && benMapArr.length == 12 && benMapArr[8] != null && benMapArr[9] != null) {
+		if (benMapArr.length == 12 && benMapArr[8] != null && benMapArr[9] != null) {
 
 			benMapOBJ.setMBeneficiarydetail(detailRepo
 					.getWith_vanSerialNo_vanID(getBigIntegerValueFromObject(benMapArr[4]), (Integer) benMapArr[8]));
@@ -840,7 +837,7 @@ public class IdentityService {
 
 				// new code, update van serial no for new entry, 26-09-2018
 				if (index >= idList.size() && beneficiaryidentity.getBenIdentityId() == null) {
-					int i8 = identityRepo.updateVanSerialNo(m.getBenIdentityId());
+					identityRepo.updateVanSerialNo(m.getBenIdentityId());
 				}
 
 				index++;
@@ -884,7 +881,7 @@ public class IdentityService {
 
 				// new code, update van serial no for new entry, 26-09-2018
 				if (familymapping.getBenFamilyMapId() == null) {
-					int i8 = familyMapRepo.updateVanSerialNo(m.getBenFamilyMapId());
+					familyMapRepo.updateVanSerialNo(m.getBenFamilyMapId());
 				}
 
 				index++;
@@ -913,7 +910,7 @@ public class IdentityService {
 			 */
 
 			logger.debug("Account to upsert = " + OutputMapper.gson().toJson(beneficiaryAccount));
-			beneficiaryAccount = accountRepo.save(beneficiaryAccount);
+			accountRepo.save(beneficiaryAccount);
 		}
 
 		if (Boolean.TRUE.equals(identity.getChangeInBenImage())) {
@@ -947,9 +944,9 @@ public class IdentityService {
 	 * @return
 	 */
 
-	ArrayDeque<MBeneficiaryregidmapping> queue = new ArrayDeque<MBeneficiaryregidmapping>();
+	ArrayDeque<MBeneficiaryregidmapping> queue = new ArrayDeque<>();
 
-	public BeneficiaryCreateResp createIdentity(IdentityDTO identity) throws IEMRException {
+	public BeneficiaryCreateResp createIdentity(IdentityDTO identity) {
 		logger.info("IdentityService.createIdentity - start");
 
 		List<MBeneficiaryregidmapping> list = null;
@@ -969,8 +966,8 @@ public class IdentityService {
 		regMap.setReserved(true);
 		if (regMap.getCreatedDate() == null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-			String DateToStoreInDataBase = sdf.format(new Date());
-			Timestamp ts = Timestamp.valueOf(DateToStoreInDataBase);
+			String dateToStoreInDataBase = sdf.format(new Date());
+			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			regMap.setCreatedDate(ts);
 		}
 
@@ -1005,8 +1002,8 @@ public class IdentityService {
 		}
 		if (mAddr.getCreatedDate() == null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-			String DateToStoreInDataBase = sdf.format(new Date());
-			Timestamp ts = Timestamp.valueOf(DateToStoreInDataBase);
+			String dateToStoreInDataBase = sdf.format(new Date());
+			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			mAddr.setCreatedDate(ts);
 		}
 
@@ -1014,72 +1011,72 @@ public class IdentityService {
 		logger.info("IdentityService.createIdentity - Address saved - id = " + mAddr.getBenAddressID());
 
 		// Update van serial no for data sync
-		int i = addressRepo.updateVanSerialNo(mAddr.getBenAddressID());
+		addressRepo.updateVanSerialNo(mAddr.getBenAddressID());
 
 		MBeneficiaryconsent mConsnt = mapper.identityDTOToDefaultMBeneficiaryconsent(identity, true, false);
 		logger.info("IdentityService.createIdentity - saving Consent");
 		if (mConsnt.getCreatedDate() == null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-			String DateToStoreInDataBase = sdf.format(new Date());
-			Timestamp ts = Timestamp.valueOf(DateToStoreInDataBase);
+			String dateToStoreInDataBase = sdf.format(new Date());
+			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			mConsnt.setCreatedDate(ts);
 		}
 		mConsnt = consentRepo.save(mConsnt);
 		logger.info("IdentityService.createIdentity - Consent saved - id = " + mConsnt.getBenConsentID());
 
 		// Update van serial no for data sync
-		int i1 = consentRepo.updateVanSerialNo(mConsnt.getBenConsentID());
+		consentRepo.updateVanSerialNo(mConsnt.getBenConsentID());
 
 		logger.info("IdentityService.createIdentity - saving Contacts");
 		MBeneficiarycontact mContc = mapper.identityDTOToMBeneficiarycontact(identity);
 		if (mContc.getCreatedDate() == null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-			String DateToStoreInDataBase = sdf.format(new Date());
-			Timestamp ts = Timestamp.valueOf(DateToStoreInDataBase);
+			String dateToStoreInDataBase = sdf.format(new Date());
+			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			mContc.setCreatedDate(ts);
 		}
 		mContc = contactRepo.save(mContc);
 		logger.info("IdentityService.createIdentity - Contacts saved - id = " + mContc.getBenContactsID());
 
 		// Update van serial no for data sync
-		int i2 = contactRepo.updateVanSerialNo(mContc.getBenContactsID());
+		contactRepo.updateVanSerialNo(mContc.getBenContactsID());
 
 		logger.info("IdentityService.createIdentity - saving Details");
 		MBeneficiarydetail mDetl = mapper.identityDTOToMBeneficiarydetail(identity);
 		if (mDetl.getCreatedDate() == null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-			String DateToStoreInDataBase = sdf.format(new Date());
-			Timestamp ts = Timestamp.valueOf(DateToStoreInDataBase);
+			String dateToStoreInDataBase = sdf.format(new Date());
+			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			mDetl.setCreatedDate(ts);
 		}
 		mDetl = detailRepo.save(mDetl);
 		logger.info("IdentityService.createIdentity - Details saved - id = " + mDetl.getBeneficiaryDetailsId());
 
 		// Update van serial no for data sync
-		int i3 = detailRepo.updateVanSerialNo(mDetl.getBeneficiaryDetailsId());
+		detailRepo.updateVanSerialNo(mDetl.getBeneficiaryDetailsId());
 
 		MBeneficiaryAccount bankOBJ = mapper.identityDTOToMBeneficiaryAccount(identity);
 		if (bankOBJ.getCreatedDate() == null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-			String DateToStoreInDataBase = sdf.format(new Date());
-			Timestamp ts = Timestamp.valueOf(DateToStoreInDataBase);
+			String dateToStoreInDataBase = sdf.format(new Date());
+			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			bankOBJ.setCreatedDate(ts);
 		}
 		bankOBJ = accountRepo.save(bankOBJ);
 		// Update van serial no for data sync
-		int i4 = accountRepo.updateVanSerialNo(bankOBJ.getBenAccountID());
+		accountRepo.updateVanSerialNo(bankOBJ.getBenAccountID());
 
 		MBeneficiaryImage benImageOBJ = mapper.identityDTOToMBeneficiaryImage(identity);
 		if (benImageOBJ.getCreatedDate() == null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-			String DateToStoreInDataBase = sdf.format(new Date());
-			Timestamp ts = Timestamp.valueOf(DateToStoreInDataBase);
+			String dateToStoreInDataBase = sdf.format(new Date());
+			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			benImageOBJ.setCreatedDate(ts);
 		}
 		benImageOBJ = imageRepo.save(benImageOBJ);
 
 		// Update van serial no for data sync
-		int i5 = imageRepo.updateVanSerialNo(benImageOBJ.getBenImageId());
+		imageRepo.updateVanSerialNo(benImageOBJ.getBenImageId());
 
 		logger.info("IdentityService.createIdentity - saving Mapping");
 		MBeneficiarymapping benMapping = mapper.identityDTOToMBeneficiarymapping(identity);
@@ -1105,19 +1102,19 @@ public class IdentityService {
 		regIdRepo.save(regMap);
 		if (benMapping.getCreatedDate() == null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-			String DateToStoreInDataBase = sdf.format(new Date());
-			Timestamp ts = Timestamp.valueOf(DateToStoreInDataBase);
+			String dateToStoreInDataBase = sdf.format(new Date());
+			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			benMapping.setCreatedDate(ts);
 		}
 
 		benMapping = mappingRepo.save(benMapping);
 		// Update van serial no for data sync
-		int i6 = mappingRepo.updateVanSerialNo(benMapping.getBenMapId());
+		mappingRepo.updateVanSerialNo(benMapping.getBenMapId());
 
 		final MBeneficiarymapping benMapping2 = benMapping;
 		logger.info("IdentityService.createIdentity - saving FamilyMaps");
-		List<MBeneficiaryfamilymapping> fIdenList = new ArrayList<MBeneficiaryfamilymapping>();
-		List<MBeneficiaryfamilymapping> fList = new ArrayList<MBeneficiaryfamilymapping>();
+		List<MBeneficiaryfamilymapping> fIdenList = null;
+		List<MBeneficiaryfamilymapping> fList = null;
 
 		// new logic (18-09-2018, Neeraj kumar)
 		if (null != identity.getBenFamilyDTOs()) {
@@ -1138,13 +1135,12 @@ public class IdentityService {
 				}
 				fList = (List<MBeneficiaryfamilymapping>) familyMapRepo.saveAll(fIdenList);
 				// Update van serial no for data sync
-				if (fList != null && fList.size() > 0) {
+				if (fList != null && !fList.isEmpty()) {
 					for (MBeneficiaryfamilymapping obj : fList) {
-						int i7 = familyMapRepo.updateVanSerialNo(obj.getBenFamilyMapId());
+						familyMapRepo.updateVanSerialNo(obj.getBenFamilyMapId());
 					}
 				}
 			}
-
 		}
 
 		logger.info("IdentityService.createIdentity - FamilyMap saved ");
@@ -1153,20 +1149,20 @@ public class IdentityService {
 		sMap.setBenMapId(benMapping.getBenMapId());
 		if (sMap.getCreatedDate() == null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-			String DateToStoreInDataBase = sdf.format(new Date());
-			Timestamp ts = Timestamp.valueOf(DateToStoreInDataBase);
+			String dateToStoreInDataBase = sdf.format(new Date());
+			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			sMap.setCreatedDate(ts);
 		}
 		sMap = serviceMapRepo.save(sMap);
 		logger.info("IdentityService.createIdentity - ServiceMap saved  - id = " + sMap.getBenServiceMapID());
 
 		// Update van serial no for data sync
-		int i7 = serviceMapRepo.updateVanSerialNo(sMap.getBenServiceMapID());
+		serviceMapRepo.updateVanSerialNo(sMap.getBenServiceMapID());
 
-		List<MBeneficiaryservicemapping> sList = new ArrayList<MBeneficiaryservicemapping>();
+		List<MBeneficiaryservicemapping> sList = new ArrayList<>();
 		sList.add(sMap);
 		logger.info("IdentityService.createIdentity - saving Identity");
-		List<MBeneficiaryidentity> mIdenList2 = new ArrayList<MBeneficiaryidentity>();
+		List<MBeneficiaryidentity> mIdenList2 = new ArrayList<>();
 		if (null != identity.getIdentities()) {
 			List<MBeneficiaryidentity> mIdenList = mapper
 					.identityDTOListToMBeneficiaryidentityList(identity.getIdentities());
@@ -1184,7 +1180,7 @@ public class IdentityService {
 				MBeneficiaryidentity m = identityRepo.save(mIden);
 
 				// Update van serial no for data sync
-				int i8 = identityRepo.updateVanSerialNo(m.getBenIdentityId());
+				identityRepo.updateVanSerialNo(m.getBenIdentityId());
 
 				mIdenList2.add(m);
 				logger.info("IdentityService.createIdentity - Identity saved  - id = " + m.getBenIdentityId());
@@ -1242,23 +1238,23 @@ public class IdentityService {
 	 * @return {@link List} Beneficiaries
 	 */
 
-	public List<BeneficiariesPartialDTO> getBeneficiariesPartialDeatilsByBenRegIdList(List<BigInteger> BenRegIds) {
+	public List<BeneficiariesPartialDTO> getBeneficiariesPartialDeatilsByBenRegIdList(List<BigInteger> benRegIds) {
 
 		logger.info("IdentityService.getBeneficiariesPartialDeatilsByBenRegId - end");
-		List<BeneficiariesPartialDTO> list = new ArrayList<BeneficiariesPartialDTO>();
+		List<BeneficiariesPartialDTO> list = new ArrayList<>();
 
 		// new logic, 19-12-2018
-		List<Object[]> benMapObjArr = new ArrayList<>();
-		if (BenRegIds != null && BenRegIds.size() > 0) {
-			benMapObjArr = mappingRepo.getBenMappingByRegIDList(BenRegIds);
-			if (benMapObjArr != null && benMapObjArr.size() > 0) {
+		List<Object[]> benMapObjArr = null;
+		if (benRegIds != null && !benRegIds.isEmpty()) {
+			benMapObjArr = mappingRepo.getBenMappingByRegIDList(benRegIds);
+			if (benMapObjArr != null && !benMapObjArr.isEmpty()) {
 				for (Object[] objArr : benMapObjArr) {
 					MBeneficiarymapping benMap = this.getBeneficiariesDTONewPartial(objArr);
 
 					list.add(partialMapper.mBeneficiarymappingToBeneficiariesPartialDTO(benMap));
 				}
 			}
-			logger.info("benMap size" + (list.size() == 0 ? "No Beneficiary Found" : list.size()));
+			logger.info("benMap size" + (list.isEmpty() ? "No Beneficiary Found" : list.size()));
 
 		}
 		// end
@@ -1277,24 +1273,21 @@ public class IdentityService {
 	public List<BeneficiariesDTO> getBeneficiariesDeatilsByBenRegIdList(List<BigInteger> benRegIds) {
 
 		logger.info("IdentityService.getBeneficiariesDeatilsByBenRegIdList - end");
-		List<BeneficiariesDTO> list = new ArrayList<BeneficiariesDTO>();
+		List<BeneficiariesDTO> list = new ArrayList<>();
 
 		// new logic, 19-12-2018
-		List<Object[]> benMapObjArr = new ArrayList<>();
-		if (benRegIds != null && benRegIds.size() > 0) {
+		List<Object[]> benMapObjArr = null;
+		if (benRegIds != null && !benRegIds.isEmpty()) {
 			benMapObjArr = mappingRepo.getBenMappingByRegIDList(benRegIds);
-			if (benMapObjArr != null && benMapObjArr.size() > 0) {
+			if (benMapObjArr != null && !benMapObjArr.isEmpty()) {
 				for (Object[] objArr : benMapObjArr) {
 					MBeneficiarymapping benMap = this.getBeneficiariesDTONew(objArr);
-
 					list.add(this.getBeneficiariesDTO(benMap));
 				}
 			}
-			logger.info("benMap size" + (list.size() == 0 ? "No Beneficiary Found" : list.size()));
-
+			logger.info("benMap size" + (list.isEmpty() ? "No Beneficiary Found" : list.size()));
 		}
 		// end
-
 		logger.info("IdetityService.getBeneficiariesPartialDeatilsByBenRegId - end");
 
 		return list;
@@ -1314,7 +1307,7 @@ public class IdentityService {
 				mapper.mBeneficiaryidentityListToBenIdentityDTOList(benMap.getMBeneficiaryidentities()));
 
 		List<Object[]> abhaList = v_BenAdvanceSearchRepo.getBenAbhaDetailsByBenRegID(bdto.getBenRegId());
-		if (abhaList != null && abhaList.size() > 0) {
+		if (abhaList != null && !abhaList.isEmpty()) {
 			List<AbhaAddressDTO> abhaDTOList = new ArrayList<>();
 			AbhaAddressDTO abhaDTO;
 			for (Object[] objArr : abhaList) {
@@ -1344,7 +1337,7 @@ public class IdentityService {
 	 * @return
 	 */
 	public List<BeneficiariesDTO> getBeneficiaries(IdentityDTO identityDTO) {
-		List<BeneficiariesDTO> list = new ArrayList<BeneficiariesDTO>();
+		List<BeneficiariesDTO> list = new ArrayList<>();
 
 		List<MBeneficiarymapping> benMapList = mappingRepo.finiteSearch(identityDTO);
 		for (MBeneficiarymapping benMap : benMapList) {
@@ -1363,12 +1356,11 @@ public class IdentityService {
 	public String getBeneficiaryImage(String requestOBJ) {
 		OutputResponse response = new OutputResponse();
 		try {
-			Map<String, Object> benImageMap = new HashMap<String, Object>();
+			Map<String, Object> benImageMap = new HashMap<>();
 			if (requestOBJ != null) {
-				JsonObject obj = new JsonObject();
-				JsonParser jsnParser = new JsonParser();
-				JsonElement jsnElmnt = jsnParser.parse(requestOBJ);
-				obj = jsnElmnt.getAsJsonObject();
+				
+				JsonElement jsnElmnt = JsonParser.parseString(requestOBJ);
+				JsonObject obj = jsnElmnt.getAsJsonObject();
 
 				if (obj != null && obj.has("beneficiaryRegID") && obj.get("beneficiaryRegID") != null) {
 					MBeneficiarymapping benMap = mappingRepo
@@ -1419,7 +1411,7 @@ public class IdentityService {
 	}
 
 	public int importBenIdToLocalServer(List<BenIdImportDTO> benIdImportDTOList) {
-		if (benIdImportDTOList.size() > 0) {
+		if (!benIdImportDTOList.isEmpty()) {
 			ArrayList<MBeneficiaryregidmapping> mBeneficiaryregidmappingList = benIdImportMapper
 					.benIdImportDTOToMBeneficiaryregidmappings(benIdImportDTOList);
 
@@ -1440,7 +1432,7 @@ public class IdentityService {
 				objArr[5] = false;
 
 				dataList.add(objArr);
-				System.out.println("regid :" + obj.getBenRegId() + " - benid :" + obj.getBeneficiaryID());
+				logger.info("regid :" + obj.getBenRegId() + " - benid :" + obj.getBeneficiaryID());
 			}
 
 			int[] i = jdbcTemplate.batchUpdate(query, dataList);

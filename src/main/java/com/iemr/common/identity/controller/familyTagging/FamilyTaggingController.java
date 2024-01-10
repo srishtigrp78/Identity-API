@@ -25,9 +25,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iemr.common.identity.service.familyTagging.FamilyTagService;
@@ -45,7 +45,7 @@ public class FamilyTaggingController {
 
 	@CrossOrigin()
 	@Operation(summary = "Create and modify family tagging")
-	@RequestMapping(value = { "/addTag" }, method = { RequestMethod.POST }, consumes = "application/json", produces = "application/json")
+	@PostMapping(value = { "/addTag" }, consumes = "application/json", produces = "application/json")
 	public String saveFamilyTagging(@RequestBody String comingReq) {
 		String s;
 		OutputResponse response = new OutputResponse();
@@ -61,7 +61,7 @@ public class FamilyTaggingController {
 
 	@CrossOrigin()
 	@Operation(summary = "Create family")
-	@RequestMapping(value = { "/createFamily" }, method = { RequestMethod.POST }, consumes = "application/json", produces = "application/json")
+	@PostMapping(value = { "/createFamily" }, consumes = "application/json", produces = "application/json")
 	public String createFamily(@RequestBody String comingReq) {
 		String s;
 		OutputResponse response = new OutputResponse();
@@ -77,7 +77,7 @@ public class FamilyTaggingController {
 
 	@CrossOrigin()
 	@Operation(summary = "Search family")
-	@RequestMapping(value = { "/searchFamily" }, method = { RequestMethod.POST }, consumes = "application/json", produces = "application/json")
+	@PostMapping(value = { "/searchFamily" }, consumes = "application/json", produces = "application/json")
 	public String searchFamily(@RequestBody String comingReq) {
 		String s;
 		OutputResponse response = new OutputResponse();
@@ -93,7 +93,7 @@ public class FamilyTaggingController {
 
 	@CrossOrigin()
 	@Operation(summary = "Get family members details")
-	@RequestMapping(value = { "/getFamilyDetails" }, method = { RequestMethod.POST }, consumes = "application/json", produces = "application/json")
+	@PostMapping(value = { "/getFamilyDetails" }, consumes = "application/json", produces = "application/json")
 	public String getFamilyDatails(@RequestBody String comingReq) {
 		String s;
 		OutputResponse response = new OutputResponse();
@@ -109,7 +109,7 @@ public class FamilyTaggingController {
 
 	@CrossOrigin()
 	@Operation(summary = "Untag beneficiary from a family")
-	@RequestMapping(value = { "/untag" }, method = { RequestMethod.POST }, consumes = "application/json", produces = "application/json")
+	@PostMapping(value = { "/untag" }, consumes = "application/json", produces = "application/json")
 	public String untagFamily(@RequestBody String comingReq) {
 		String s;
 		OutputResponse response = new OutputResponse();
@@ -125,7 +125,7 @@ public class FamilyTaggingController {
 
 	@CrossOrigin()
 	@Operation(summary = "Edit beneficiary family details")
-	@RequestMapping(value = { "/editFamilyTagging" }, method = { RequestMethod.POST }, consumes = "application/json", produces = "application/json")
+	@PostMapping(value = { "/editFamilyTagging" }, consumes = "application/json", produces = "application/json")
 	public String editFamilyDetails(@RequestBody String comingReq) {
 		String s;
 		OutputResponse response = new OutputResponse();

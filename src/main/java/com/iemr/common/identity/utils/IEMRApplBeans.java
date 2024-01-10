@@ -28,7 +28,6 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-import com.iemr.common.identity.utils.config.ConfigProperties;
 import com.iemr.common.identity.utils.gateway.email.EmailService;
 import com.iemr.common.identity.utils.gateway.email.GenericEmailServiceImpl;
 import com.iemr.common.identity.utils.redis.RedisStorage;
@@ -40,25 +39,17 @@ public class IEMRApplBeans {
 
 	@Bean
 	public Validator getVaidator() {
-		Validator validator = new Validator();
-		return validator;
+		return new Validator();
 	}
 
 	@Bean
 	public EmailService getEmailService() {
-		EmailService emailService = new GenericEmailServiceImpl();
-		return emailService;
+		return new GenericEmailServiceImpl();
 	}
 
 	@Bean
 	public JavaMailSender getJavaMailSender() {
-		JavaMailSender mailSender = new JavaMailSenderImpl();
-		return mailSender;
-	}
-
-	@Bean
-	public ConfigProperties configProperties() {
-		return new ConfigProperties();
+		return new JavaMailSenderImpl();
 	}
 
 	@Bean
@@ -76,8 +67,7 @@ public class IEMRApplBeans {
 
 	@Bean
 	public LettuceConnectionFactory connectionFactory() {
-		System.out.print("Connecting to Redis " + redisHost + ":" + redisPort);
-
+		
 		return new LettuceConnectionFactory(redisHost, redisPort);
 	}
 

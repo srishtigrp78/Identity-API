@@ -21,11 +21,11 @@
 */
 package com.iemr.common.identity.utils.gateway.email;
 
+import org.json.JSONException;
+
 public interface EmailService
 {
-	void sendEmail(String jsonObject, String template);
+	void sendEmail(String jsonObject, String template) throws JSONException;
 
-	void sendEmailWithAttachment(String jsonObject, String template);
-
-	void sendEmail(String jsonObject);
+	void sendEmail(String jsonObject) throws JSONException;
 }

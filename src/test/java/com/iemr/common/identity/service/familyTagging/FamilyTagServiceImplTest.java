@@ -1,6 +1,5 @@
 package com.iemr.common.identity.service.familyTagging;
 
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -14,11 +13,9 @@ import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import com.google.gson.Gson;
 import com.iemr.common.identity.data.familyTagging.BenFamilyMapping;
@@ -28,10 +25,7 @@ import com.iemr.common.identity.exception.IEMRException;
 import com.iemr.common.identity.repo.BenDetailRepo;
 import com.iemr.common.identity.repo.BenMappingRepo;
 import com.iemr.common.identity.repo.familyTag.FamilyTagRepo;
-
-import junit.framework.TestCase;
 @ExtendWith(MockitoExtension.class)
-
 class FamilyTagServiceImplTest {
 	
 	@InjectMocks
@@ -243,7 +237,8 @@ class FamilyTagServiceImplTest {
 
 	@Test
 	void testGetFamilyId() throws IEMRException {
-		familyTagServiceImpl.getFamilyId("");
+		String resp = familyTagServiceImpl.getFamilyId("");
+		Assert.assertNotNull(resp);
 	}
 	
 	@Test
@@ -269,6 +264,7 @@ class FamilyTagServiceImplTest {
 		list.add(mBeneficiarydetail);
 		when(benMappingRepo.getBenRegId(any(), any())).thenReturn(BigInteger.valueOf(987));
 		when(benDetailRepo.getFamilyDetails(any())).thenReturn(list);
-		familyTagServiceImpl.getFamilyDetails(json);
+		String resp = familyTagServiceImpl.getFamilyDetails(json);
+		Assert.assertNotNull(resp);
 	}
 }

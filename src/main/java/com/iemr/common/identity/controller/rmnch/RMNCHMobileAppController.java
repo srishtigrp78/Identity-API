@@ -27,10 +27,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iemr.common.identity.service.rmnch.RmnchDataSyncService;
@@ -54,7 +54,7 @@ public class RMNCHMobileAppController {
 	@Qualifier("rmnchServiceImpl")
 	RmnchDataSyncService rmnchDataSyncService;
 
-	@RequestMapping(value = "/syncDataToAmrit", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+	@PostMapping(value = "/syncDataToAmrit", consumes = "application/json", produces = "application/json")
 	@Operation(summary = "Sync data to AMRIT for already regestered beneficiary with AMRIT beneficiary id ")
 	public String syncDataToAmrit(@Param(value = "{\r\n" + "  \"beneficiaryDetails\": [\r\n" + "    {\r\n"
 			+ "      \"BenRegId\": \"Long\",\r\n" + "      \"Countyid\": \"Integer\",\r\n"
@@ -134,7 +134,7 @@ public class RMNCHMobileAppController {
 	}
 
 //	@Deprecated
-	@RequestMapping(value = "/getBeneficiaryDataForVillage", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+	@PostMapping(value = "/getBeneficiaryDataForVillage", consumes = "application/json", produces = "application/json")
 	@Operation(summary = "Get beneficiary data for given village ")
 	public String getBeneficiaryData(
 			@Param(value = "{\r\n" + "\"villageID\":\"Integer\",\r\n" + "\"fromDate\":\"DateTime\",\r\n"
@@ -161,7 +161,7 @@ public class RMNCHMobileAppController {
 
 	}
 
-	@RequestMapping(value = "/getBeneficiaryDataForAsha", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+	@PostMapping(value = "/getBeneficiaryDataForAsha", consumes = "application/json", produces = "application/json")
 	@Operation(summary = "get beneficiary data for given village ")
 	public String getBeneficiaryDataByAsha(
 			@Param(value = "{\r\n" + "\"AshaId\":\"Integer\",\r\n" + "\"fromDate\":\"DateTime\",\r\n"

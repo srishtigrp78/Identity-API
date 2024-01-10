@@ -23,7 +23,7 @@ package com.iemr.common.identity.exception;
 
 public class IEMRException extends Exception {
 	private static final long serialVersionUID = 1L;
-	private String message = null;
+	private final String message;
 
 	public IEMRException(String message, Throwable cause) {
 		super(message);
@@ -36,10 +36,12 @@ public class IEMRException extends Exception {
 		this.message = message;
 	}
 
+	@Override
 	public String toString() {
 		return this.message;
 	}
 
+	@Override
 	public String getMessage() {
 		return this.message;
 	}

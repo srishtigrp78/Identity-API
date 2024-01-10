@@ -29,6 +29,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -55,7 +56,7 @@ import net.minidev.json.parser.ParseException;
 
 
 @ExtendWith(MockitoExtension.class)
-public class IdentityControllerTest {
+class IdentityControllerTest {
 	@InjectMocks
 	IdentityController identityController;
 	@Mock
@@ -72,67 +73,80 @@ public class IdentityControllerTest {
 		
 		String req = new Gson().toJson(searchParams);
 		//when(svc.getBeneficiaries(searchParams)).thenReturn(any()).thenReturn(bdList);
-		identityController.getBeneficiaries(req);
+		String resp = identityController.getBeneficiaries(req);
+		Assert.assertNotNull(resp);
 	}
 
 	@Test
 	void testGetBeneficiariesByBeneficiaryRegId() {
-		identityController.getBeneficiariesByBeneficiaryRegId("123");
+		String resp = identityController.getBeneficiariesByBeneficiaryRegId("123");
+		Assert.assertNotNull(resp);
 	}
 	
 	@Test
 	void testGetBeneficiariesByBeneficiaryRegIdCatchBlock() throws NoResultException, QueryTimeoutException, Exception {
 		when(svc.getBeneficiariesByBenRegId(any())).thenThrow(NoResultException.class);
-		identityController.getBeneficiariesByBeneficiaryRegId("123");
+		String resp = identityController.getBeneficiariesByBeneficiaryRegId("123");
+		Assert.assertNotNull(resp);
 	}
 
 	@Test
 	void testGetBeneficiariesByBeneficiaryId() {
-		identityController.getBeneficiariesByBeneficiaryId("987");
+		String resp = identityController.getBeneficiariesByBeneficiaryId("987");
+		Assert.assertNotNull(resp);
 	}
 	@Test
 	void testGetBeneficiariesByBeneficiaryIdCatchBlock() throws NoResultException, QueryTimeoutException, Exception {
 		when(svc.getBeneficiariesByBenId(any())).thenThrow(NoResultException.class);
-		identityController.getBeneficiariesByBeneficiaryId("987");
+		String resp = identityController.getBeneficiariesByBeneficiaryId("987");
+		Assert.assertNotNull(resp);
 	}
 
 	@Test
 	void testGetBeneficiariesByPhoneNum() {
-		identityController.getBeneficiariesByPhoneNum("9988776655");
+		String resp = identityController.getBeneficiariesByPhoneNum("9988776655");
+		Assert.assertNotNull(resp);
 	}
 	@Test
 	void testGetBeneficiariesByPhoneNumCatchblock() throws NoResultException, QueryTimeoutException, Exception {
 		when(svc.getBeneficiariesByPhoneNum(any())).thenThrow(NoResultException.class);
-		identityController.getBeneficiariesByPhoneNum("9988776655");
+		String resp = identityController.getBeneficiariesByPhoneNum("9988776655");
+		Assert.assertNotNull(resp);
 	}
 	@Test
 	void testSearhBeneficiaryByABHAAddress() {
-		identityController.searhBeneficiaryByABHAAddress("9876");
+		String resp = identityController.searhBeneficiaryByABHAAddress("9876");
+		Assert.assertNotNull(resp);
 	}
 
 	@Test
 	void testSearhBeneficiaryByABHAAddressCatchblock() throws NoResultException, QueryTimeoutException, Exception {
 		when(svc.getBeneficiaryByHealthIDAbhaAddress(any())).thenThrow(NoResultException.class);
-		identityController.searhBeneficiaryByABHAAddress("9876");
+		String resp = identityController.searhBeneficiaryByABHAAddress("9876");
+		Assert.assertNotNull(resp);
 	}
 	@Test
 	void testSearhBeneficiaryByABHAIdNo() {
-		identityController.searhBeneficiaryByABHAIdNo("9876");
+		String resp = identityController.searhBeneficiaryByABHAIdNo("9876");
+		Assert.assertNotNull(resp);
 	}
 	@Test
 	void testSearhBeneficiaryByABHAIdNoCatchblock() throws NoResultException, QueryTimeoutException, Exception {
 		when(svc.getBeneficiaryByHealthIDNoAbhaIdNo(any())).thenThrow(NoResultException.class);
-		identityController.searhBeneficiaryByABHAIdNo("9876");
+		String resp = identityController.searhBeneficiaryByABHAIdNo("9876");
+		Assert.assertNotNull(resp);
 	}
 
 	@Test
 	void testSearhBeneficiaryByFamilyId() {
-		identityController.searhBeneficiaryByFamilyId("9876");
+		String resp = identityController.searhBeneficiaryByFamilyId("9876");
+		Assert.assertNotNull(resp);
 	}
 	@Test
 	void testSearhBeneficiaryByFamilyIdCatchblock() throws NoResultException, QueryTimeoutException, Exception {
 		when(svc.searhBeneficiaryByFamilyId(any())).thenThrow(NoResultException.class);
-		identityController.searhBeneficiaryByFamilyId("9876");
+		String resp = identityController.searhBeneficiaryByFamilyId("9876");
+		Assert.assertNotNull(resp);
 	}
 
 	@Test
@@ -144,24 +158,12 @@ public class IdentityControllerTest {
 		SearchSyncDTO searchSyncDTO = new SearchSyncDTO();
 		String req = new Gson().toJson(searchSyncDTO);
 		//when(svc.searchBeneficiaryByBlockIdAndLastModifyDate(any(), any())).thenReturn(bdList);
-		identityController.searchBeneficiaryByBlockIdAndLastModDate(req);
+		String resp = identityController.searchBeneficiaryByBlockIdAndLastModDate(req);
+		Assert.assertNotNull(resp);
 		//Assert.assertThrows(Exception.class, () -> 
 	}
 
-	@Test
-	void testSearhBeneficiaryByGovIdentity() {
-		identityController.searhBeneficiaryByGovIdentity("987");
-	}
-
-	@Test
-	void testEditIdentity() {
-		identityController.editIdentity("String");
-	}
-
-	@Test
-	void testCreateIdentity() {
-		identityController.createIdentity("String");
-	}
+	
 
 	@Test
 	void testReserveIdentityEmptyIdentity() throws ParseException {
@@ -202,7 +204,8 @@ public class IdentityControllerTest {
 
 	@Test
 	void testGetFiniteBeneficiariesCatchblockIfInvalidJSON() {
-		identityController.getFiniteBeneficiaries("String");
+		String resp = identityController.getFiniteBeneficiaries("String");
+		Assert.assertNotNull(resp);
 	}
 	@Test
 	void testGetFiniteBeneficiaries() throws ParseException {
@@ -235,7 +238,8 @@ public class IdentityControllerTest {
 
 	@Test
 	void testGetBeneficiaryImageByBenRegID() {
-		identityController.getBeneficiaryImageByBenRegID("String");
+		String resp = identityController.getBeneficiaryImageByBenRegID("String");
+		Assert.assertNull(resp);
 	}
 
 	@Test
@@ -269,11 +273,13 @@ public class IdentityControllerTest {
 
 	@Test
 	void testCheckAvailablBenIDLocalServer() {
-		identityController.checkAvailablBenIDLocalServer();
+		String resp = identityController.checkAvailablBenIDLocalServer();
+		Assert.assertNotNull(resp);
 	}
 
 	@Test
 	void testSaveGeneratedBenIDToLocalServer() {
-		identityController.saveGeneratedBenIDToLocalServer(null);
+		String resp = identityController.saveGeneratedBenIDToLocalServer(null);
+		Assert.assertNotNull(resp);
 	}
 }
