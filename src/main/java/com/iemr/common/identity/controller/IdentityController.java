@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,21 +119,11 @@ public class IdentityController {
 		logger.info("IdentityController.getBeneficiary - start. benId = " + benRegId);
 		String response;
 		try {
-			String benRegIdValue = "";
-			JsonElement json = JsonParser.parseString(benRegId);
-
-			if (json instanceof JsonNull) {
+			
+			if (null == benRegId || StringUtils.isEmpty(benRegId)) {
 				return getErrorResponseString("Null/Empty Beneficiary Id.", 5000, "failure", "");
-				
 			}
-
-			if (json instanceof JsonPrimitive) {
-				benRegIdValue = benRegId;
-			} else {
-				benRegIdValue = InputMapper.getInstance().gson().fromJson(json, String.class);
-			}
-
-			List<BeneficiariesDTO> list = svc.getBeneficiariesByBenRegId(new BigInteger(benRegIdValue));
+			List<BeneficiariesDTO> list = svc.getBeneficiariesByBenRegId(new BigInteger(benRegId));
 			list.removeIf(Objects::isNull);
 			Collections.sort(list);
 			response = getSuccessResponseString(list, 200, "success", "getBeneficiariesByBeneficiaryRegId");
@@ -152,7 +143,7 @@ public class IdentityController {
 	@PostMapping(path = "/getByBenId", headers = "Authorization")
 	public String getBeneficiariesByBeneficiaryId(
 			@Param(value = "\"Integer\"") @RequestParam("benId") String benId) {
-		logger.info("IdentityController.getBeneficiary start benId : ", benId);
+		logger.info("IdentityController.getBeneficiary - start. benId = " + benId);
 
 		String response;
 		try {
@@ -209,7 +200,7 @@ public class IdentityController {
 
 			logger.info("IdentityController.getBeneficiary - end");
 		} catch (Exception e) {
-			logger.error("error in beneficiary search by phone No : " , e.getLocalizedMessage());
+			logger.error("error in beneficiary search by phone No : " + e.getLocalizedMessage());
 			response = getErrorResponseString("error in beneficiary search by phone No : " + e.getLocalizedMessage(),
 					5000, "failure", "");
 		}
@@ -221,7 +212,7 @@ public class IdentityController {
 	@PostMapping(path = "/getByAbhaAddress", headers = "Authorization")
 	public String searhBeneficiaryByABHAAddress(
 			@Param(value = "\"String\"") @RequestParam("healthID") String healthID) {
-		logger.info("IdentityController.getBeneficiary - start. Health ID / ABHA Address = " , healthID);
+		logger.info("IdentityController.getBeneficiary - start. Health ID / ABHA Address = " + healthID);
 		String response;
 		try {
 			String healthIDValue = "";
@@ -241,9 +232,9 @@ public class IdentityController {
 
 			logger.info("IdentityController.getBeneficiary - end");
 		} catch (Exception e) {
-			logger.error("error in beneficiary search by Health ID or ABHA address : " , e.getLocalizedMessage());
+			logger.error("error in beneficiary search by Health ID / ABHA address : " + e.getLocalizedMessage());
 			response = getErrorResponseString(
-					"error in beneficiary search by Health ID or ABHA address : " + e.getLocalizedMessage(), 5000,
+					"error in beneficiary search by Health ID / ABHA address : " + e.getLocalizedMessage(), 5000,
 					"failure", "");
 		}
 		return response;
@@ -254,7 +245,7 @@ public class IdentityController {
 	@PostMapping(path = "/getByAbhaIdNo", headers = "Authorization")
 	public String searhBeneficiaryByABHAIdNo(
 			@Param(value = "\"String\"") @RequestParam("healthIDNo") String healthIDNo) {
-		logger.info("IdentityController.getBeneficiary - start. HealthIDNo / ABHA Id No = " , healthIDNo);
+		logger.info("IdentityController.getBeneficiary - start. HealthIDNo / ABHA Id No = " + healthIDNo);
 		String response;
 		try {
 			String healthIDNoValue = "";
@@ -274,7 +265,7 @@ public class IdentityController {
 
 			logger.info("IdentityController.getBeneficiary - end");
 		} catch (Exception e) {
-			logger.error("error in beneficiary search by Health ID No / ABHA Id No : " , e.getLocalizedMessage());
+			logger.error("error in beneficiary search by Health ID No / ABHA Id No : " + e.getLocalizedMessage());
 			response = getErrorResponseString(
 					"error in beneficiary search by Health ID No / ABHA Id No : " + e.getLocalizedMessage(), 5000,
 					"failure", "");
@@ -287,7 +278,7 @@ public class IdentityController {
 	@PostMapping(path = "/searchByFamilyId", headers = "Authorization")
 	public String searhBeneficiaryByFamilyId(
 			@Param(value = "\"String\"") @RequestParam("familyId") String familyId) {
-		logger.info("IdentityController.getBeneficiary - start. family id = " , familyId);
+		logger.info("IdentityController.getBeneficiary - start. family id = " + familyId);
 		String response;
 		try {
 
@@ -305,7 +296,7 @@ public class IdentityController {
 
 			logger.info("IdentityController.getBeneficiary - end");
 		} catch (Exception e) {
-			logger.error("error in beneficiary search by Family Id : " , e.getLocalizedMessage());
+			logger.error("error in beneficiary search by Family Id : " + e.getLocalizedMessage());
 			response = getErrorResponseString("error in beneficiary search by Family Id  : " + e.getLocalizedMessage(),
 					5000, "failure", "");
 		}
@@ -318,7 +309,7 @@ public class IdentityController {
 	@PostMapping(path = "/searchByDistrictId")
 	public String searchBeneficiaryByBlockIdAndLastModDate(
 			@Param(value = "\"String\"") @RequestBody String object) {
-		logger.info("IdentityController.getBeneficiary - start. search object = " , object);
+		logger.info("IdentityController.getBeneficiary - start. search object = " + object);
 		String response;
 		try {
 
@@ -331,7 +322,7 @@ public class IdentityController {
 
 			logger.info("IdentityController.getBeneficiary - end");
 		} catch (Exception e) {
-			logger.error("error in beneficiary search by Family Id : " , e.getLocalizedMessage());
+			logger.error("error in beneficiary search by Family Id : " + e.getLocalizedMessage());
 			response = getErrorResponseString("error in beneficiary search by block Id  : " + e.getLocalizedMessage(),
 					5000, "failure", "");
 		}
@@ -343,7 +334,7 @@ public class IdentityController {
 	@PostMapping(path = "/searhByGovIdentity", headers = "Authorization")
 	public String searhBeneficiaryByGovIdentity(
 			@Param(value = "\"String\"") @RequestParam("identity") String identity) {
-		logger.info("IdentityController.getBeneficiary - start. Gov Identity = " , identity);
+		logger.info("IdentityController.getBeneficiary - start. Gov Identity = " + identity);
 		String response;
 		try {
 
@@ -361,7 +352,7 @@ public class IdentityController {
 
 			logger.info("IdentityController.getBeneficiary - end");
 		} catch (Exception e) {
-			logger.error("error in beneficiary search by Gov Identity No : " , e.getLocalizedMessage());
+			logger.error("error in beneficiary search by Gov Identity No : " + e.getLocalizedMessage());
 			response = getErrorResponseString(
 					"error in beneficiary search by GovIdentity No : " + e.getLocalizedMessage(), 5000, "failure", "");
 		}
@@ -490,12 +481,12 @@ public class IdentityController {
 		try {
 			svc.editIdentity(identity);
 			String response = getSuccessResponseString("Updated successfully", 200, "success", "editIdentityByAgent");
-			logger.info("IdentityController.editIdentity - end " , response);
+			logger.info("IdentityController.editIdentity - end " + response);
 			return response;
 		} catch (MissingMandatoryFieldsException e) {
 			e.printStackTrace();
 			String response = getErrorResponseString(e.getMessage(), 200, "success", "editIdentityByAgent");
-			logger.info("IdentityController.editIdentity - end " , response);
+			logger.info("IdentityController.editIdentity - end " + response);
 			return response;
 		}
 	}
@@ -607,13 +598,13 @@ public class IdentityController {
 		}
 
 		IdentityDTO identity = InputMapper.getInstance().gson().fromJson(json, IdentityDTO.class);
-		logger.info("identity hit: " , identity);
+		logger.info("identity hit: " + identity);
 		BeneficiaryCreateResp map;
 		map = svc.createIdentity(identity);
 		String data = InputMapper.getInstance().gson().toJson(map);
 		String response = getSuccessResponseString(data, 200, "success", "createIdentityByAgent");
 
-		logger.info("IdentityController.createIdentity - end : " , response);
+		logger.info("IdentityController.createIdentity - end " + response);
 		return response;
 	}
 
@@ -668,7 +659,7 @@ public class IdentityController {
 	@PostMapping(path = "/getByPartialBenRegIdList", headers = "Authorization")
 	public String getPartialBeneficiariesByBenRegIds(
 			@Param(value = "[Integer,Integer…..(array of benRegId)]") @RequestBody String benRegIds) {
-		logger.info("IdentityController.getBeneficiariesByBenRegIds - start. benRegIdList = " , benRegIds);
+		logger.info("IdentityController.getBeneficiariesByBenRegIds - start. benRegIdList = " + benRegIds);
 		BigInteger[] benRegIdarray = null;
 		JsonElement json = JsonParser.parseString(benRegIds);
 
@@ -700,7 +691,7 @@ public class IdentityController {
 	@PostMapping(path = "/getByBenRegIdList", headers = "Authorization")
 	public String getBeneficiariesByBenRegIds(
 			@Param(value = " {\"beneficiaryRegID\": \"Long\"}") @RequestBody String benRegIds) {
-		logger.info("IdentityController.getBeneficiariesByBenRegIds - start. benRegIdList = " , benRegIds);
+		logger.info("IdentityController.getBeneficiariesByBenRegIds - start. benRegIdList = " + benRegIds);
 		BigInteger[] benRegIdarray = null;
 		JsonElement json = JsonParser.parseString(benRegIds);
 
