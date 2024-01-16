@@ -1,34 +1,25 @@
 package com.iemr.common.identity.service.rmnch;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONObject;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 
 import com.google.gson.Gson;
-import com.iemr.common.identity.data.rmnch.GetBenRequestHandler;
 import com.iemr.common.identity.data.rmnch.RMNCHBeneficiaryDetailsRmnch;
 import com.iemr.common.identity.data.rmnch.RMNCHBornBirthDetails;
 import com.iemr.common.identity.data.rmnch.RMNCHCBACdetails;
 import com.iemr.common.identity.data.rmnch.RMNCHHouseHoldDetails;
-import com.iemr.common.identity.data.rmnch.RMNCHMBeneficiaryaddress;
 import com.iemr.common.identity.repo.rmnch.RMNCHBenAccountRepo;
 import com.iemr.common.identity.repo.rmnch.RMNCHBenAddressRepo;
 import com.iemr.common.identity.repo.rmnch.RMNCHBenContactRepo;
@@ -97,7 +88,6 @@ class RmnchDataSyncServiceImplTest {
 		RMNCHCBACdetails rMNCHCBACdetails = new RMNCHCBACdetails();
 		rMNCHCBACdetails.setBenficieryid(Long.valueOf(987));
 		rMNCHCBACdetailslist.add(rMNCHCBACdetails);
-		String cbacJson = new Gson().toJson(rMNCHCBACdetails);
 		cbaclist.add(birthJson);
 		jsonObject.put("cBACDetails", cbaclist);
 		
@@ -125,7 +115,7 @@ class RmnchDataSyncServiceImplTest {
 		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID(any())).thenReturn(rMNCHBeneficiaryDetailsRmnch);
 		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(Long.valueOf(987));
 		String syncDataToAmrit = rmnchDataSyncServiceImpl.syncDataToAmrit(replace2);
-		Assert.assertNotNull(syncDataToAmrit);
+		Assertions.assertNotNull(syncDataToAmrit);
 	}
 
 	/*

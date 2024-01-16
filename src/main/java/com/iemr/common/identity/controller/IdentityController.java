@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,25 +115,13 @@ public class IdentityController {
 	@Operation(summary = "Search beneficiary based on beneficiary registration id")
 	@PostMapping(path = "/getByBenRegId", headers = "Authorization")
 	public String getBeneficiariesByBeneficiaryRegId(
-			@Param(value = "\"Integer\"") @RequestParam String benRegId) {
-		logger.info("IdentityController.getBeneficiary - start. benId = " + benRegId);
+			@Param(value = "\"Integer\"") @RequestParam("benRegId") String benRegId) {
 		String response;
 		try {
-			String benRegIdValue = "";
-			JsonElement json = JsonParser.parseString(benRegId);
-
-			if (json instanceof JsonNull) {
+			if (null == benRegId || StringUtils.isEmpty(benRegId)) {
 				return getErrorResponseString("Null/Empty Beneficiary Id.", 5000, "failure", "");
-				
 			}
-
-			if (json instanceof JsonPrimitive) {
-				benRegIdValue = benRegId;
-			} else {
-				benRegIdValue = InputMapper.getInstance().gson().fromJson(json, String.class);
-			}
-
-			List<BeneficiariesDTO> list = svc.getBeneficiariesByBenRegId(new BigInteger(benRegIdValue));
+			List<BeneficiariesDTO> list = svc.getBeneficiariesByBenRegId(new BigInteger(benRegId));
 			list.removeIf(Objects::isNull);
 			Collections.sort(list);
 			response = getSuccessResponseString(list, 200, "success", "getBeneficiariesByBeneficiaryRegId");
@@ -151,9 +140,7 @@ public class IdentityController {
 	@Operation(summary = "Search identity based on beneficiary registration id")
 	@PostMapping(path = "/getByBenId", headers = "Authorization")
 	public String getBeneficiariesByBeneficiaryId(
-			@Param(value = "\"Integer\"") @RequestParam String benId) {
-		logger.info("IdentityController.getBeneficiary - start. benId = " + benId);
-
+			@Param(value = "\"Integer\"") @RequestParam("benId") String benId) {
 		String response;
 		try {
 			String benIdValue = "";
@@ -188,8 +175,7 @@ public class IdentityController {
 	@Operation(summary = "Search beneficiary based on phone number")
 	@PostMapping(path = "/getByPhoneNum", headers = "Authorization")
 	public String getBeneficiariesByPhoneNum(
-			@Param(value = "\"String\"") @RequestParam String phoneNum) {
-		logger.info("IdentityController.getBeneficiary - start. phoneNum = " + phoneNum);
+			@Param(value = "\"String\"") @RequestParam("phoneNum") String phoneNum) {
 		String response;
 		try {
 			String phoneNumValue = "";
@@ -220,8 +206,7 @@ public class IdentityController {
 	@Operation(summary = "Search beneficiary based on health ID / ABHA Address")
 	@PostMapping(path = "/getByAbhaAddress", headers = "Authorization")
 	public String searhBeneficiaryByABHAAddress(
-			@Param(value = "\"String\"") @RequestParam String healthID) {
-		logger.info("IdentityController.getBeneficiary - start. Health ID / ABHA Address = " + healthID);
+			@Param(value = "\"String\"") @RequestParam("healthID") String healthID) {
 		String response;
 		try {
 			String healthIDValue = "";
@@ -253,8 +238,7 @@ public class IdentityController {
 	@Operation(summary = "Search beneficiary based on health ID number / ABHA ID number")
 	@PostMapping(path = "/getByAbhaIdNo", headers = "Authorization")
 	public String searhBeneficiaryByABHAIdNo(
-			@Param(value = "\"String\"") @RequestParam String healthIDNo) {
-		logger.info("IdentityController.getBeneficiary - start. HealthIDNo / ABHA Id No = " + healthIDNo);
+			@Param(value = "\"String\"") @RequestParam("healthIDNo") String healthIDNo) {
 		String response;
 		try {
 			String healthIDNoValue = "";
@@ -286,8 +270,7 @@ public class IdentityController {
 	@Operation(summary = "Search beneficiary based on family id")
 	@PostMapping(path = "/searchByFamilyId", headers = "Authorization")
 	public String searhBeneficiaryByFamilyId(
-			@Param(value = "\"String\"") @RequestParam String familyId) {
-		logger.info("IdentityController.getBeneficiary - start. family id = " + familyId);
+			@Param(value = "\"String\"") @RequestParam("familyId") String familyId) {
 		String response;
 		try {
 
@@ -342,8 +325,7 @@ public class IdentityController {
 	@Operation(summary = "Search beneficiary based on government identity number")
 	@PostMapping(path = "/searhByGovIdentity", headers = "Authorization")
 	public String searhBeneficiaryByGovIdentity(
-			@Param(value = "\"String\"") @RequestParam String identity) {
-		logger.info("IdentityController.getBeneficiary - start. Gov Identity = " + identity);
+			@Param(value = "\"String\"") @RequestParam("identity") String identity) {
 		String response;
 		try {
 

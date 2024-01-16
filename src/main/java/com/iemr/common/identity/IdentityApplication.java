@@ -26,25 +26,21 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.iemr.common.identity.utils.IEMRApplBeans;
 
 @SpringBootApplication
-@EnableTransactionManagement
 public class IdentityApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
-		SpringApplication.run(applicationClass, args);
+		SpringApplication.run(IdentityApplication.class, args);
 	}
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(applicationClass);
+		return application.sources(IdentityApplication.class);
 	}
 
-	private static Class<IdentityApplication> applicationClass = IdentityApplication.class;
-	
 	@Bean
 	public IEMRApplBeans instantiateBeans(){
 		

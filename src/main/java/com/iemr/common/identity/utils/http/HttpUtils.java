@@ -41,6 +41,7 @@ import org.springframework.web.client.RestTemplate;
 import com.sun.jersey.multipart.FormDataBodyPart;
 import com.sun.jersey.multipart.FormDataMultiPart;
 
+
 @Component
 public class HttpUtils {
 	public static final String AUTHORIZATION = "Authorization";
@@ -126,8 +127,7 @@ public class HttpUtils {
 			try(FormDataMultiPart multiPart = new FormDataMultiPart();
 					FileInputStream is = new FileInputStream(data)) {
 				
-				FormDataBodyPart filePart = new FormDataBodyPart("content", is,
-						MediaType.APPLICATION_OCTET_STREAM_TYPE);
+				FormDataBodyPart filePart = new FormDataBodyPart();
 				multiPart.bodyPart(filePart);
 				multiPart.field("docPath", data);
 				headers.add("Content-Type", MediaType.APPLICATION_JSON);

@@ -25,6 +25,9 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 
+
+import com.google.gson.annotations.Expose;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,11 +35,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
-
-import org.hibernate.validator.constraints.Email;
-
-import com.google.gson.annotations.Expose;
-
+import jakarta.validation.constraints.Email;
 import lombok.Data;
 
 /**
