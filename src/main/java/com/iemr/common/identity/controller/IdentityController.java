@@ -114,7 +114,7 @@ public class IdentityController {
 	@Operation(summary = "Search beneficiary based on beneficiary registration id")
 	@PostMapping(path = "/getByBenRegId", headers = "Authorization")
 	public String getBeneficiariesByBeneficiaryRegId(
-			@Param(value = "\"Integer\"") @RequestParam String benRegId) {
+			@Param(value = "\"Integer\"") @RequestParam("benRegId") String benRegId) {
 		logger.info("IdentityController.getBeneficiary - start. benId = " + benRegId);
 		String response;
 		try {
@@ -151,7 +151,7 @@ public class IdentityController {
 	@Operation(summary = "Search identity based on beneficiary registration id")
 	@PostMapping(path = "/getByBenId", headers = "Authorization")
 	public String getBeneficiariesByBeneficiaryId(
-			@Param(value = "\"Integer\"") @RequestParam String benId) {
+			@Param(value = "\"Integer\"") @RequestParam("benId") String benId) {
 		logger.info("IdentityController.getBeneficiary - start. benId = " + benId);
 
 		String response;
@@ -188,7 +188,7 @@ public class IdentityController {
 	@Operation(summary = "Search beneficiary based on phone number")
 	@PostMapping(path = "/getByPhoneNum", headers = "Authorization")
 	public String getBeneficiariesByPhoneNum(
-			@Param(value = "\"String\"") @RequestParam String phoneNum) {
+			@Param(value = "\"String\"") @RequestParam("phoneNum") String phoneNum) {
 		logger.info("IdentityController.getBeneficiary - start. phoneNum = " + phoneNum);
 		String response;
 		try {
@@ -220,7 +220,7 @@ public class IdentityController {
 	@Operation(summary = "Search beneficiary based on health ID / ABHA Address")
 	@PostMapping(path = "/getByAbhaAddress", headers = "Authorization")
 	public String searhBeneficiaryByABHAAddress(
-			@Param(value = "\"String\"") @RequestParam String healthID) {
+			@Param(value = "\"String\"") @RequestParam("healthID") String healthID) {
 		logger.info("IdentityController.getBeneficiary - start. Health ID / ABHA Address = " + healthID);
 		String response;
 		try {
@@ -253,7 +253,7 @@ public class IdentityController {
 	@Operation(summary = "Search beneficiary based on health ID number / ABHA ID number")
 	@PostMapping(path = "/getByAbhaIdNo", headers = "Authorization")
 	public String searhBeneficiaryByABHAIdNo(
-			@Param(value = "\"String\"") @RequestParam String healthIDNo) {
+			@Param(value = "\"String\"") @RequestParam("healthIDNo") String healthIDNo) {
 		logger.info("IdentityController.getBeneficiary - start. HealthIDNo / ABHA Id No = " + healthIDNo);
 		String response;
 		try {
@@ -286,7 +286,7 @@ public class IdentityController {
 	@Operation(summary = "Search beneficiary based on family id")
 	@PostMapping(path = "/searchByFamilyId", headers = "Authorization")
 	public String searhBeneficiaryByFamilyId(
-			@Param(value = "\"String\"") @RequestParam String familyId) {
+			@Param(value = "\"String\"") @RequestParam("familyId") String familyId) {
 		logger.info("IdentityController.getBeneficiary - start. family id = " + familyId);
 		String response;
 		try {
@@ -342,7 +342,7 @@ public class IdentityController {
 	@Operation(summary = "Search beneficiary based on government identity number")
 	@PostMapping(path = "/searhByGovIdentity", headers = "Authorization")
 	public String searhBeneficiaryByGovIdentity(
-			@Param(value = "\"String\"") @RequestParam String identity) {
+			@Param(value = "\"String\"") @RequestParam("identity") String identity) {
 		logger.info("IdentityController.getBeneficiary - start. Gov Identity = " + identity);
 		String response;
 		try {

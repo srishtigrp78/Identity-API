@@ -10,7 +10,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -59,7 +59,7 @@ class FamilyTagServiceImplTest {
 		benFamilyMapping.setNoOfmembers(4);
 		when(familyTagRepo.searchFamilyByFamilyId(requestObj.getFamilyId())).thenReturn(benFamilyMapping );
 		String resp = familyTagServiceImpl.addTag(request);
-		Assert.assertNotNull(resp);
+		Assertions.assertNotNull(resp);
 	}
 
 	@Test
@@ -80,12 +80,12 @@ class FamilyTagServiceImplTest {
 		benFamilyMapping.setNoOfmembers(4);
 		when(familyTagRepo.searchFamilyByFamilyId("789")).thenReturn(benFamilyMapping);
 		String resp = familyTagServiceImpl.doFamilyUntag(string);
-		Assert.assertNotNull(resp);
+		Assertions.assertNotNull(resp);
 	}
 
 	@Test
 	void testEditFamilyDetailsCatchblock() throws IEMRException {
-		Assert.assertThrows(IEMRException.class, () -> familyTagServiceImpl.editFamilyDetails(null));
+		Assertions.assertThrows(IEMRException.class, () -> familyTagServiceImpl.editFamilyDetails(null));
 	}
 	
 	@Test
@@ -104,7 +104,7 @@ class FamilyTagServiceImplTest {
 		when(benMappingRepo.getBenDetailsId(BigInteger.valueOf(benFamilyMapping.getBeneficiaryRegId()))).thenReturn(mBeneficieryMapping);
 		
 		String editFamilyDetails = familyTagServiceImpl.editFamilyDetails(json);
-		Assert.assertNotNull(editFamilyDetails);
+		Assertions.assertNotNull(editFamilyDetails);
 	}
 	@Test
 	void testEditFamilyDetails_If_BenFamilyMapping_Null() throws IEMRException {
@@ -117,7 +117,7 @@ class FamilyTagServiceImplTest {
 		String json = new Gson().toJson(benFamilyMapping);
 		when(familyTagRepo.searchFamilyByFamilyId(benFamilyMapping.getFamilyId())).thenReturn(null);
 		
-		Assert.assertThrows(IEMRException.class, () -> familyTagServiceImpl.editFamilyDetails(json));
+		Assertions.assertThrows(IEMRException.class, () -> familyTagServiceImpl.editFamilyDetails(json));
 	}
 	@Test
 	void testEditFamilyDetailsIfMBeneficiarymappingNull() throws IEMRException {
@@ -134,12 +134,12 @@ class FamilyTagServiceImplTest {
 		mBeneficieryMapping.setVanID(123);
 		when(benMappingRepo.getBenDetailsId(BigInteger.valueOf(benFamilyMapping.getBeneficiaryRegId()))).thenReturn(null);
 		
-		Assert.assertThrows(IEMRException.class, () -> familyTagServiceImpl.editFamilyDetails(json));
+		Assertions.assertThrows(IEMRException.class, () -> familyTagServiceImpl.editFamilyDetails(json));
 	}
 
 	@Test
 	void testSearchFamilyCatchblock() throws IEMRException {
-		Assert.assertThrows(IEMRException.class, () -> familyTagServiceImpl.searchFamily(null));
+		Assertions.assertThrows(IEMRException.class, () -> familyTagServiceImpl.searchFamily(null));
 	}
 
 	@Test
@@ -154,7 +154,7 @@ class FamilyTagServiceImplTest {
 		list.add(benFamilyMapping);
 		when(familyTagRepo.searchFamilyWithFamilyId(benFamilyMapping.getFamilyName(),
 				benFamilyMapping.getVillageId(), benFamilyMapping.getFamilyId())).thenReturn(list);
-		Assert.assertNotNull(familyTagServiceImpl.searchFamily(json));
+		Assertions.assertNotNull(familyTagServiceImpl.searchFamily(json));
 	}
 	
 	@Test
@@ -169,7 +169,7 @@ class FamilyTagServiceImplTest {
 		list.add(benFamilyMapping);
 		when(familyTagRepo.searchFamily(benFamilyMapping.getFamilyName(),
 				benFamilyMapping.getVillageId())).thenReturn(list);
-		Assert.assertNotNull(familyTagServiceImpl.searchFamily(json));
+		Assertions.assertNotNull(familyTagServiceImpl.searchFamily(json));
 	}
 	@Test
 	void testSearchFamily_If_RESP_NULL() throws IEMRException {
@@ -182,12 +182,12 @@ class FamilyTagServiceImplTest {
 
 		when(familyTagRepo.searchFamily(benFamilyMapping.getFamilyName(),
 				benFamilyMapping.getVillageId())).thenReturn(null);
-		Assert.assertNotNull(familyTagServiceImpl.searchFamily(json));
+		Assertions.assertNotNull(familyTagServiceImpl.searchFamily(json));
 	}
 
 	@Test
 	void testCreateFamilyCatchBlock() throws IEMRException {
-		Assert.assertThrows(IEMRException.class, () -> familyTagServiceImpl.createFamily(null));
+		Assertions.assertThrows(IEMRException.class, () -> familyTagServiceImpl.createFamily(null));
 	}
 	@Test
 	void testCreateFamilyFamilyTaggedIDNull() throws IEMRException {
@@ -208,7 +208,7 @@ class FamilyTagServiceImplTest {
 		when(benMappingRepo
 		.getBenDetailsId(BigInteger.valueOf(benFamilyMapping.getBeneficiaryRegId()))).thenReturn(mBeneficiarymapping);
 		
-		Assert.assertThrows(IEMRException.class, () -> familyTagServiceImpl.createFamily(json));
+		Assertions.assertThrows(IEMRException.class, () -> familyTagServiceImpl.createFamily(json));
 	}
 	@Test
 	void testCreateFamily() throws IEMRException {
@@ -231,19 +231,19 @@ class FamilyTagServiceImplTest {
 		.getBenDetailsId(BigInteger.valueOf(benFamilyMapping.getBeneficiaryRegId()))).thenReturn(mBeneficiarymapping);
 		
 		String resp = familyTagServiceImpl.createFamily(json);
-		Assert.assertNotNull(resp);
+		Assertions.assertNotNull(resp);
 	}
 
 
 	@Test
 	void testGetFamilyId() throws IEMRException {
 		String resp = familyTagServiceImpl.getFamilyId("");
-		Assert.assertNotNull(resp);
+		Assertions.assertNotNull(resp);
 	}
 	
 	@Test
 	void testGetFamilyDetailsCatchBlock() throws IEMRException {
-		Assert.assertThrows(IEMRException.class, () -> familyTagServiceImpl.getFamilyDetails(null));
+		Assertions.assertThrows(IEMRException.class, () -> familyTagServiceImpl.getFamilyDetails(null));
 	}
 
 	@Test
@@ -265,6 +265,6 @@ class FamilyTagServiceImplTest {
 		when(benMappingRepo.getBenRegId(any(), any())).thenReturn(BigInteger.valueOf(987));
 		when(benDetailRepo.getFamilyDetails(any())).thenReturn(list);
 		String resp = familyTagServiceImpl.getFamilyDetails(json);
-		Assert.assertNotNull(resp);
+		Assertions.assertNotNull(resp);
 	}
 }

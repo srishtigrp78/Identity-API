@@ -21,8 +21,7 @@
 */
 package com.iemr.common.identity.service;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -37,13 +36,14 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.google.common.collect.Lists;
@@ -93,7 +93,7 @@ import com.iemr.common.identity.utils.mapper.OutputMapper;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.QueryTimeoutException;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class IdentityServiceTest {
 
 	@InjectMocks
@@ -468,7 +468,7 @@ public class IdentityServiceTest {
 			when(mappingRepo.getBenMappingByRegIDList(BenRegIds)).thenReturn(list);
 			List<BeneficiariesPartialDTO> dtoList = identityService
 					.getBeneficiariesPartialDeatilsByBenRegIdList(BenRegIds);
-			Assert.assertTrue(dtoList.size() > 0);
+			Assertions.assertTrue(dtoList.size() > 0);
 
 		}
 		@Test
@@ -705,7 +705,7 @@ public class IdentityServiceTest {
 			when(partialMapper.mBeneficiarymappingToBeneficiaryCreateResp(any())).thenReturn(resp);
 			
 			BeneficiaryCreateResp createIdentity = identityService.createIdentity(identityDTO);
-			Assert.assertNotNull(createIdentity);
+			Assertions.assertNotNull(createIdentity);
 			
 		}
 		@Test

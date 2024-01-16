@@ -88,7 +88,6 @@ import com.iemr.common.identity.repo.MBeneficiaryAccountRepo;
 import com.iemr.common.identity.repo.MBeneficiaryImageRepo;
 import com.iemr.common.identity.repo.V_BenAdvanceSearchRepo;
 import com.iemr.common.identity.repo.rmnch.RMNCHBeneficiaryDetailsRmnchRepo;
-import com.iemr.common.identity.utils.exception.IEMRException;
 import com.iemr.common.identity.utils.mapper.OutputMapper;
 import com.iemr.common.identity.utils.response.OutputResponse;
 
