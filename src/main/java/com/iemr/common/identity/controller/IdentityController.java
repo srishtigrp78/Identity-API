@@ -116,7 +116,7 @@ public class IdentityController {
 	@PostMapping(path = "/getByBenRegId", headers = "Authorization")
 	public String getBeneficiariesByBeneficiaryRegId(
 			@Param(value = "\"Integer\"") @RequestParam("benRegId") String benRegId) {
-		logger.info("IdentityController.getBeneficiary - start. benId = " + benRegId);
+		logger.info("IdentityController.getBeneficiary - start. benId {} " , benRegId);
 		String response;
 		try {
 			
