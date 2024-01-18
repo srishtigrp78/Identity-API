@@ -155,7 +155,7 @@ class IdentityControllerTest {
 		SearchSyncDTO searchSyncDTO = new SearchSyncDTO();
 		String req = new Gson().toJson(searchSyncDTO);
 		//when(svc.searchBeneficiaryByBlockIdAndLastModifyDate(any(), any())).thenReturn(bdList);
-		String resp = identityController.searchBeneficiaryByBlockIdAndLastModDate(req);
+		String resp = identityController.searchBeneficiaryByVillageIdAndLastModDate(req);
 		Assertions.assertNotNull(resp);
 		//Assertions.assertThrows(Exception.class, () -> 
 	}

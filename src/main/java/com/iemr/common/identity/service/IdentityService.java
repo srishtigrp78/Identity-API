@@ -505,16 +505,13 @@ public class IdentityService {
 		return beneficiaryList;
 	}
 
-	public List<BeneficiariesDTO> searchBeneficiaryByBlockIdAndLastModifyDate(Integer blockID, Timestamp lastModDate) {
+	public List<BeneficiariesDTO> searchBeneficiaryByVillageIdAndLastModifyDate(List<Integer> villageIDs, Timestamp lastModifiedDate) {
 
 		List<BeneficiariesDTO> beneficiaryList = new ArrayList<>();
 		try {
 			// find benmap ids
-			List<MBeneficiarymapping> benMappingsList = mappingRepo.findByBeneficiaryDetailsByBlockIDAndLastModifyDate(blockID, lastModDate);
-			if (benMappingsList == null || benMappingsList.isEmpty()){
-				return beneficiaryList;
-			}
-			else {
+			List<MBeneficiarymapping> benMappingsList = mappingRepo.findByBeneficiaryDetailsByVillageIDAndLastModifyDate(villageIDs, lastModifiedDate);
+			if (benMappingsList != null && !benMappingsList.isEmpty()){
 				for (MBeneficiarymapping benMapOBJ : benMappingsList) {
 					beneficiaryList.add(this.getBeneficiariesDTO(benMapOBJ));
 				}
@@ -522,11 +519,22 @@ public class IdentityService {
 
 		} catch (Exception e) {
 			logger.error(
-					"error in beneficiary search for familyId : " + blockID + " error : " + e.getLocalizedMessage());
+					"error in beneficiary search to sync to CHO App with villageIDs: " + villageIDs + " error : " + e.getLocalizedMessage());
 		}
 		return beneficiaryList;
 	}
-
+	
+	public Long countBeneficiaryByVillageIdAndLastModifyDate(List<Integer> villageIDs, Timestamp lastModifiedDate) {
+		Long beneficiaryCount = 0L;
+		try {
+			beneficiaryCount = mappingRepo.getBeneficiaryCountsByVillageIDAndLastModifyDate(villageIDs,
+					lastModifiedDate);
+		} catch (Exception e) {
+			logger.error("error in getting beneficiary count to sync to CHO App with villageIDs: " + villageIDs
+					+ " error : " + e.getLocalizedMessage());
+		}
+		return beneficiaryCount;
+	}
 	public List<BeneficiariesDTO> searhBeneficiaryByGovIdentity(String identity)
 			throws NoResultException, QueryTimeoutException {
 		List<BeneficiariesDTO> beneficiaryList = new ArrayList<>();
