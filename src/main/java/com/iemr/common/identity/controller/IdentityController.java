@@ -314,7 +314,7 @@ public class IdentityController {
 
 			logger.info("IdentityController.getBeneficiary - end");
 		} catch (Exception e) {
-			logger.error("error in beneficiary search by village Ids and last sync date : " + e.getLocalizedMessage());
+			logger.error("error in beneficiary search by village Ids and last sync date : {} " , e.getLocalizedMessage());
 			response = getErrorResponseString("error in beneficiary search by village Ids and last sync date  : " + e.getLocalizedMessage(),
 					5000, "failure", "");
 		}
@@ -326,7 +326,6 @@ public class IdentityController {
 		@PostMapping(path = "/countBenByVillageIdAndLastModifiedDate")
 		public String countBeneficiaryByVillageIdAndLastModDate(
 				@Param(value = "\"String\"") @RequestBody String object) {
-			logger.info("IdentityController.getBeneficiaryCount- start. search object = " + object);
 			String response;
 			try {
 
@@ -336,7 +335,7 @@ public class IdentityController {
 				response = getSuccessResponseString(String.valueOf(beneficiaryCount), 200, "success", "getIdentityCountByVillageAndLastSyncTime");
 				logger.info("IdentityController.getBeneficiaryCount - end");
 			} catch (Exception e) {
-				logger.error("error in getting beneficiary count by village Ids and last sync date : " + e.getLocalizedMessage());
+				logger.error("error in getting beneficiary count by village Ids and last sync date : {} " , e.getLocalizedMessage());
 				response = getErrorResponseString("error in getting beneficiary count by village Ids and last sync date  : " + e.getLocalizedMessage(),
 						5000, "failure", "");
 			}
@@ -364,7 +363,7 @@ public class IdentityController {
 
 			logger.info("IdentityController.getBeneficiary - end");
 		} catch (Exception e) {
-			logger.error("error in beneficiary search by Gov Identity No : " + e.getLocalizedMessage());
+			logger.error("error in beneficiary search by Gov Identity No : {} " , e.getLocalizedMessage());
 			response = getErrorResponseString(
 					"error in beneficiary search by GovIdentity No : " + e.getLocalizedMessage(), 5000, "failure", "");
 		}

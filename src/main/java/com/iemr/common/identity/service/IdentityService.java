@@ -519,7 +519,7 @@ public class IdentityService {
 
 		} catch (Exception e) {
 			logger.error(
-					"error in beneficiary search to sync to CHO App with villageIDs: " + villageIDs + " error : " + e.getLocalizedMessage());
+					"error in beneficiary search to sync to CHO App with villageIDs: {} " , villageIDs + " error : " + e.getLocalizedMessage());
 		}
 		return beneficiaryList;
 	}
@@ -531,7 +531,7 @@ public class IdentityService {
 					lastModifiedDate);
 		} catch (Exception e) {
 			logger.error("error in getting beneficiary count to sync to CHO App with villageIDs: " + villageIDs
-					+ " error : " + e.getLocalizedMessage());
+					+ " error : {} " , e.getLocalizedMessage());
 		}
 		return beneficiaryCount;
 	}
