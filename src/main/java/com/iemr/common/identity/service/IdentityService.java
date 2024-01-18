@@ -530,7 +530,7 @@ public class IdentityService {
 			beneficiaryCount = mappingRepo.getBeneficiaryCountsByVillageIDAndLastModifyDate(villageIDs,
 					lastModifiedDate);
 		} catch (Exception e) {
-			logger.error("error in getting beneficiary count to sync to CHO App with villageIDs: {} " , villageIDs + " error : {} " , e.getLocalizedMessage());
+			logger.error("error in getting beneficiary count to sync to CHO App with villageIDs: {},error :{} " , villageIDs ,e.getLocalizedMessage());
 		}
 		return beneficiaryCount;
 	}

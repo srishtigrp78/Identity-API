@@ -60,14 +60,12 @@ public class RMNCHMobileAppController {
 		OutputResponse response = new OutputResponse();
 		try {
 			if (requestOBJ != null) {
-				logger.info("request object with timestamp : " + new Timestamp(System.currentTimeMillis()) + " "
-						+ requestOBJ);
 				String s = rmnchDataSyncService.syncDataToAmrit(requestOBJ);
 				response.setResponse(s);
 			} else
 				response.setError(5000, "Invalid/NULL request obj");
 		} catch (Exception e) {
-			logger.error("Error in RMNCH mobile data sync : " + e);
+			logger.error("Error in RMNCH mobile data sync : {} " , e);
 			response.setError(5000, "Error in RMNCH mobile data sync : " + e);
 		}
 		return response.toString();
