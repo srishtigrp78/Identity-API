@@ -317,9 +317,9 @@ public class IdentityController {
 
 	// search beneficiary by lastModDate and districtID
 	@CrossOrigin(origins = { "*commonapi*" })
-	@ApiOperation(value ="Search beneficiary by blockId and last modified date")
-	@PostMapping(path = "/searchByDistrictId")
-	public @ResponseBody String searchBeneficiaryByBlockIdAndLastModDate(
+	@ApiOperation(value ="Search beneficiary by villageId and last modified date-time")
+	@PostMapping(path = "/searchByVillageIdAndLastModifiedDate")
+	public @ResponseBody String searchBeneficiaryByVillageIdAndLastModDate(
 			@ApiParam(value = "\"String\"") @RequestBody String object) {
 		logger.info("IdentityController.getBeneficiary - start. search object = " + object);
 		String response;
@@ -328,14 +328,40 @@ public class IdentityController {
 			JsonElement json = new JsonParser().parse(object);
 
 			SearchSyncDTO search = InputMapper.getInstance().gson().fromJson(json, SearchSyncDTO.class);
-			List<BeneficiariesDTO> list = svc.searchBeneficiaryByBlockIdAndLastModifyDate(search.getBlockID(), new Timestamp(search.getLastModifDate()));
+			List<BeneficiariesDTO> list = svc.searchBeneficiaryByVillageIdAndLastModifyDate(search.getVillageID(), new Timestamp(search.getLastModifiedDate()));
 
-			response = getSuccessResponseString(list, 200, "success", "getIdentityByAgent");
+			response = getSuccessResponseString(list, 200, "success", "getIdentityByVillageAndLastSyncTime");
 
 			logger.info("IdentityController.getBeneficiary - end");
 		} catch (Exception e) {
-			logger.error("error in beneficiary search by Family Id : " + e.getLocalizedMessage());
-			response = getErrorResponseString("error in beneficiary search by block Id  : " + e.getLocalizedMessage(),
+			logger.error("error in beneficiary search by village Ids and last sync date : " + e.getLocalizedMessage());
+			response = getErrorResponseString("error in beneficiary search by village Ids and last sync date  : " + e.getLocalizedMessage(),
+					5000, "failure", "");
+		}
+		return response;
+	}
+
+	// search beneficiary by lastModDate and districtID
+	@CrossOrigin(origins = { "*commonapi*" })
+	@ApiOperation(value ="Get count of beneficiary by villageId and last modified date-time")
+	@PostMapping(path = "/countBenByVillageIdAndLastModifiedDate")
+	public @ResponseBody String countBeneficiaryByVillageIdAndLastModDate(
+			@ApiParam(value = "\"String\"") @RequestBody String object) {
+		logger.info("IdentityController.getBeneficiaryCount- start. search object = " + object);
+		String response;
+		try {
+
+			JsonElement json = new JsonParser().parse(object);
+
+			SearchSyncDTO search = InputMapper.getInstance().gson().fromJson(json, SearchSyncDTO.class);
+			Long beneficiaryCount = svc.countBeneficiaryByVillageIdAndLastModifyDate(search.getVillageID(), new Timestamp(search.getLastModifiedDate()));
+
+			response = getSuccessResponseString(String.valueOf(beneficiaryCount), 200, "success", "getIdentityCountByVillageAndLastSyncTime");
+
+			logger.info("IdentityController.getBeneficiaryCount - end");
+		} catch (Exception e) {
+			logger.error("error in getting beneficiary count by village Ids and last sync date : " + e.getLocalizedMessage());
+			response = getErrorResponseString("error in getting beneficiary count by village Ids and last sync date  : " + e.getLocalizedMessage(),
 					5000, "failure", "");
 		}
 		return response;
