@@ -65,7 +65,7 @@ public class RMNCHMobileAppController {
 			} else
 				response.setError(5000, "Invalid/NULL request obj");
 		} catch (Exception e) {
-			logger.error("Error in RMNCH mobile data sync : {} " , e);
+			logger.error("Error in RMNCH mobile data sync : {} " , e.getMessage());
 			response.setError(5000, "Error in RMNCH mobile data sync : " + e);
 		}
 		return response.toString();
