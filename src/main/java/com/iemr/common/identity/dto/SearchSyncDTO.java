@@ -21,12 +21,14 @@
 */
 package com.iemr.common.identity.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
 public class SearchSyncDTO {
 
-	private Long lastModifDate;
-	private Integer blockID;
+	private Long lastModifiedDate;
+	private List<Integer> villageID;
 
 }
