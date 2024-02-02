@@ -431,6 +431,15 @@ public class IdentityServiceTest {
 			identityDTO.setIsEmerAddrSameAsCurrAddr(true);
 			identityDTO.setIsEmerAddrSameAsPermAddr(true);
 			
+			IdentityDTO identityDTODup=new IdentityDTO();
+			identityDTODup.setIsPermAddrSameAsCurrAddr(true);
+			identityDTODup.setIsPermAddrSameAsEmerAddr(true);
+			identityDTODup.setIsEmerAddrSameAsCurrAddr(true);
+			identityDTODup.setIsEmerAddrSameAsPermAddr(true);
+			
+			identityDTO.equals(identityDTODup);
+			identityDTO.hashCode();
+			
 			MBeneficiaryaddress benaddress=new MBeneficiaryaddress();
 			benaddress.setBenAddressID(new BigInteger("101"));
 			
@@ -533,6 +542,7 @@ public class IdentityServiceTest {
 			identityEditDTO.setChangeInFamilyDetails(true);	
 			identityEditDTO.setChangeInBankDetails(true);
 			identityEditDTO.setChangeInBenImage(true);
+			identityEditDTO.hashCode();
 			MBeneficiarymapping benMapping = new MBeneficiarymapping();
 			benMapping.setMBeneficiarydetail(beneficiarydetail);
 			benMapping.setMBeneficiaryaddress(beneficiaryaddress);
@@ -696,6 +706,9 @@ public class IdentityServiceTest {
 			
 			
 			MBeneficiarymapping benMapping = new MBeneficiarymapping();
+			MBeneficiarymapping benMappingDuplicate = new MBeneficiarymapping();
+			benMapping.equals(benMappingDuplicate);
+			benMapping.hashCode();
 			benMapping.toString();
 			when(identityMapper.identityDTOToMBeneficiarymapping(any())).thenReturn(benMapping);
 			when(mappingRepo.save(benMapping)).thenReturn(benMapping);
