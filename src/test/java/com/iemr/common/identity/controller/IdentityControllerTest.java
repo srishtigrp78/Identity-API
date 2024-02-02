@@ -78,6 +78,7 @@ class IdentityControllerTest {
 		//when(svc.getBeneficiaries(searchParams)).thenReturn(any()).thenReturn(bdList);
 		String resp = identityController.getBeneficiaries(req);
 		Assertions.assertNotNull(resp);
+
 	}
 
 	private void makeBeneficiariesDTO(BeneficiariesDTO dto) {
@@ -155,6 +156,7 @@ class IdentityControllerTest {
 		dto.toString();
 		BeneficiariesDTO beneficiariesDTO = new BeneficiariesDTO();
 		dto.equals(beneficiariesDTO);
+
 	}
 
 	@Test
@@ -238,9 +240,10 @@ class IdentityControllerTest {
 		SearchSyncDTO searchSyncDTO = new SearchSyncDTO();
 		String req = new Gson().toJson(searchSyncDTO);
 		//when(svc.searchBeneficiaryByBlockIdAndLastModifyDate(any(), any())).thenReturn(bdList);
+
 		String resp = identityController.searchBeneficiaryByVillageIdAndLastModDate(req);
+
 		Assertions.assertNotNull(resp);
-		//Assertions.assertThrows(Exception.class, () -> 
 	}
 
 	

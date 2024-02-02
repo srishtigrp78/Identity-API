@@ -11,16 +11,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.test.util.ReflectionTestUtils;
+
 
 import com.google.gson.Gson;
 import com.iemr.common.identity.data.rmnch.GetBenRequestHandler;
@@ -28,12 +29,14 @@ import com.iemr.common.identity.data.rmnch.RMNCHBeneficiaryDetailsRmnch;
 import com.iemr.common.identity.data.rmnch.RMNCHBornBirthDetails;
 import com.iemr.common.identity.data.rmnch.RMNCHCBACdetails;
 import com.iemr.common.identity.data.rmnch.RMNCHHouseHoldDetails;
+
 import com.iemr.common.identity.data.rmnch.RMNCHMBeneficiaryAccount;
 import com.iemr.common.identity.data.rmnch.RMNCHMBeneficiaryImage;
 import com.iemr.common.identity.data.rmnch.RMNCHMBeneficiaryaddress;
 import com.iemr.common.identity.data.rmnch.RMNCHMBeneficiarycontact;
 import com.iemr.common.identity.data.rmnch.RMNCHMBeneficiarydetail;
 import com.iemr.common.identity.data.rmnch.RMNCHMBeneficiarymapping;
+
 import com.iemr.common.identity.repo.rmnch.RMNCHBenAccountRepo;
 import com.iemr.common.identity.repo.rmnch.RMNCHBenAddressRepo;
 import com.iemr.common.identity.repo.rmnch.RMNCHBenContactRepo;
@@ -93,8 +96,7 @@ class RmnchDataSyncServiceImplTest {
 		rMNCHBeneficiaryDetailsRmnch.equals(rMNCHBeneficiaryDetailsRmnch2);
 		rMNCHBeneficiaryDetailsRmnch.toString();
 		String json = new Gson().toJson(rMNCHBeneficiaryDetailsRmnch);
-		
-		
+
 		  JSONObject jsonObject = new JSONObject();
 		  
 		  List<String> list=new ArrayList<>(); list.add(json); char s= '"'; String t =
