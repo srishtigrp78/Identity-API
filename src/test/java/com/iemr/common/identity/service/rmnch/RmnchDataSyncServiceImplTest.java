@@ -186,6 +186,8 @@ class RmnchDataSyncServiceImplTest {
 		m.setBenAddressId(BigInteger.valueOf(9));
 		m.setBenConsentId(BigInteger.valueOf(9));
 		m.setBenRegId(BigInteger.valueOf(9));
+		m.hashCode();
+		m.equals(m);
 		m.toString();
 		RMNCHMBeneficiarydetail benDetailsOBJ = new RMNCHMBeneficiarydetail();
 		
@@ -215,12 +217,15 @@ class RmnchDataSyncServiceImplTest {
 		RMNCHMBeneficiarycontact benContactOBJ = new RMNCHMBeneficiarycontact();
 		benContactOBJ.toString();
 		RMNCHBeneficiaryDetailsRmnch benDetailsRMNCHOBJ = new RMNCHBeneficiaryDetailsRmnch();
+		benDetailsRMNCHOBJ.hashCode();
 		benDetailsRMNCHOBJ.toString();
 		
 		RMNCHBornBirthDetails benBotnBirthRMNCHROBJ = new RMNCHBornBirthDetails();
+		benBotnBirthRMNCHROBJ.hashCode();
 		benBotnBirthRMNCHROBJ.toString();
 		
 		RMNCHCBACdetails benCABCRMNCHROBJ = new RMNCHCBACdetails();
+		benCABCRMNCHROBJ.hashCode();
 		benCABCRMNCHROBJ.toString();
 		
 		Object[] elements = new Object[4];
