@@ -34,7 +34,7 @@ import org.springframework.stereotype.Repository;
 import com.iemr.common.identity.data.rmnch.RMNCHMBeneficiaryaddress;
 
 @Repository
-public interface RMNCHBenAddressRepo extends JpaRepository<RMNCHMBeneficiaryaddress, Long> {
+public interface RMNCHBenAddressRepo extends JpaRepository<RMNCHMBeneficiaryaddress, BigInteger> {
 	@Query(" SELECT t FROM RMNCHMBeneficiaryaddress t WHERE t.id = :vanSerialNo AND t.VanID = :vanID")
 	public RMNCHMBeneficiaryaddress getByIdAndVanID(@Param("vanSerialNo") BigInteger vanSerialNo,
 			@Param("vanID") int vanID);

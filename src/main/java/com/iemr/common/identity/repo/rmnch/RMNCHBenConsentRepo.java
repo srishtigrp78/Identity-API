@@ -31,7 +31,7 @@ import org.springframework.stereotype.Repository;
 import com.iemr.common.identity.data.rmnch.RMNCHMBeneficiaryconsent;
 
 @Repository
-public interface RMNCHBenConsentRepo extends CrudRepository<RMNCHMBeneficiaryconsent, Long> {
+public interface RMNCHBenConsentRepo extends CrudRepository<RMNCHMBeneficiaryconsent, BigInteger> {
 	@Query(" SELECT t FROM RMNCHMBeneficiaryconsent t WHERE t.id = :vanSerialNo AND t.VanID = :vanID")
 	public RMNCHMBeneficiaryconsent getByIdAndVanID(@Param("vanSerialNo") BigInteger vanSerialNo,
 			@Param("vanID") int vanID);

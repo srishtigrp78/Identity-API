@@ -46,7 +46,7 @@ import lombok.Data;
 @Data
 public class RMNCHBornBirthDetails {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Expose
 	@Column(name = "BornBirthDeatilsId", insertable = false, updatable = false)
 	private Long bornBirthDeatilsId;

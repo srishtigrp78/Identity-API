@@ -40,7 +40,7 @@ import lombok.Data;
 @Data
 public class MBeneficiaryImage {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "BenImageId")
 	private Long benImageId;
 	@Column(name = "BenImage")

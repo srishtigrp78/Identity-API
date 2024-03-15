@@ -45,7 +45,7 @@ import lombok.Data;
 @Data
 public class RMNCHCBACdetails {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Expose
 	@Column(name = "CBACDetailsid", insertable = false, updatable = false)
 	private Long cBACDetailsid;
