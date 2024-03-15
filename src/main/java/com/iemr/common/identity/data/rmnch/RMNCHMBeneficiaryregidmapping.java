@@ -45,7 +45,7 @@ public class RMNCHMBeneficiaryregidmapping {
 	private Long benRegId;
 
 	@Column(nullable = false)
-	private Long beneficiaryID;
+	private BigInteger beneficiaryID;
 
 	@Column(length = 30)
 	private String createdBy;

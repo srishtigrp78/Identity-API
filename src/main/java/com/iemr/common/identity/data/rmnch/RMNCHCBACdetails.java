@@ -21,6 +21,7 @@
 */
 package com.iemr.common.identity.data.rmnch;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
@@ -52,7 +53,7 @@ public class RMNCHCBACdetails {
 
 	@Expose
 	@Column(name = "BeneficiaryRegId")
-	private Long BenRegId;
+	private BigInteger BenRegId;
 
 	@Expose
 	@Column(name = "cbac_age")
@@ -380,7 +381,7 @@ public class RMNCHCBACdetails {
 
 	@Expose
 	@Column(name = "beneficiaryId")
-	private Long benficieryid;
+	private BigInteger benficieryid;
 
 	// new fields, 16-09-2021
 	@Expose

@@ -133,7 +133,7 @@ public class RmnchDataSyncServiceImpl implements RmnchDataSyncService {
 				// other tables data saving
 				// ben details RMNCH extra fields details
 
-				Long benRegID = null;
+				BigInteger benRegID = null;
 
 				if (jsnOBJ != null && jsnOBJ.has("beneficiaryDetails")) {
 					RMNCHBeneficiaryDetailsRmnch[] objArr = InputMapper.gson()
@@ -167,7 +167,7 @@ public class RmnchDataSyncServiceImpl implements RmnchDataSyncService {
 									obj.setRelatedBeneficiaryIdsDB(sb.toString());
 								}
 								RMNCHMBeneficiarydetail rmnchmBeneficiarydetail =
-										rMNCHBenDetailsRepo.getByBenRegID(BigInteger.valueOf(obj.getBenRegId()));
+										rMNCHBenDetailsRepo.getByBenRegID(obj.getBenRegId());
 								if (rmnchmBeneficiarydetail != null) {
 									rmnchmBeneficiarydetail.setFirstName(obj.getFirstName());
 									rmnchmBeneficiarydetail.setLastName(obj.getLastName());
@@ -408,10 +408,10 @@ public class RmnchDataSyncServiceImpl implements RmnchDataSyncService {
 
 					if (m.getBenRegId() != null) {
 						benDetailsRMNCHOBJ = rMNCHBeneficiaryDetailsRmnchRepo
-								.getByRegID((m.getBenRegId()).longValue());
-						benBotnBirthRMNCHROBJ = rMNCHBornBirthDetailsRepo.getByRegID((m.getBenRegId()).longValue());
+								.getByRegID(m.getBenRegId());
+						benBotnBirthRMNCHROBJ = rMNCHBornBirthDetailsRepo.getByRegID(m.getBenRegId());
 
-						benCABCRMNCHROBJ = rMNCHCBACDetailsRepo.getByRegID((m.getBenRegId()).longValue());
+						benCABCRMNCHROBJ = rMNCHCBACDetailsRepo.getByRegID(m.getBenRegId());
 						// 20-09-2021,start
 						NcdTbHrpData res = getHRP_NCD_TB_SuspectedStatus(m.getBenRegId().longValue(), authorisation,
 								benDetailsOBJ);
@@ -554,7 +554,7 @@ public class RmnchDataSyncServiceImpl implements RmnchDataSyncService {
 					// new fields
 					benDetailsRMNCHOBJ.setRegistrationDate(benDetailsOBJ.getCreatedDate());
 					if (benID != null)
-						benDetailsRMNCHOBJ.setBenficieryid(benID.longValue());
+						benDetailsRMNCHOBJ.setBenficieryid(benID);
 
 					if (benDetailsOBJ.getLastName() != null)
 						benDetailsRMNCHOBJ.setLastName(benDetailsOBJ.getLastName());

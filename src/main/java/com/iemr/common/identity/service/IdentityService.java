@@ -43,6 +43,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Objects;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -576,9 +577,9 @@ public class IdentityService {
 		benMapOBJ.setCreatedDate((Timestamp) benMapArr[11]);
 
 		if (benMapArr != null && benMapArr.length == 12 && benMapArr[8] != null && benMapArr[9] != null) {
-
+			Long benRegID = Long.valueOf(benMapArr[5].toString());
 			RMNCHBeneficiaryDetailsRmnch obj = rMNCHBeneficiaryDetailsRmnchRepo
-					.getByRegID(((BigInteger) benMapArr[5]).longValue());
+					.getByRegID(BigInteger.valueOf(benRegID));
 			if (obj != null) {
 				if (obj.getHouseoldId() != null)
 					benMapOBJ.setHouseHoldID(obj.getHouseoldId());
@@ -599,7 +600,7 @@ public class IdentityService {
 			benMapOBJ.setMBeneficiaryregidmapping(regIdRepo
 					.getWithVanSerialNoVanID(getBigIntegerValueFromObject(benMapArr[5]), (Integer) benMapArr[8]));
 			benMapOBJ.setMBeneficiaryImage(
-					imageRepo.getWithVanSerialNoVanID((Long) benMapArr[6], (Integer) benMapArr[8]));
+					imageRepo.getWithVanSerialNoVanID(BigInteger.valueOf(Long.valueOf(benMapArr[6].toString())), (Integer) benMapArr[8]));
 			benMapOBJ.setMBeneficiaryAccount(accountRepo
 					.getWithVanSerialNoVanID(getBigIntegerValueFromObject(benMapArr[7]), (Integer) benMapArr[8]));
 
@@ -928,7 +929,7 @@ public class IdentityService {
 			 * new logic for data sync, 26-09-2018
 			 */
 			// getting correct beneficiaryDetailsId by passing vanSerialNo & vanID
-			Long benImageId = imageRepo.findIdByVanSerialNoAndVanID(benMapping.getMBeneficiaryImage().getBenImageId(),
+			BigInteger benImageId = imageRepo.findIdByVanSerialNoAndVanID(benMapping.getMBeneficiaryImage().getBenImageId(),
 					benMapping.getVanID());
 			// next statement is new one, setting correct beneficiaryDetailsId
 			if (benImageId != null)

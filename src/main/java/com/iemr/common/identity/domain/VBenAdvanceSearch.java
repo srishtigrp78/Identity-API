@@ -56,7 +56,7 @@ public class VBenAdvanceSearch {
 	private BigInteger benAddressID;
 	@Expose
 	@Column(name = "BenImageId")
-	private Long benImageID;
+	private BigInteger benImageID;
 	@Expose
 	@Column(name = "BenContactsId")
 	private BigInteger benContactID;
@@ -193,11 +193,11 @@ public class VBenAdvanceSearch {
 		this.benAddressID = benAddressID;
 	}
 
-	public Long getBenImageID() {
+	public BigInteger getBenImageID() {
 		return benImageID;
 	}
 
-	public void setBenImageID(Long benImageID) {
+	public void setBenImageID(BigInteger benImageID) {
 		this.benImageID = benImageID;
 	}
 

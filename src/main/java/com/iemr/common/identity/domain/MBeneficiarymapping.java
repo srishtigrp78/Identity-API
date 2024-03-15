@@ -171,7 +171,7 @@ public class MBeneficiarymapping implements Serializable {
 	private MBeneficiaryImage mBeneficiaryImage;
 
 	@Column(name = "benImageId", insertable = false, updatable = false)
-	private Long benImageId;
+	private BigInteger benImageId;
 
 	// uni-directional one-to-one association
 	@OneToOne
@@ -179,7 +179,7 @@ public class MBeneficiarymapping implements Serializable {
 	private MBeneficiaryAccount mBeneficiaryAccount;
 
 	@Column(name = "benAccountID", insertable = false, updatable = false)
-	private Long benAccountID;
+	private BigInteger benAccountID;
 
 	// End
 
@@ -213,7 +213,7 @@ public class MBeneficiarymapping implements Serializable {
 	}
 
 	public MBeneficiarymapping(BigInteger benMapId, BigInteger benAddressId, BigInteger benConsentId,
-			BigInteger benContactsId, BigInteger benDetailsId, BigInteger benRegId, Long benImageId, Long benAccountID,
+			BigInteger benContactsId, BigInteger benDetailsId, BigInteger benRegId, BigInteger benImageId, BigInteger benAccountID,
 			Integer vanID, BigInteger vanSerialNo, String createdBy, Timestamp createdDate) {
 		super();
 		this.benMapId = benMapId;

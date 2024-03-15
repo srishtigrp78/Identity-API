@@ -21,6 +21,8 @@
 */
 package com.iemr.common.identity.repo.rmnch;
 
+import java.math.BigInteger;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -29,11 +31,11 @@ import org.springframework.stereotype.Repository;
 import com.iemr.common.identity.data.rmnch.RMNCHBeneficiaryDetailsRmnch;
 
 @Repository
-public interface RMNCHBeneficiaryDetailsRmnchRepo extends CrudRepository<RMNCHBeneficiaryDetailsRmnch, Long> {
+public interface RMNCHBeneficiaryDetailsRmnchRepo extends CrudRepository<RMNCHBeneficiaryDetailsRmnch, BigInteger> {
 	@Query(" SELECT t FROM RMNCHBeneficiaryDetailsRmnch t WHERE t.id = :vanSerialNo AND t.VanID = :vanID")
-	public RMNCHBeneficiaryDetailsRmnch getByIdAndVanID(@Param("vanSerialNo") Long vanSerialNo,
+	public RMNCHBeneficiaryDetailsRmnch getByIdAndVanID(@Param("vanSerialNo") BigInteger vanSerialNo,
 			@Param("vanID") int vanID);
 
 	@Query(" SELECT t FROM RMNCHBeneficiaryDetailsRmnch t WHERE t.BenRegId =:benRegID ")
-	public RMNCHBeneficiaryDetailsRmnch getByRegID(@Param("benRegID") Long benRegID);
+	public RMNCHBeneficiaryDetailsRmnch getByRegID(@Param("benRegID") BigInteger bigInteger);
 }

@@ -21,6 +21,7 @@
 */
 package com.iemr.common.identity.domain;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
@@ -42,7 +43,7 @@ public class MBeneficiaryImage {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "BenImageId")
-	private Long benImageId;
+	private BigInteger benImageId;
 	@Column(name = "BenImage")
 	private String benImage;
 	@Column(name = "BenBiometric")
