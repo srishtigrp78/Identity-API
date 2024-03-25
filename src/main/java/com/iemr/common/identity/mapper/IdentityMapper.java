@@ -294,7 +294,7 @@ public interface IdentityMapper {
 	@Mapping(target = "beneficiaryDetails.title", source = "map.MBeneficiarydetail.title")
 	@Mapping(target = "beneficiaryDetails.zoneId", source = "map.MBeneficiarydetail.zoneId")
 	@Mapping(target = "contacts", expression = "java( Phone.createContactList(map.getMBeneficiarycontact(), "
-			+ "benRegId.toString(), map.getMBeneficiarydetail().getFirstName() + \" \" + "
+			+ "benRegId != null ? benRegId.toString() : null, map.getMBeneficiarydetail().getFirstName() + \" \" + "
 			+ "map.getMBeneficiarydetail().getMiddleName() + \" \" + " + "map.getMBeneficiarydetail().getLastName()))")
 
 	@Mapping(target = "permanentAddress.zoneID", source = "map.MBeneficiaryaddress.permZoneID")
