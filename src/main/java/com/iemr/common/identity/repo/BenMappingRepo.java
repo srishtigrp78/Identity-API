@@ -42,7 +42,7 @@ public interface BenMappingRepo extends CrudRepository<MBeneficiarymapping, BigI
 	MBeneficiarymapping findByBenMapIdOrderByBenMapIdAsc(BigInteger benMapId);
 
 	MBeneficiarymapping findByBenRegIdOrderByBenMapIdAsc(BigInteger benRegId);
-	
+
 	@Query("select m from MBeneficiarymapping m where m.mBeneficiarydetail.beneficiaryDetailsId = :beneficiaryDetailsId"
 			+ " order by m.benMapId Asc")
 	MBeneficiarymapping findByBeneficiaryDetailsId(@Param("beneficiaryDetailsId") BigInteger beneficiaryDetailsId);
@@ -58,7 +58,6 @@ public interface BenMappingRepo extends CrudRepository<MBeneficiarymapping, BigI
 
 	@Query("select t from MBeneficiarymapping t where t.benRegId = :benRegID")
 	MBeneficiarymapping getBenImageIdByBenRegID(@Param("benRegID") BigInteger benRegID);
-
 
 	@Transactional
 	@Modifying
@@ -87,7 +86,7 @@ public interface BenMappingRepo extends CrudRepository<MBeneficiarymapping, BigI
 	@Query(value = "SELECT BenMapId, BenAddressId, BenConsentId, BenContactsId, BenDetailsId, "
 			+ " BenRegId, BenImageId, BenAccountID, VanID, VanSerialNo, "
 			+ " CreatedBy, CreatedDate FROM i_beneficiarymapping "
-			+ " WHERE BenRegId IN :benRegIDList ORDER BY BenMapId Desc ",nativeQuery = true)
+			+ " WHERE BenRegId IN :benRegIDList ORDER BY BenMapId Desc ", nativeQuery = true)
 	public List<Object[]> getBenMappingByRegIDList(@Param("benRegIDList") List<BigInteger> benRegIDList);
 
 	@Query("SELECT t FROM MBeneficiarymapping t WHERE t.benRegId =:benRegId")
@@ -113,23 +112,27 @@ public interface BenMappingRepo extends CrudRepository<MBeneficiarymapping, BigI
 	@Query(value = "select m from MBeneficiarymapping m where m.mBeneficiaryaddress.permVillageId IN :villageIDs and "
 			+ "(m.mBeneficiaryaddress.lastModDate > :lastModDate or m.mBeneficiarycontact.lastModDate > :lastModDate "
 			+ "or m.mBeneficiarydetail.lastModDate > :lastModDate ) order by m.benMapId Desc")
-	List<MBeneficiarymapping> findByBeneficiaryDetailsByVillageIDAndLastModifyDate(@Param("villageIDs") List<Integer> villageID, @Param("lastModDate") Timestamp lastModifiedDate);
+	List<MBeneficiarymapping> findByBeneficiaryDetailsByVillageIDAndLastModifyDate(
+			@Param("villageIDs") List<Integer> villageID, @Param("lastModDate") Timestamp lastModifiedDate);
 
 	@Query(value = "select COUNT(m) from MBeneficiarymapping m where m.mBeneficiaryaddress.permVillageId IN :villageIDs and "
 			+ "(m.mBeneficiaryaddress.lastModDate > :lastModDate or m.mBeneficiarycontact.lastModDate > :lastModDate "
 			+ "or m.mBeneficiarydetail.lastModDate > :lastModDate ) order by m.benMapId Desc")
-	Long getBeneficiaryCountsByVillageIDAndLastModifyDate(@Param("villageIDs") List<Integer> villageID, @Param("lastModDate") Timestamp lastModifiedDate);
-	
-	List<MBeneficiarymapping> dynamicFilterSearch(IdentitySearchDTO searchDTO);
+	Long getBeneficiaryCountsByVillageIDAndLastModifyDate(@Param("villageIDs") List<Integer> villageID,
+			@Param("lastModDate") Timestamp lastModifiedDate);
 
-	/**
-	 * This method is to search finite beneficiary for MCTS before in order to
-	 * generate iemr ID and can be use to finite search generally
+	/*
+	 * List<MBeneficiarymapping> dynamicFilterSearch(IdentitySearchDTO searchDTO);
 	 * 
-	 * @param identityDTO
-	 * @return mBeneficiarymappingList
-	 */
-	List<MBeneficiarymapping> finiteSearch(IdentityDTO identityDTO);
-
-	List<VBenAdvanceSearch> dynamicFilterSearchNew(IdentitySearchDTO searchDTO);
+	 *//**
+		 * This method is to search finite beneficiary for MCTS before in order to
+		 * generate iemr ID and can be use to finite search generally
+		 * 
+		 * @param identityDTO
+		 * @return mBeneficiarymappingList
+		 *//*
+			 * List<MBeneficiarymapping> finiteSearch(IdentityDTO identityDTO);
+			 * 
+			 * List<VBenAdvanceSearch> dynamicFilterSearchNew(IdentitySearchDTO searchDTO);
+			 */
 }

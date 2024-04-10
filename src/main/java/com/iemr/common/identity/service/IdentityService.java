@@ -35,7 +35,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.mapstruct.Mapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +42,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Objects;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -1431,7 +1429,7 @@ public class IdentityService {
 	 * @return
 	 */
 	private BeneficiariesDTO getBeneficiariesDTO(MBeneficiarymapping benMap) {
-
+		
 		BeneficiariesDTO bdto = mapper.mBeneficiarymappingToBeneficiariesDTO(benMap);
 		bdto.setBeneficiaryFamilyTags(
 				mapper.mapToMBeneficiaryfamilymappingWithBenFamilyDTOList(benMap.getMBeneficiaryfamilymappings()));
@@ -1461,6 +1459,8 @@ public class IdentityService {
 		}
 		return bdto;
 	}
+
+	
 
 	/**
 	 * finite search
