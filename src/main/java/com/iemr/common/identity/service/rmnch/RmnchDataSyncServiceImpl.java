@@ -80,7 +80,6 @@ import com.iemr.common.identity.utils.mapper.InputMapper;
 
 @Service
 @Qualifier("rmnchServiceImpl")
-@PropertySource("classpath:application.properties")
 public class RmnchDataSyncServiceImpl implements RmnchDataSyncService {
 
 	private Logger logger = LoggerFactory.getLogger(RMNCHMobileAppController.class);

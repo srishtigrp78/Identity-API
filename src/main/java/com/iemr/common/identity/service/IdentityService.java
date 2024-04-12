@@ -1429,7 +1429,6 @@ public class IdentityService {
 	 * @return
 	 */
 	private BeneficiariesDTO getBeneficiariesDTO(MBeneficiarymapping benMap) {
-		
 		BeneficiariesDTO bdto = mapper.mBeneficiarymappingToBeneficiariesDTO(benMap);
 		bdto.setBeneficiaryFamilyTags(
 				mapper.mapToMBeneficiaryfamilymappingWithBenFamilyDTOList(benMap.getMBeneficiaryfamilymappings()));
@@ -1461,6 +1460,11 @@ public class IdentityService {
 	}
 
 	
+
+	private BeneficiariesDTO mBeneficiarymappingToBeneficiariesDTO(MBeneficiarymapping benMap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	/**
 	 * finite search
