@@ -40,7 +40,7 @@ import lombok.Data;
 public class MBensecurestack {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private Integer benSecureStackId;
 	
