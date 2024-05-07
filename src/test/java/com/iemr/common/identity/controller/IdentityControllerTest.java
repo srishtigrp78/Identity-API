@@ -39,10 +39,12 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.google.common.collect.Lists;
+import com.google.gson.Gson;
 import com.iemr.common.identity.dto.BeneficiariesDTO;
 import com.iemr.common.identity.dto.BeneficiariesPartialDTO;
 import com.iemr.common.identity.dto.BeneficiaryCreateResp;
 import com.iemr.common.identity.dto.IdentitySearchDTO;
+import com.iemr.common.identity.dto.SearchSyncDTO;
 import com.iemr.common.identity.mapper.IdentityMapper;
 import com.iemr.common.identity.repo.BenAddressRepo;
 import com.iemr.common.identity.repo.BenMappingRepo;
@@ -316,5 +318,20 @@ public class IdentityControllerTest {
 		doReturn(bdList).when(identityService).getBeneficiaries(Mockito.any(IdentitySearchDTO.class));
 		String res = identityController.getFiniteBeneficiaries(Mockito.anyString());
 		assertTrue(res.contains("\\\"benId\\\":1"));
+	}
+	@Test
+	public void testcountBeneficiaryByVillageIdAndLastModDate() {
+		SearchSyncDTO searchSyncDTO = new SearchSyncDTO();
+		searchSyncDTO.setLastModifiedDate(9l);
+		String json = new Gson().toJson(searchSyncDTO);
+		identityController.countBeneficiaryByVillageIdAndLastModDate(json);
+		
+	}
+	@Test
+	public void testsearchBeneficiaryByVillageIdAndLastModDate() {
+		SearchSyncDTO searchSyncDTO = new SearchSyncDTO();
+		searchSyncDTO.setLastModifiedDate(9l);
+		String json = new Gson().toJson(searchSyncDTO);
+		identityController.searchBeneficiaryByVillageIdAndLastModDate(json);
 	}
 }
