@@ -26,6 +26,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
@@ -279,6 +280,15 @@ class IdentityControllerTest {
 	@Test
 	void testSaveGeneratedBenIDToLocalServer() {
 		String resp = identityController.saveGeneratedBenIDToLocalServer(null);
+		Assertions.assertNotNull(resp);
+	}
+	@Test
+	public void testcountBeneficiaryByVillageIdAndLastModDate() {
+		SearchSyncDTO searchSyncDTO = new SearchSyncDTO();
+		searchSyncDTO.setLastModifiedDate(9l);
+		String json = new Gson().toJson(searchSyncDTO);
+		when(svc.countBeneficiaryByVillageIdAndLastModifyDate(any(), any())).thenReturn(9l);
+		String resp = identityController.countBeneficiaryByVillageIdAndLastModDate(json);
 		Assertions.assertNotNull(resp);
 	}
 }

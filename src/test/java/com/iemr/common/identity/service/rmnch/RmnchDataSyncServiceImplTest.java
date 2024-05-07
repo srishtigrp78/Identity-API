@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +87,7 @@ class RmnchDataSyncServiceImplTest {
 		List<String> cbaclist=new ArrayList<>();
 		List<RMNCHCBACdetails> rMNCHCBACdetailslist=new ArrayList<>();
 		RMNCHCBACdetails rMNCHCBACdetails = new RMNCHCBACdetails();
-		rMNCHCBACdetails.setBenficieryid(Long.valueOf(987));
+		rMNCHCBACdetails.setBenficieryid(BigInteger.valueOf(987));
 		rMNCHCBACdetailslist.add(rMNCHCBACdetails);
 		cbaclist.add(birthJson);
 		jsonObject.put("cBACDetails", cbaclist);
@@ -108,12 +109,12 @@ class RmnchDataSyncServiceImplTest {
 		when(rMNCHHouseHoldDetailsRepo.getByHouseHoldID(Long.valueOf(987))).thenReturn(rMNCHHouseHoldDetails);
 		when(rMNCHCBACDetailsRepo.saveAll(anyList())).thenReturn(rMNCHCBACdetailslist);
 		when(rMNCHCBACDetailsRepo.getByRegID(any())).thenReturn(rMNCHCBACdetails);
-		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(Long.valueOf(987));
+		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(BigInteger.valueOf(987));
 		when(rMNCHBornBirthDetailsRepo.saveAll(anyList())).thenReturn(rMNCHBornBirthDetailslist);
 		when(rMNCHBornBirthDetailsRepo.getByRegID(any())).thenReturn(rMNCHBornBirthDetails);
-		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(Long.valueOf(987));
+		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(BigInteger.valueOf(987));
 		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID(any())).thenReturn(rMNCHBeneficiaryDetailsRmnch);
-		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(Long.valueOf(987));
+		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(BigInteger.valueOf(987));
 		String syncDataToAmrit = rmnchDataSyncServiceImpl.syncDataToAmrit(replace2);
 		Assertions.assertNotNull(syncDataToAmrit);
 	}

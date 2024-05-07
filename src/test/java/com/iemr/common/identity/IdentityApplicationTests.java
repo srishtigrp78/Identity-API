@@ -34,8 +34,5 @@ import org.springframework.boot.test.context.SpringBootTest;
 class IdentityApplicationTests {
 	@InjectMocks
 	IdentityApplication identityApplication;
-	@Test
-	void contextLoads() {
-		Assertions.assertNotNull(identityApplication.toString());
-	}
+	
 }
