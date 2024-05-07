@@ -30,7 +30,7 @@
 		<environment>${ENV_VAR}</environment>
 		<target-properties>target/classes/application.properties</target-properties>
 		<source-properties>target/classes/common_${environment}.properties</source-properties>
-		<maven.test.skip>true</maven.test.skip>
+		<maven.test.skip>false</maven.test.skip>
 		<sonar.java.binaries>target</sonar.java.binaries>
 	</properties>
 	<dependencies>
