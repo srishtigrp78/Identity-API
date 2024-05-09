@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.iemr.common.identity.domain.MBeneficiaryAccount;
 
-public interface MBeneficiaryAccountRepo extends CrudRepository<MBeneficiaryAccount, Long> {
+public interface MBeneficiaryAccountRepo extends CrudRepository<MBeneficiaryAccount, BigInteger> {
 	@Transactional
 	@Modifying
 	@Query(" UPDATE MBeneficiaryAccount set vanSerialNo = :benAccountID WHERE benAccountID = :benAccountID")

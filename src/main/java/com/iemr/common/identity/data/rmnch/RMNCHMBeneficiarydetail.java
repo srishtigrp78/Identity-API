@@ -41,7 +41,7 @@ import lombok.Data;
 @Data
 public class RMNCHMBeneficiarydetail {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
 	private BigInteger beneficiaryDetailsId;
 

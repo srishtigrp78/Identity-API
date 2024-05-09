@@ -21,6 +21,7 @@
 */
 package com.iemr.common.identity.repo.rmnch;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -36,7 +37,7 @@ public interface RMNCHCBACDetailsRepo extends CrudRepository<RMNCHCBACdetails, L
 	public RMNCHCBACdetails getByIdAndVanID(@Param("vanSerialNo") Long vanSerialNo, @Param("vanID") int vanID);
 
 	@Query(" SELECT t FROM RMNCHCBACdetails t WHERE t.BenRegId =:benRegID")
-	public RMNCHCBACdetails getByRegID(@Param("benRegID") Long benRegID);
+	public RMNCHCBACdetails getByRegID(@Param("benRegID") BigInteger benRegID);
 
 	@Query(value = "select beneficiary_visit_code,visit_category from db_iemr.i_ben_flow_outreach where beneficiary_reg_id=:benRegID AND beneficiary_visit_code is not null AND visit_category is not null order by created_date desc limit 1", nativeQuery = true)
 	public List<Object[]> getVisitDetailsbyRegID(@Param("benRegID") Long benRegID);

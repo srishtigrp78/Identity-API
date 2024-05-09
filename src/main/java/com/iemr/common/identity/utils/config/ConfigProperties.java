@@ -34,7 +34,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Configuration 
-@PropertySource("classpath:/application.properties")
 @Component
 public class ConfigProperties {
 	private static Properties properties;

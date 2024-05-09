@@ -40,12 +40,12 @@ import lombok.Data;
 @Data
 public class RMNCHMBeneficiaryregidmapping {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
 	private Long benRegId;
 
 	@Column(nullable = false)
-	private Long beneficiaryID;
+	private BigInteger beneficiaryID;
 
 	@Column(length = 30)
 	private String createdBy;

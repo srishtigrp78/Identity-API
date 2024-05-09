@@ -58,7 +58,7 @@ public class MBeneficiarydetail implements Serializable {
 	private static final int ND_INT = 3;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
 	private BigInteger beneficiaryDetailsId;
 

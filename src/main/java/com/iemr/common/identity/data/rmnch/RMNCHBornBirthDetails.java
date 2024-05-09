@@ -22,6 +22,7 @@
 package com.iemr.common.identity.data.rmnch;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
@@ -46,18 +47,18 @@ import lombok.Data;
 @Data
 public class RMNCHBornBirthDetails {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Expose
 	@Column(name = "BornBirthDeatilsId", insertable = false, updatable = false)
 	private Long bornBirthDeatilsId;
 
 	@Expose
 	@Column(name = "BeneficiaryRegID")
-	private Long BenRegId;
+	private BigInteger BenRegId;
 
 	@Expose
 	@Column(name = "beneficiaryId")
-	private Long benficieryid;
+	private BigInteger benficieryid;
 
 	@Expose
 	@Column(name = "countryid")

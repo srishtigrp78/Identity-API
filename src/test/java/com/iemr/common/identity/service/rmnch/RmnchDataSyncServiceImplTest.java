@@ -117,10 +117,11 @@ class RmnchDataSyncServiceImplTest {
 		List<String> cbaclist = new ArrayList<>();
 		List<RMNCHCBACdetails> rMNCHCBACdetailslist = new ArrayList<>();
 		RMNCHCBACdetails rMNCHCBACdetails = new RMNCHCBACdetails();
-		rMNCHCBACdetails.setBenficieryid(Long.valueOf(987));
+		rMNCHCBACdetails.setBenficieryid(BigInteger.valueOf(987));
 		rMNCHCBACdetails.hashCode();
 		rMNCHCBACdetails.equals(rMNCHCBACdetails);
 		rMNCHCBACdetails.toString();
+
 		rMNCHCBACdetailslist.add(rMNCHCBACdetails);
 		cbaclist.add(birthJson);
 		jsonObject.put("cBACDetails", cbaclist);
@@ -151,15 +152,16 @@ class RmnchDataSyncServiceImplTest {
 		when(rMNCHHouseHoldDetailsRepo.getByHouseHoldID(Long.valueOf(987))).thenReturn(rMNCHHouseHoldDetails);
 		when(rMNCHCBACDetailsRepo.saveAll(anyList())).thenReturn(rMNCHCBACdetailslist);
 		when(rMNCHCBACDetailsRepo.getByRegID(any())).thenReturn(rMNCHCBACdetails);
-		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(Long.valueOf(987));
+		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(BigInteger.valueOf(987));
 		when(rMNCHBornBirthDetailsRepo.saveAll(anyList())).thenReturn(rMNCHBornBirthDetailslist);
 		when(rMNCHBornBirthDetailsRepo.getByRegID(any())).thenReturn(rMNCHBornBirthDetails);
-		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(Long.valueOf(987));
+		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(BigInteger.valueOf(987));
 		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID(any())).thenReturn(rMNCHBeneficiaryDetailsRmnch);
-		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(Long.valueOf(987));
+		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(BigInteger.valueOf(987));
 
 		RMNCHMBeneficiarydetail rmnchBenDetails = new RMNCHMBeneficiarydetail();
 		when(rMNCHBenDetailsRepo.getByBenRegID(any())).thenReturn(rmnchBenDetails);
+
 		String syncDataToAmrit = rmnchDataSyncServiceImpl.syncDataToAmrit(replace2);
 		Assertions.assertNotNull(syncDataToAmrit);
 	}
@@ -250,9 +252,9 @@ class RmnchDataSyncServiceImplTest {
 		// when(rMNCHBenContactRepo.getByIdAndVanID(m.getBenContactsId(),
 		// a.getVanID())).thenReturn(benContactOBJ);
 		when(rMNCHMBenRegIdMapRepo.getBenIdFromRegID(m.getBenRegId().longValue())).thenReturn(BigInteger.valueOf(9));
-		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benDetailsRMNCHOBJ);
-		when(rMNCHBornBirthDetailsRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benBotnBirthRMNCHROBJ);
-		when(rMNCHCBACDetailsRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benCABCRMNCHROBJ);
+		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID(m.getBenRegId())).thenReturn(benDetailsRMNCHOBJ);
+		when(rMNCHBornBirthDetailsRepo.getByRegID(m.getBenRegId())).thenReturn(benBotnBirthRMNCHROBJ);
+		when(rMNCHCBACDetailsRepo.getByRegID(m.getBenRegId())).thenReturn(benCABCRMNCHROBJ);
 		when(rMNCHCBACDetailsRepo.getVisitDetailsbyRegID(any())).thenReturn(objArraylist);
 
 		when(rMNCHCBACDetailsRepo.getDiagnosisProvidedCommon(any(), any())).thenReturn(listOfObject);
@@ -328,9 +330,9 @@ class RmnchDataSyncServiceImplTest {
 		// when(rMNCHBenContactRepo.getByIdAndVanID(m.getBenContactsId(),
 		// a.getVanID())).thenReturn(benContactOBJ);
 		when(rMNCHMBenRegIdMapRepo.getBenIdFromRegID(m.getBenRegId().longValue())).thenReturn(BigInteger.valueOf(9));
-		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benDetailsRMNCHOBJ);
-		when(rMNCHBornBirthDetailsRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benBotnBirthRMNCHROBJ);
-		when(rMNCHCBACDetailsRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benCABCRMNCHROBJ);
+		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID(m.getBenRegId())).thenReturn(benDetailsRMNCHOBJ);
+		when(rMNCHBornBirthDetailsRepo.getByRegID(m.getBenRegId())).thenReturn(benBotnBirthRMNCHROBJ);
+		when(rMNCHCBACDetailsRepo.getByRegID(m.getBenRegId())).thenReturn(benCABCRMNCHROBJ);
 		when(rMNCHCBACDetailsRepo.getVisitDetailsbyRegID(any())).thenReturn(objArraylist);
 
 		when(rMNCHCBACDetailsRepo.getDiagnosisProvidedCommon(any(), any())).thenReturn(listOfObject);
@@ -463,9 +465,9 @@ class RmnchDataSyncServiceImplTest {
 		// when(rMNCHBenContactRepo.getByIdAndVanID(m.getBenContactsId(),
 		// a.getVanID())).thenReturn(benContactOBJ);
 		when(rMNCHMBenRegIdMapRepo.getBenIdFromRegID(m.getBenRegId().longValue())).thenReturn(BigInteger.valueOf(9));
-		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benDetailsRMNCHOBJ);
-		when(rMNCHBornBirthDetailsRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benBotnBirthRMNCHROBJ);
-		when(rMNCHCBACDetailsRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benCABCRMNCHROBJ);
+		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID(m.getBenRegId())).thenReturn(benDetailsRMNCHOBJ);
+		when(rMNCHBornBirthDetailsRepo.getByRegID(m.getBenRegId())).thenReturn(benBotnBirthRMNCHROBJ);
+		when(rMNCHCBACDetailsRepo.getByRegID(m.getBenRegId())).thenReturn(benCABCRMNCHROBJ);
 		when(rMNCHCBACDetailsRepo.getVisitDetailsbyRegID(any())).thenReturn(objArraylist);
 
 		when(rMNCHCBACDetailsRepo.getDiagnosisProvidedPNC(any(), any())).thenReturn(listOfObject);
@@ -543,9 +545,9 @@ class RmnchDataSyncServiceImplTest {
 		// when(rMNCHBenContactRepo.getByIdAndVanID(m.getBenContactsId(),
 		// a.getVanID())).thenReturn(benContactOBJ);
 		when(rMNCHMBenRegIdMapRepo.getBenIdFromRegID(m.getBenRegId().longValue())).thenReturn(BigInteger.valueOf(9));
-		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benDetailsRMNCHOBJ);
-		when(rMNCHBornBirthDetailsRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benBotnBirthRMNCHROBJ);
-		when(rMNCHCBACDetailsRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benCABCRMNCHROBJ);
+		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID(m.getBenRegId())).thenReturn(benDetailsRMNCHOBJ);
+		when(rMNCHBornBirthDetailsRepo.getByRegID(m.getBenRegId())).thenReturn(benBotnBirthRMNCHROBJ);
+		when(rMNCHCBACDetailsRepo.getByRegID(m.getBenRegId())).thenReturn(benCABCRMNCHROBJ);
 		when(rMNCHCBACDetailsRepo.getVisitDetailsbyRegID(any())).thenReturn(objArraylist);
 
 		when(rMNCHMBenMappingRepo.getByAddressIDAndVanID(a.getId(), a.getVanID())).thenReturn(m);
@@ -640,9 +642,9 @@ class RmnchDataSyncServiceImplTest {
 		// when(rMNCHBenContactRepo.getByIdAndVanID(m.getBenContactsId(),
 		// a.getVanID())).thenReturn(benContactOBJ);
 		when(rMNCHMBenRegIdMapRepo.getBenIdFromRegID(m.getBenRegId().longValue())).thenReturn(BigInteger.valueOf(9));
-		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benDetailsRMNCHOBJ);
-		when(rMNCHBornBirthDetailsRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benBotnBirthRMNCHROBJ);
-		when(rMNCHCBACDetailsRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benCABCRMNCHROBJ);
+		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID(m.getBenRegId())).thenReturn(benDetailsRMNCHOBJ);
+		when(rMNCHBornBirthDetailsRepo.getByRegID(m.getBenRegId())).thenReturn(benBotnBirthRMNCHROBJ);
+		when(rMNCHCBACDetailsRepo.getByRegID(m.getBenRegId())).thenReturn(benCABCRMNCHROBJ);
 		when(rMNCHCBACDetailsRepo.getVisitDetailsbyRegID(any())).thenReturn(objArraylist);
 
 		// when(rMNCHCBACDetailsRepo.getDiagnosisProvidedCommon(any(),
@@ -736,9 +738,9 @@ class RmnchDataSyncServiceImplTest {
 		// when(rMNCHBenContactRepo.getByIdAndVanID(m.getBenContactsId(),
 		// a.getVanID())).thenReturn(benContactOBJ);
 		when(rMNCHMBenRegIdMapRepo.getBenIdFromRegID(m.getBenRegId().longValue())).thenReturn(BigInteger.valueOf(9));
-		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benDetailsRMNCHOBJ);
-		when(rMNCHBornBirthDetailsRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benBotnBirthRMNCHROBJ);
-		when(rMNCHCBACDetailsRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benCABCRMNCHROBJ);
+		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID(m.getBenRegId())).thenReturn(benDetailsRMNCHOBJ);
+		when(rMNCHBornBirthDetailsRepo.getByRegID(m.getBenRegId())).thenReturn(benBotnBirthRMNCHROBJ);
+		when(rMNCHCBACDetailsRepo.getByRegID(m.getBenRegId())).thenReturn(benCABCRMNCHROBJ);
 		when(rMNCHCBACDetailsRepo.getVisitDetailsbyRegID(any())).thenReturn(objArraylist);
 
 		when(rMNCHCBACDetailsRepo.getDiagnosisProvidedCommon(any(), any())).thenReturn(listOfObject);
@@ -831,9 +833,9 @@ class RmnchDataSyncServiceImplTest {
 		// when(rMNCHBenContactRepo.getByIdAndVanID(m.getBenContactsId(),
 		// a.getVanID())).thenReturn(benContactOBJ);
 		when(rMNCHMBenRegIdMapRepo.getBenIdFromRegID(m.getBenRegId().longValue())).thenReturn(BigInteger.valueOf(9));
-		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benDetailsRMNCHOBJ);
-		when(rMNCHBornBirthDetailsRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benBotnBirthRMNCHROBJ);
-		when(rMNCHCBACDetailsRepo.getByRegID((m.getBenRegId()).longValue())).thenReturn(benCABCRMNCHROBJ);
+		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID(m.getBenRegId())).thenReturn(benDetailsRMNCHOBJ);
+		when(rMNCHBornBirthDetailsRepo.getByRegID(m.getBenRegId())).thenReturn(benBotnBirthRMNCHROBJ);
+		when(rMNCHCBACDetailsRepo.getByRegID(m.getBenRegId())).thenReturn(benCABCRMNCHROBJ);
 		when(rMNCHCBACDetailsRepo.getVisitDetailsbyRegID(any())).thenReturn(objArraylist);
 
 		when(rMNCHCBACDetailsRepo.getDiagnosisProvidedCommon(any(), any())).thenReturn(listOfObject);

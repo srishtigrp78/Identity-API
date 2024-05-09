@@ -19,22 +19,20 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see https://www.gnu.org/licenses/.
 */
-package com.iemr.common.identity.repo.rmnch;
+package com.iemr.common.identity;
 
-import java.math.BigInteger;
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import com.iemr.common.identity.data.rmnch.RMNCHBornBirthDetails;
-
-@Repository
-public interface RMNCHBornBirthDetailsRepo extends CrudRepository<RMNCHBornBirthDetails, Long> {
-	@Query(" SELECT t FROM RMNCHBornBirthDetails t WHERE t.id = :vanSerialNo AND t.VanID = :vanID")
-	public RMNCHBornBirthDetails getByIdAndVanID(@Param("vanSerialNo") Long vanSerialNo, @Param("vanID") int vanID);
-
-	@Query(" SELECT t FROM RMNCHBornBirthDetails t WHERE t.BenRegId =:benRegID ")
-	public RMNCHBornBirthDetails getByRegID(@Param("benRegID") BigInteger benRegID);
+@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+class IdentityApplicationTests {
+	@InjectMocks
+	IdentityApplication identityApplication;
+	
 }

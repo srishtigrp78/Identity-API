@@ -44,6 +44,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
@@ -607,8 +608,7 @@ public class IdentityController {
 		if (json instanceof JsonNull || json instanceof JsonPrimitive) {
 			return getErrorResponseString("Null/Empty Identity Create Data.", 200, "success", "");
 		}
-
-		IdentityDTO identity = InputMapper.getInstance().gson().fromJson(json, IdentityDTO.class);
+		IdentityDTO identity = new Gson().fromJson(json, IdentityDTO.class);
 		logger.info("identity hit: " + identity);
 		BeneficiaryCreateResp map;
 		map = svc.createIdentity(identity);

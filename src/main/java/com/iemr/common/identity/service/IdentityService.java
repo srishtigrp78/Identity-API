@@ -41,6 +41,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -574,9 +575,9 @@ public class IdentityService {
 		benMapOBJ.setCreatedDate((Timestamp) benMapArr[11]);
 
 		if (benMapArr != null && benMapArr.length == 12 && benMapArr[8] != null && benMapArr[9] != null) {
-
+			Long benRegID = Long.valueOf(benMapArr[5].toString());
 			RMNCHBeneficiaryDetailsRmnch obj = rMNCHBeneficiaryDetailsRmnchRepo
-					.getByRegID(((BigInteger) benMapArr[5]).longValue());
+					.getByRegID(BigInteger.valueOf(benRegID));
 			if (obj != null) {
 				if (obj.getHouseoldId() != null)
 					benMapOBJ.setHouseHoldID(obj.getHouseoldId());
@@ -597,7 +598,7 @@ public class IdentityService {
 			benMapOBJ.setMBeneficiaryregidmapping(regIdRepo
 					.getWithVanSerialNoVanID(getBigIntegerValueFromObject(benMapArr[5]), (Integer) benMapArr[8]));
 			benMapOBJ.setMBeneficiaryImage(
-					imageRepo.getWithVanSerialNoVanID((Long) benMapArr[6], (Integer) benMapArr[8]));
+					imageRepo.getWithVanSerialNoVanID(BigInteger.valueOf(Long.valueOf(benMapArr[6].toString())), (Integer) benMapArr[8]));
 			benMapOBJ.setMBeneficiaryAccount(accountRepo
 					.getWithVanSerialNoVanID(getBigIntegerValueFromObject(benMapArr[7]), (Integer) benMapArr[8]));
 
@@ -926,7 +927,7 @@ public class IdentityService {
 			 * new logic for data sync, 26-09-2018
 			 */
 			// getting correct beneficiaryDetailsId by passing vanSerialNo & vanID
-			Long benImageId = imageRepo.findIdByVanSerialNoAndVanID(benMapping.getMBeneficiaryImage().getBenImageId(),
+			BigInteger benImageId = imageRepo.findIdByVanSerialNoAndVanID(benMapping.getMBeneficiaryImage().getBenImageId(),
 					benMapping.getVanID());
 			// next statement is new one, setting correct beneficiaryDetailsId
 			if (benImageId != null)
@@ -982,7 +983,9 @@ public class IdentityService {
 		regMap.setProvisioned(true);
 
 		logger.info("IdentityService.createIdentity - saving Address");
-		MBeneficiaryaddress mAddr = mapper.identityDTOToMBeneficiaryaddress(identity);
+		ObjectMapper objectMapper = new ObjectMapper();
+		MBeneficiaryaddress mAddr = identityDTOToMBeneficiaryaddress(identity);
+		//MBeneficiaryaddress mAddr1 = mapper.identityDTOToMBeneficiaryaddress(identity);
 		logger.info("identity.getIsPermAddrSameAsCurrAddr = " + identity.getIsPermAddrSameAsCurrAddr());
 		if (Boolean.TRUE.equals(identity.getIsPermAddrSameAsCurrAddr())) {
 			logger.debug("identity.getCurrentAddress = " + identity.getCurrentAddress());
@@ -1034,7 +1037,8 @@ public class IdentityService {
 		consentRepo.updateVanSerialNo(mConsnt.getBenConsentID());
 
 		logger.info("IdentityService.createIdentity - saving Contacts");
-		MBeneficiarycontact mContc = mapper.identityDTOToMBeneficiarycontact(identity);
+		MBeneficiarycontact mContc = identityDTOToMBeneficiarycontact(identity);
+		//MBeneficiarycontact mContc = mapper.identityDTOToMBeneficiarycontact(identity);
 		if (mContc.getCreatedDate() == null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
 			String dateToStoreInDataBase = sdf.format(new Date());
@@ -1197,6 +1201,126 @@ public class IdentityService {
 		return partialMapper.mBeneficiarymappingToBeneficiaryCreateResp(benMapping);
 	}
 
+	private MBeneficiarycontact identityDTOToMBeneficiarycontact(IdentityDTO dto) {
+		MBeneficiarycontact beneficiaryContact = new MBeneficiarycontact();
+	    if (dto.getContact() != null) {
+	        beneficiaryContact.setPreferredPhoneNum(dto.getContact().getPreferredPhoneNum());
+	        beneficiaryContact.setPreferredPhoneTyp(dto.getContact().getPreferredPhoneTyp());
+	        beneficiaryContact.setPreferredSMSPhoneNum(dto.getContact().getPreferredSMSPhoneNum());
+	        beneficiaryContact.setPreferredSMSPhoneTyp(dto.getContact().getPreferredSMSPhoneTyp());
+	        beneficiaryContact.setEmergencyContactNum(dto.getContact().getEmergencyContactNum());
+	        beneficiaryContact.setPhoneNum1(dto.getContact().getPhoneNum1());
+	        beneficiaryContact.setPhoneTyp1(dto.getContact().getPhoneTyp1());
+	        beneficiaryContact.setPhoneNum2(dto.getContact().getPhoneNum2());
+	        beneficiaryContact.setPhoneTyp2(dto.getContact().getPhoneTyp2());
+	        beneficiaryContact.setPhoneNum3(dto.getContact().getPhoneNum3());
+	        beneficiaryContact.setPhoneTyp3(dto.getContact().getPhoneTyp3());
+	        beneficiaryContact.setPhoneNum4(dto.getContact().getPhoneNum4());
+	        beneficiaryContact.setPhoneTyp4(dto.getContact().getPhoneTyp4());
+	        beneficiaryContact.setPhoneNum5(dto.getContact().getPhoneNum5());
+	        beneficiaryContact.setPhoneTyp5(dto.getContact().getPhoneTyp5());
+	    }
+	    beneficiaryContact.setEmailId(dto.getPreferredEmailId());
+	    beneficiaryContact.setCreatedBy(dto.getAgentName());
+	    beneficiaryContact.setCreatedDate(dto.getCreatedDate());
+	    beneficiaryContact.setVanID(dto.getVanID());
+	    beneficiaryContact.setParkingPlaceID(dto.getParkingPlaceId());
+	    return beneficiaryContact;
+	}
+
+	private MBeneficiaryaddress identityDTOToMBeneficiaryaddress(IdentityDTO dto) {
+		MBeneficiaryaddress beneficiaryAddress = new MBeneficiaryaddress();
+		if (dto.getCurrentAddress() != null) {
+            beneficiaryAddress.setCurrAddrLine1(dto.getCurrentAddress().getAddrLine1());
+            beneficiaryAddress.setCurrAddrLine2(dto.getCurrentAddress().getAddrLine2());
+            beneficiaryAddress.setCurrAddrLine3(dto.getCurrentAddress().getAddrLine3());
+            beneficiaryAddress.setCurrCountryId(dto.getCurrentAddress().getCountryId());
+            beneficiaryAddress.setCurrCountry(dto.getCurrentAddress().getCountry());
+            beneficiaryAddress.setCurrStateId(dto.getCurrentAddress().getStateId());
+            beneficiaryAddress.setCurrState(dto.getCurrentAddress().getState());
+            beneficiaryAddress.setCurrDistrictId(dto.getCurrentAddress().getDistrictId());
+            beneficiaryAddress.setCurrDistrict(dto.getCurrentAddress().getDistrict());
+            beneficiaryAddress.setCurrSubDistrictId(dto.getCurrentAddress().getSubDistrictId());
+            beneficiaryAddress.setCurrSubDistrict(dto.getCurrentAddress().getSubDistrict());
+            beneficiaryAddress.setCurrVillageId(dto.getCurrentAddress().getVillageId());
+            beneficiaryAddress.setCurrVillage(dto.getCurrentAddress().getVillage());
+            beneficiaryAddress.setCurrAddressValue(dto.getCurrentAddress().getAddressValue());
+            beneficiaryAddress.setCurrPinCode(dto.getCurrentAddress().getPinCode());
+            beneficiaryAddress.setCurrZoneID(dto.getCurrentAddress().getZoneID());
+            beneficiaryAddress.setCurrZone(dto.getCurrentAddress().getZoneName());
+            beneficiaryAddress.setCurrAreaId(dto.getCurrentAddress().getParkingPlaceID());
+            beneficiaryAddress.setCurrArea(dto.getCurrentAddress().getParkingPlaceName());
+            beneficiaryAddress.setCurrServicePointId(dto.getCurrentAddress().getServicePointID());
+            beneficiaryAddress.setCurrServicePoint(dto.getCurrentAddress().getServicePointName());
+            beneficiaryAddress.setCurrHabitation(dto.getCurrentAddress().getHabitation());
+        }
+		if (dto.getEmergencyAddress() != null) {
+			beneficiaryAddress.setEmerAddrLine1(dto.getEmergencyAddress().getAddrLine1());
+	        beneficiaryAddress.setEmerAddrLine2(dto.getEmergencyAddress().getAddrLine2());
+	        beneficiaryAddress.setEmerAddrLine3(dto.getEmergencyAddress().getAddrLine3());
+	        beneficiaryAddress.setEmerCountryId(dto.getEmergencyAddress().getCountryId());
+	        beneficiaryAddress.setEmerCountry(dto.getEmergencyAddress().getCountry());
+	        beneficiaryAddress.setEmerStateId(dto.getEmergencyAddress().getStateId());
+	        beneficiaryAddress.setEmerState(dto.getEmergencyAddress().getState());
+	        beneficiaryAddress.setEmerDistrictId(dto.getEmergencyAddress().getDistrictId());
+	        beneficiaryAddress.setEmerDistrict(dto.getEmergencyAddress().getDistrict());
+	        beneficiaryAddress.setEmerSubDistrictId(dto.getEmergencyAddress().getSubDistrictId());
+	        beneficiaryAddress.setEmerSubDistrict(dto.getEmergencyAddress().getSubDistrict());
+	        beneficiaryAddress.setEmerVillageId(dto.getEmergencyAddress().getVillageId());
+	        beneficiaryAddress.setEmerVillage(dto.getEmergencyAddress().getVillage());
+	        beneficiaryAddress.setEmerAddressValue(dto.getEmergencyAddress().getAddressValue());
+	        beneficiaryAddress.setEmerPinCode(dto.getEmergencyAddress().getPinCode());
+	        beneficiaryAddress.setEmerZoneID(dto.getEmergencyAddress().getZoneID());
+	        beneficiaryAddress.setEmerZone(dto.getEmergencyAddress().getZoneName());
+	        beneficiaryAddress.setEmerAreaId(dto.getEmergencyAddress().getParkingPlaceID());
+	        beneficiaryAddress.setEmerArea(dto.getEmergencyAddress().getParkingPlaceName());
+	        beneficiaryAddress.setEmerServicePointId(dto.getEmergencyAddress().getServicePointID());
+	        beneficiaryAddress.setEmerServicePoint(dto.getEmergencyAddress().getServicePointName());
+	        beneficiaryAddress.setEmerHabitation(dto.getEmergencyAddress().getHabitation());
+		}
+		
+		if (dto.getPermanentAddress() != null) {
+			beneficiaryAddress.setPermAddrLine1(dto.getPermanentAddress().getAddrLine1());
+	        beneficiaryAddress.setPermAddrLine2(dto.getPermanentAddress().getAddrLine2());
+	        beneficiaryAddress.setPermAddrLine3(dto.getPermanentAddress().getAddrLine3());
+	        beneficiaryAddress.setPermCountryId(dto.getPermanentAddress().getCountryId());
+	        beneficiaryAddress.setPermCountry(dto.getPermanentAddress().getCountry());
+	        beneficiaryAddress.setPermStateId(dto.getPermanentAddress().getStateId());
+	        beneficiaryAddress.setPermState(dto.getPermanentAddress().getState());
+	        beneficiaryAddress.setPermDistrictId(dto.getPermanentAddress().getDistrictId());
+	        beneficiaryAddress.setPermDistrict(dto.getPermanentAddress().getDistrict());
+	        beneficiaryAddress.setPermSubDistrictId(dto.getPermanentAddress().getSubDistrictId());
+	        beneficiaryAddress.setPermSubDistrict(dto.getPermanentAddress().getSubDistrict());
+	        beneficiaryAddress.setPermVillageId(dto.getPermanentAddress().getVillageId());
+	        beneficiaryAddress.setPermVillage(dto.getPermanentAddress().getVillage());
+	        beneficiaryAddress.setPermAddressValue(dto.getPermanentAddress().getAddressValue());
+	        beneficiaryAddress.setPermPinCode(dto.getPermanentAddress().getPinCode());
+	        
+            beneficiaryAddress.setPermZoneID(dto.getPermanentAddress().getZoneID());
+            beneficiaryAddress.setPermZone(dto.getPermanentAddress().getZoneName());
+            beneficiaryAddress.setPermAreaId(dto.getPermanentAddress().getParkingPlaceID());
+            beneficiaryAddress.setPermArea(dto.getPermanentAddress().getParkingPlaceName());
+            beneficiaryAddress.setPermServicePointId(dto.getPermanentAddress().getServicePointID());
+            beneficiaryAddress.setPermServicePoint(dto.getPermanentAddress().getServicePointName());
+            beneficiaryAddress.setPermHabitation(dto.getPermanentAddress().getHabitation());
+        }
+		if (dto.getAgentName() != null) {
+	        beneficiaryAddress.setCreatedBy(dto.getAgentName());
+	    }
+	    if (dto.getCreatedDate() != null) {
+	        beneficiaryAddress.setCreatedDate(dto.getCreatedDate());
+	    }
+	    if (dto.getVanID() != null) {
+	        beneficiaryAddress.setVanID(dto.getVanID());
+	    }
+	    if (dto.getParkingPlaceId() != null) {
+	        beneficiaryAddress.setParkingPlaceID(dto.getParkingPlaceId());
+	    }
+	
+		
+		return beneficiaryAddress;
+	}
+
 	public String getReservedIdList() {
 
 		return "success";
@@ -1305,7 +1429,6 @@ public class IdentityService {
 	 * @return
 	 */
 	private BeneficiariesDTO getBeneficiariesDTO(MBeneficiarymapping benMap) {
-
 		BeneficiariesDTO bdto = mapper.mBeneficiarymappingToBeneficiariesDTO(benMap);
 		bdto.setBeneficiaryFamilyTags(
 				mapper.mapToMBeneficiaryfamilymappingWithBenFamilyDTOList(benMap.getMBeneficiaryfamilymappings()));
@@ -1334,6 +1457,13 @@ public class IdentityService {
 			bdto.setAbhaDetails(abhaDTOList);
 		}
 		return bdto;
+	}
+
+	
+
+	private BeneficiariesDTO mBeneficiarymappingToBeneficiariesDTO(MBeneficiarymapping benMap) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**

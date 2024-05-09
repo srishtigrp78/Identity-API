@@ -63,86 +63,7 @@ public interface IdentityMapper {
 
 	MBeneficiarymapping identityDTOToMBeneficiarymapping(IdentityDTO dto);
 
-	@Mapping(source = "dto.currentAddress.addrLine1", target = "currAddrLine1")
-	@Mapping(source = "dto.currentAddress.addrLine2", target = "currAddrLine2")
-	@Mapping(source = "dto.currentAddress.addrLine3", target = "currAddrLine3")
-	@Mapping(source = "dto.currentAddress.countryId", target = "currCountryId")
-	@Mapping(source = "dto.currentAddress.country", target = "currCountry")
-	@Mapping(source = "dto.currentAddress.stateId", target = "currStateId")
-	@Mapping(source = "dto.currentAddress.state", target = "currState")
-	@Mapping(source = "dto.currentAddress.districtId", target = "currDistrictId")
-	@Mapping(source = "dto.currentAddress.district", target = "currDistrict")
-	@Mapping(source = "dto.currentAddress.subDistrictId", target = "currSubDistrictId")
-	@Mapping(source = "dto.currentAddress.subDistrict", target = "currSubDistrict")
-	@Mapping(source = "dto.currentAddress.villageId", target = "currVillageId")
-	@Mapping(source = "dto.currentAddress.village", target = "currVillage")
-	@Mapping(source = "dto.currentAddress.addressValue", target = "currAddressValue")
-	@Mapping(source = "dto.currentAddress.pinCode", target = "currPinCode")
-	@Mapping(source = "dto.emergencyAddress.addrLine1", target = "emerAddrLine1")
-	@Mapping(source = "dto.emergencyAddress.addrLine2", target = "emerAddrLine2")
-	@Mapping(source = "dto.emergencyAddress.addrLine3", target = "emerAddrLine3")
-	@Mapping(source = "dto.emergencyAddress.countryId", target = "emerCountryId")
-	@Mapping(source = "dto.emergencyAddress.country", target = "emerCountry")
-	@Mapping(source = "dto.emergencyAddress.stateId", target = "emerStateId")
-	@Mapping(source = "dto.emergencyAddress.state", target = "emerState")
-	@Mapping(source = "dto.emergencyAddress.districtId", target = "emerDistrictId")
-	@Mapping(source = "dto.emergencyAddress.district", target = "emerDistrict")
-	@Mapping(source = "dto.emergencyAddress.subDistrictId", target = "emerSubDistrictId")
-	@Mapping(source = "dto.emergencyAddress.subDistrict", target = "emerSubDistrict")
-	@Mapping(source = "dto.emergencyAddress.villageId", target = "emerVillageId")
-	@Mapping(source = "dto.emergencyAddress.village", target = "emerVillage")
-	@Mapping(source = "dto.emergencyAddress.addressValue", target = "emerAddressValue")
-	@Mapping(source = "dto.emergencyAddress.pinCode", target = "emerPinCode")
-	@Mapping(source = "dto.permanentAddress.addrLine1", target = "permAddrLine1")
-	@Mapping(source = "dto.permanentAddress.addrLine2", target = "permAddrLine2")
-	@Mapping(source = "dto.permanentAddress.addrLine3", target = "permAddrLine3")
-	@Mapping(source = "dto.permanentAddress.countryId", target = "permCountryId")
-	@Mapping(source = "dto.permanentAddress.country", target = "permCountry")
-	@Mapping(source = "dto.permanentAddress.stateId", target = "permStateId")
-	@Mapping(source = "dto.permanentAddress.state", target = "permState")
-	@Mapping(source = "dto.permanentAddress.districtId", target = "permDistrictId")
-	@Mapping(source = "dto.permanentAddress.district", target = "permDistrict")
-	@Mapping(source = "dto.permanentAddress.subDistrictId", target = "permSubDistrictId")
-	@Mapping(source = "dto.permanentAddress.subDistrict", target = "permSubDistrict")
-	@Mapping(source = "dto.permanentAddress.villageId", target = "permVillageId")
-	@Mapping(source = "dto.permanentAddress.village", target = "permVillage")
-	@Mapping(source = "dto.permanentAddress.addressValue", target = "permAddressValue")
-	@Mapping(source = "dto.permanentAddress.pinCode", target = "permPinCode")
-	@Mapping(source = "dto.agentName", target = "createdBy")
-	// @Mapping(source = "dto.eventTypeDate", target = "createdDate")
-	@Mapping(source = "dto.createdDate", target = "createdDate")
-
-	/*
-	 * New columns added for MMU integration 09-04-2018
-	 */
-	@Mapping(source = "dto.permanentAddress.zoneID", target = "permZoneID")
-	@Mapping(source = "dto.permanentAddress.zoneName", target = "permZone")
-	@Mapping(source = "dto.permanentAddress.parkingPlaceID", target = "permAreaId")
-	@Mapping(source = "dto.permanentAddress.parkingPlaceName", target = "permArea")
-	@Mapping(source = "dto.permanentAddress.servicePointID", target = "permServicePointId")
-	@Mapping(source = "dto.permanentAddress.servicePointName", target = "permServicePoint")
-	@Mapping(source = "dto.permanentAddress.habitation", target = "permHabitation")
-
-	@Mapping(source = "dto.currentAddress.zoneID", target = "currZoneID")
-	@Mapping(source = "dto.currentAddress.zoneName", target = "currZone")
-	@Mapping(source = "dto.currentAddress.parkingPlaceID", target = "currAreaId")
-	@Mapping(source = "dto.currentAddress.parkingPlaceName", target = "currArea")
-	@Mapping(source = "dto.currentAddress.servicePointID", target = "currServicePointId")
-	@Mapping(source = "dto.currentAddress.servicePointName", target = "currServicePoint")
-	@Mapping(source = "dto.currentAddress.habitation", target = "currHabitation")
-
-	@Mapping(source = "dto.emergencyAddress.zoneID", target = "emerZoneID")
-	@Mapping(source = "dto.emergencyAddress.zoneName", target = "emerZone")
-	@Mapping(source = "dto.emergencyAddress.parkingPlaceID", target = "emerAreaId")
-	@Mapping(source = "dto.emergencyAddress.parkingPlaceName", target = "emerArea")
-	@Mapping(source = "dto.emergencyAddress.servicePointID", target = "emerServicePointId")
-	@Mapping(source = "dto.emergencyAddress.servicePointName", target = "emerServicePoint")
-	@Mapping(source = "dto.emergencyAddress.habitation", target = "emerHabitation")
-
-	@Mapping(source = "dto.vanID", target = "vanID")
-	@Mapping(source = "dto.parkingPlaceId", target = "parkingPlaceID")
-
-	MBeneficiaryaddress identityDTOToMBeneficiaryaddress(IdentityDTO dto);
+	
 
 	@Mapping(source = "defaultNo", target = "shareAnonymousWithGovt")
 	@Mapping(source = "defaultNo", target = "shareAnonymousWithMedicalCommunity")
@@ -169,29 +90,7 @@ public interface IdentityMapper {
 
 	MBeneficiaryconsent identityDTOToDefaultMBeneficiaryconsent(IdentityDTO dto, Boolean defaultYes, Boolean defaultNo);
 
-	@Mapping(source = "dto.contact.preferredPhoneNum", target = "preferredPhoneNum")
-	@Mapping(source = "dto.contact.preferredPhoneTyp", target = "preferredPhoneTyp")
-	@Mapping(source = "dto.contact.preferredSMSPhoneNum", target = "preferredSMSPhoneNum")
-	@Mapping(source = "dto.contact.preferredSMSPhoneTyp", target = "preferredSMSPhoneTyp")
-	@Mapping(source = "dto.contact.emergencyContactNum", target = "emergencyContactNum")
-	@Mapping(source = "dto.contact.phoneNum1", target = "phoneNum1")
-	@Mapping(source = "dto.contact.phoneTyp1", target = "phoneTyp1")
-	@Mapping(source = "dto.contact.phoneNum2", target = "phoneNum2")
-	@Mapping(source = "dto.contact.phoneTyp2", target = "phoneTyp2")
-	@Mapping(source = "dto.contact.phoneNum3", target = "phoneNum3")
-	@Mapping(source = "dto.contact.phoneTyp3", target = "phoneTyp3")
-	@Mapping(source = "dto.contact.phoneNum4", target = "phoneNum4")
-	@Mapping(source = "dto.contact.phoneTyp4", target = "phoneTyp4")
-	@Mapping(source = "dto.contact.phoneNum5", target = "phoneNum5")
-	@Mapping(source = "dto.contact.phoneTyp5", target = "phoneTyp5")
-	@Mapping(source = "dto.preferredEmailId", target = "emailId")
-	@Mapping(source = "dto.agentName", target = "createdBy")
-	@Mapping(source = "dto.createdDate", target = "createdDate")
-
-	@Mapping(source = "dto.vanID", target = "vanID")
-	@Mapping(source = "dto.parkingPlaceId", target = "parkingPlaceID")
-
-	MBeneficiarycontact identityDTOToMBeneficiarycontact(IdentityDTO dto);
+	
 
 	@Mapping(source = "dto.areaId", target = "areaId")
 	@Mapping(source = "dto.beneficiaryRegId", target = "beneficiaryRegID")
@@ -383,8 +282,7 @@ public interface IdentityMapper {
 	@Mapping(target = "beneficiaryDetails.healthCareWorkerId", source = "map.MBeneficiarydetail.healthCareWorkerId")
 	@Mapping(target = "beneficiaryDetails.healthCareWorker", source = "map.MBeneficiarydetail.healthCareWorker")
 	@Mapping(target = "beneficiaryDetails.preferredLanguage", source = "map.MBeneficiarydetail.preferredLanguage")
-	// @Mapping(target="beneficiaryDetails.",
-	// source="map.MBeneficiarydetail.processed"),
+
 	@Mapping(target = "beneficiaryDetails.religion", source = "map.MBeneficiarydetail.religion")
 	@Mapping(target = "beneficiaryDetails.remarks", source = "map.MBeneficiarydetail.remarks")
 
@@ -394,9 +292,14 @@ public interface IdentityMapper {
 	@Mapping(target = "beneficiaryDetails.status", source = "map.MBeneficiarydetail.status")
 	@Mapping(target = "beneficiaryDetails.title", source = "map.MBeneficiarydetail.title")
 	@Mapping(target = "beneficiaryDetails.zoneId", source = "map.MBeneficiarydetail.zoneId")
-	@Mapping(target = "contacts", expression = "java( Phone.createContactList(map.getMBeneficiarycontact(), "
-			+ "benRegId.toString(), map.getMBeneficiarydetail().getFirstName() + \" \" + "
-			+ "map.getMBeneficiarydetail().getMiddleName() + \" \" + " + "map.getMBeneficiarydetail().getLastName()))")
+	@Mapping(target = "contacts", expression = "java( map != null && map.getMBeneficiarycontact() != null && "
+            + "map.getMBeneficiarydetail() != null ? "
+            + "Phone.createContactList(map.getMBeneficiarycontact(), "
+            + "(benRegId != null ? benRegId.toString() : null), "
+            + "(map.getMBeneficiarydetail().getFirstName() != null ? map.getMBeneficiarydetail().getFirstName() : \"\") + \" \" + "
+            + "(map.getMBeneficiarydetail().getMiddleName() != null ? map.getMBeneficiarydetail().getMiddleName() : \"\") + \" \" + "
+            + "(map.getMBeneficiarydetail().getLastName() != null ? map.getMBeneficiarydetail().getLastName() : \"\") "
+            + ") : null)")
 
 	@Mapping(target = "permanentAddress.zoneID", source = "map.MBeneficiaryaddress.permZoneID")
 	@Mapping(target = "permanentAddress.zoneName", source = "map.MBeneficiaryaddress.permZone")
@@ -427,12 +330,14 @@ public interface IdentityMapper {
 	@Mapping(target = "ifscCode", source = "map.MBeneficiaryAccount.ifscCode")
 	@Mapping(target = "accountNo", source = "map.MBeneficiaryAccount.accountNo")
 	@Mapping(target = "benAccountID", source = "map.benAccountID")
-	@Mapping(target = "ageAtMarriage", expression = "java(MBeneficiarydetail.getAgeAtMarriageCalc("
-			+ "map.getMBeneficiarydetail().getDob(), map.getMBeneficiarydetail().getMarriageDate(), "
-			+ "map.getMBeneficiarydetail().getAgeAtMarriage()))")
-	@Mapping(target = "marriageDate", expression = "java(MBeneficiarydetail.getMarriageDateCalc("
-			+ "map.getMBeneficiarydetail().getDob(), map.getMBeneficiarydetail().getMarriageDate(), "
-			+ "map.getMBeneficiarydetail().getAgeAtMarriage()))")
+	@Mapping(target = "ageAtMarriage", expression = "java(map != null && map.getMBeneficiarydetail() != null ? "
+            + "MBeneficiarydetail.getAgeAtMarriageCalc(map.getMBeneficiarydetail().getDob(), "
+            + "map.getMBeneficiarydetail().getMarriageDate(), "
+            + "map.getMBeneficiarydetail().getAgeAtMarriage()) : null)")
+	@Mapping(target = "marriageDate", expression = "java(map != null && map.getMBeneficiarydetail() != null ? "
+            + "MBeneficiarydetail.getMarriageDateCalc(map.getMBeneficiarydetail().getDob(), "
+            + "map.getMBeneficiarydetail().getMarriageDate(), "
+            + "map.getMBeneficiarydetail().getAgeAtMarriage()) : null)")
 
 	@Mapping(target = "literacyStatus", source = "map.MBeneficiarydetail.literacyStatus")
 	@Mapping(target = "motherName", source = "map.MBeneficiarydetail.motherName")
@@ -458,8 +363,7 @@ public interface IdentityMapper {
 	@Mapping(target = "beneficiaryDetails.headOfFamily_Relation", source = "map.MBeneficiarydetail.headOfFamily_Relation")
 
 	// Start 1097
-	@Mapping(expression = "java(MBeneficiarydetail.calculateAge(map.getMBeneficiarydetail().getDob()))", target = "beneficiaryAge")
-	// End 1097
+	@Mapping(expression = "java(map != null && map.getMBeneficiarydetail() != null ? MBeneficiarydetail.calculateAge(map.getMBeneficiarydetail().getDob()) : null)", target = "beneficiaryAge")// End 1097
 
 	BeneficiariesDTO mBeneficiarymappingToBeneficiariesDTO(MBeneficiarymapping map);
 

@@ -31,7 +31,7 @@ import org.springframework.stereotype.Repository;
 import com.iemr.common.identity.data.rmnch.RMNCHMBeneficiarydetail;
 
 @Repository
-public interface RMNCHBenDetailsRepo extends CrudRepository<RMNCHMBeneficiarydetail, Long> {
+public interface RMNCHBenDetailsRepo extends CrudRepository<RMNCHMBeneficiarydetail, BigInteger> {
 	@Query(" SELECT t FROM RMNCHMBeneficiarydetail t WHERE t.id = :vanSerialNo AND t.VanID = :vanID")
 	public RMNCHMBeneficiarydetail getByIdAndVanID(@Param("vanSerialNo") BigInteger vanSerialNo,
 			@Param("vanID") int vanID);

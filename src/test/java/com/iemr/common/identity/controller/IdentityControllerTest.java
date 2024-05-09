@@ -365,4 +365,13 @@ class IdentityControllerTest {
 		String resp = identityController.saveGeneratedBenIDToLocalServer(null);
 		Assertions.assertNotNull(resp);
 	}
+	@Test
+	public void testcountBeneficiaryByVillageIdAndLastModDate() {
+		SearchSyncDTO searchSyncDTO = new SearchSyncDTO();
+		searchSyncDTO.setLastModifiedDate(9l);
+		String json = new Gson().toJson(searchSyncDTO);
+		when(svc.countBeneficiaryByVillageIdAndLastModifyDate(any(), any())).thenReturn(9l);
+		String resp = identityController.countBeneficiaryByVillageIdAndLastModDate(json);
+		Assertions.assertNotNull(resp);
+	}
 }

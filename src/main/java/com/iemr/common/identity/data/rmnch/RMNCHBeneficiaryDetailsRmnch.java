@@ -28,6 +28,7 @@ import java.sql.Timestamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
@@ -46,14 +47,14 @@ import lombok.Data;
 @Data
 public class RMNCHBeneficiaryDetailsRmnch {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Expose
 	@Column(name = "beneficiaryDetails_RmnchId", insertable = false, updatable = false)
-	private Long beneficiaryDetails_RmnchId;
+	private BigInteger beneficiaryDetails_RmnchId;
 
 	@Expose
 	@Column(name = "BeneficiaryRegID")
-	private Long BenRegId;
+	private BigInteger BenRegId;
 
 	@Expose
 	@Column(name = "aadhaNo")
@@ -289,7 +290,7 @@ public class RMNCHBeneficiaryDetailsRmnch {
 
 	@Expose
 	@Column(name = "beneficiaryId")
-	private Long benficieryid;
+	private BigInteger benficieryid;
 
 	// new fields 30-06-2021
 	@Expose
