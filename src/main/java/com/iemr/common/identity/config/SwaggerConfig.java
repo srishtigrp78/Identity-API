@@ -24,21 +24,22 @@ package com.iemr.common.identity.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+
 
 @Configuration
-//@EnableSwagger2
 public class SwaggerConfig
 {
-	/*
-	 * @Bean public Docket productApi() { return new
-	 * Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any
-	 * ()) .paths(PathSelectors.any()).build().apiInfo(metaData()); }
-	 * 
-	 * private ApiInfo metaData() { ApiInfoBuilder builder = new ApiInfoBuilder();
-	 * builder.contact(new Contact("AMRIT", "https://psmri.github.io/PSMRI/",
-	 * "amrit@piramalswasthya.org")); builder.
-	 * description("A microservice for the creation and management of beneficiaries."
-	 * ); builder.version("1.0"); builder.title("Identity API"); return
-	 * builder.build(); }
-	 */
+	@Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI().info(new 
+             Info().title("Identity API").version("version").description("A microservice for the creation and management of beneficiaries."))
+                .addSecurityItem(new SecurityRequirement().addList("my security"))
+                .components(new Components().addSecuritySchemes("my security",
+                        new SecurityScheme().name("my security").type(SecurityScheme.Type.HTTP).scheme("bearer")));
+    }
 }
