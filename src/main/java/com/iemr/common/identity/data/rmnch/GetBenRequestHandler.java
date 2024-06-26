@@ -23,6 +23,10 @@ package com.iemr.common.identity.data.rmnch;
 
 import java.sql.Timestamp;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
 public class GetBenRequestHandler {
 	private Integer villageID;
 	private Timestamp fromDate;

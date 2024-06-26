@@ -37,6 +37,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -44,7 +45,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.annotation.Description;
-import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.google.common.collect.Lists;
@@ -828,7 +828,7 @@ public class IdentityServiceTest {
 		identityService.editIdentityEducationOrCommunity(identity);
 		Assertions.assertNotNull(benmapping);
 	}
-
+	
 	@Test
 	@Description("Tests the functionality of importing beneficiary IDs to a local server, ensuring successful transfer and integration of beneficiary data for local processing or storage.")
 	void testimportBenIdToLocalServer() {

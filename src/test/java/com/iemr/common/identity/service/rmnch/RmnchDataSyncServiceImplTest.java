@@ -1,11 +1,14 @@
 package com.iemr.common.identity.service.rmnch;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +17,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.annotation.Description;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.iemr.common.identity.data.rmnch.GetBenRequestHandler;
 import com.iemr.common.identity.data.rmnch.RMNCHBeneficiaryDetailsRmnch;
 import com.iemr.common.identity.data.rmnch.RMNCHBornBirthDetails;
@@ -79,6 +87,7 @@ class RmnchDataSyncServiceImplTest {
 	RMNCHBornBirthDetails benBotnBirthRMNCHROBJ2;
 
 	@Test
+	@Description("Test Case for syncing data to amrit (TC_SYNC_DATA_001)")
 	void testSyncDataToAmrit() throws Exception {
 		RMNCHBeneficiaryDetailsRmnch rMNCHBeneficiaryDetailsRmnch = new RMNCHBeneficiaryDetailsRmnch();
 		RMNCHBeneficiaryDetailsRmnch rMNCHBeneficiaryDetailsRmnch2 = new RMNCHBeneficiaryDetailsRmnch();
@@ -167,6 +176,40 @@ class RmnchDataSyncServiceImplTest {
 	}
 
 	@Test
+	@Description("Test Case for handling empty request object (TC_SYNC_DATA_002)")
+	void testSyncDataToAmrit_emptyRequest() {
+		// Arrange (Given)
+		String requestOBJ = null;
+
+		// Act (When)
+		Assertions.assertThrows(Exception.class, () -> rmnchDataSyncServiceImpl.syncDataToAmrit(requestOBJ));
+	}
+
+	@Test
+	@Description("Test Case for handling empty beneficiary request data (TC_SYNC_DATA_003)")
+	void testSyncDataToAmrit_emptyBeneficiaryDetails() throws Exception {
+		// Arrange (Given)
+		JsonObject jsnOBJ = new JsonObject();
+		String requestOBJ = new Gson().toJson(jsnOBJ);
+
+		// Act (When)
+		Assertions.assertThrows(Exception.class, () -> rmnchDataSyncServiceImpl.syncDataToAmrit(requestOBJ));
+	}
+
+	@Test
+	@Description("Test Case for handling empty beneficiary details array (TC_SYNC_DATA_004)")
+	void testSyncDataToAmrit_emptyBeneficiaryDetailsArray() throws Exception {
+		// Arrange (Given)
+		JsonObject jsnOBJ = new JsonObject();
+		jsnOBJ.add("beneficiaryDetails", new JsonArray()); // Empty beneficiary details array
+		String requestOBJ = new Gson().toJson(jsnOBJ);
+
+		// Act (When)
+		Assertions.assertThrows(Exception.class, () -> rmnchDataSyncServiceImpl.syncDataToAmrit(requestOBJ));
+	}
+
+	@Test
+	@Description("Test Case for getting beneficiary data for general OPD with beneficiary details (TC_GET_BEN_DATA_001)")
 	void testgetBenDataForGeneralOPDCase() throws Exception {
 		ReflectionTestUtils.setField(rmnchDataSyncServiceImpl, "door_to_door_page_size", "1");
 		GetBenRequestHandler getBenRequestHandler = new GetBenRequestHandler();
@@ -269,6 +312,7 @@ class RmnchDataSyncServiceImplTest {
 	}
 
 	@Test
+	@Description("Test Case for getting beneficiary data for general OPD QC with beneficiary details (TC_GET_BEN_DATA_002)")
 	void testgetBenDataForGeneralOPDQCCase() throws Exception {
 		ReflectionTestUtils.setField(rmnchDataSyncServiceImpl, "door_to_door_page_size", "1");
 		GetBenRequestHandler getBenRequestHandler = new GetBenRequestHandler();
@@ -347,6 +391,7 @@ class RmnchDataSyncServiceImplTest {
 	}
 
 	@Test
+	@Description("Test Case for getting beneficiary data for PNC  with beneficiary details (TC_GET_BEN_DATA_003)")
 	void testgetBenDataForPNCCase() throws Exception {
 		ReflectionTestUtils.setField(rmnchDataSyncServiceImpl, "door_to_door_page_size", "1");
 		GetBenRequestHandler getBenRequestHandler = new GetBenRequestHandler();
@@ -481,6 +526,7 @@ class RmnchDataSyncServiceImplTest {
 	}
 
 	@Test
+	@Description("Test Case for getting beneficiary data for ANC with beneficiary details (TC_GET_BEN_DATA_004)")
 	void testgetBenDataForANCCase() throws Exception {
 		ReflectionTestUtils.setField(rmnchDataSyncServiceImpl, "door_to_door_page_size", "1");
 		GetBenRequestHandler getBenRequestHandler = new GetBenRequestHandler();
@@ -561,6 +607,7 @@ class RmnchDataSyncServiceImplTest {
 	}
 
 	@Test
+	@Description("Test Case for getting beneficiary data for NCD Care with beneficiary details (TC_GET_BEN_DATA_005)")
 	void testgetBenDataForNCDcare() throws Exception {
 		ReflectionTestUtils.setField(rmnchDataSyncServiceImpl, "door_to_door_page_size", "1");
 		GetBenRequestHandler getBenRequestHandler = new GetBenRequestHandler();
@@ -660,6 +707,7 @@ class RmnchDataSyncServiceImplTest {
 	}
 
 	@Test
+	@Description("Test Case for getting beneficiary data for NCD Screening with beneficiary details (TC_GET_BEN_DATA_006)")
 	void testgetBenDataForNCDscreening() throws Exception {
 		ReflectionTestUtils.setField(rmnchDataSyncServiceImpl, "door_to_door_page_size", "1");
 		GetBenRequestHandler getBenRequestHandler = new GetBenRequestHandler();
@@ -755,6 +803,7 @@ class RmnchDataSyncServiceImplTest {
 	}
 
 	@Test
+	@Description("Test Case for getting beneficiary data for COVID 19 Screening with beneficiary details (TC_GET_BEN_DATA_007)")
 	void testgetBenDataForCOVID19Screening() throws Exception {
 		ReflectionTestUtils.setField(rmnchDataSyncServiceImpl, "door_to_door_page_size", "1");
 		GetBenRequestHandler getBenRequestHandler = new GetBenRequestHandler();
@@ -848,7 +897,7 @@ class RmnchDataSyncServiceImplTest {
 		Integer valueOf = Integer.valueOf(string);
 		Assertions.assertTrue(valueOf > 0);
 	}
-
+	
 	private String getData(String resp, String status) throws ParseException {
 		JSONParser parser = new JSONParser();
 		JSONObject json = (JSONObject) parser.parse(resp);
