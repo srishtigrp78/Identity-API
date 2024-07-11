@@ -27,6 +27,8 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.json.JSONObject;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,6 +39,8 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 
 import lombok.AllArgsConstructor;
@@ -236,6 +240,12 @@ public class MBeneficiarydetail implements Serializable {
 	
 	@Column(name = "MonthlyFamilyIncome")
 	private String monthlyFamilyIncome;
+	
+	@Column(name = "ExtraFields")
+	private String otherFields;
+	
+//	@Column(columnDefinition = "json")
+//	private JsonElement otherFields;
 
 	public MBeneficiarydetail() {
 

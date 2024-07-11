@@ -483,13 +483,13 @@ public class IdentityController {
 			+ "  \"vanID\": \"Integer\",\r\n" + "  \"parkingPlaceId\": \"Integer\"\r\n"
 			+ "}") @RequestBody String identityEditData) {
 		logger.info("IdentityController.editIdentity - start");
-		JsonElement json = JsonParser.parseString(identityEditData);
+	//	JsonElement json = JsonParser.parseString(identityEditData);
 
-		if (json instanceof JsonNull || json instanceof JsonPrimitive) {
-			return getErrorResponseString("Null/Empty Identity Edit Data.", 200, "success", "");
-		}
+//		if (json instanceof JsonNull || json instanceof JsonPrimitive) {
+//			return getErrorResponseString("Null/Empty Identity Edit Data.", 200, "success", "");
+//		}
 
-		IdentityEditDTO identity = InputMapper.getInstance().gson().fromJson(json, IdentityEditDTO.class);
+		IdentityEditDTO identity = InputMapper.getInstance().gson().fromJson(identityEditData, IdentityEditDTO.class);
 		try {
 			svc.editIdentity(identity);
 			String response = getSuccessResponseString("Updated successfully", 200, "success", "editIdentityByAgent");
@@ -603,12 +603,12 @@ public class IdentityController {
 			+ "  \"sexualOrientationType\": \"String\",\r\n" + "  \"vanID\": \"Integer\",\r\n"
 			+ "  \"createdDate\": \"Timestamp\"\r\n" + "}") @RequestBody String identityData) throws IEMRException {
 		logger.info("IdentityController.createIdentity - start");
-		JsonElement json = JsonParser.parseString(identityData);
+	//	JsonElement json = JsonParser.parseString(identityData);
 
-		if (json instanceof JsonNull || json instanceof JsonPrimitive) {
-			return getErrorResponseString("Null/Empty Identity Create Data.", 200, "success", "");
-		}
-		IdentityDTO identity = new Gson().fromJson(json, IdentityDTO.class);
+//		if (json instanceof JsonNull || json instanceof JsonPrimitive) {
+//			return getErrorResponseString("Null/Empty Identity Create Data.", 200, "success", "");
+//		}
+		IdentityDTO identity = new Gson().fromJson(identityData, IdentityDTO.class);
 		logger.info("identity hit: " + identity);
 		BeneficiaryCreateResp map;
 		map = svc.createIdentity(identity);

@@ -21,10 +21,18 @@
 */
 package com.iemr.common.identity.dto;
 
+
+
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.iemr.common.identity.domain.Address;
 import com.iemr.common.identity.domain.Phone;
 
@@ -87,4 +95,7 @@ public class BeneficiariesDTO implements Comparable<BeneficiariesDTO> {
 	private String sourceOfInformation;
 	private String isHIVPos;
 	// End 1097
+	
+	private String otherFields;
+	
 }

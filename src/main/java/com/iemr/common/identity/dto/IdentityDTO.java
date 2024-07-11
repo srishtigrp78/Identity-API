@@ -24,6 +24,10 @@ package com.iemr.common.identity.dto;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.json.JSONObject;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.iemr.common.identity.domain.Address;
 import com.iemr.common.identity.domain.Contact;
@@ -124,9 +128,11 @@ public class IdentityDTO {
 
 	@Expose
 	private Integer vanID;
+	private String otherFields;
 
 
 	@Expose
 	private Boolean beneficiaryConsent;
+//	private Object otherFields;
 
 }

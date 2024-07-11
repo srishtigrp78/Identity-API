@@ -167,7 +167,6 @@ class RmnchDataSyncServiceImplTest {
 		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(BigInteger.valueOf(987));
 		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID(any())).thenReturn(rMNCHBeneficiaryDetailsRmnch);
 		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(BigInteger.valueOf(987));
-
 		RMNCHMBeneficiarydetail rmnchBenDetails = new RMNCHMBeneficiarydetail();
 		when(rMNCHBenDetailsRepo.getByBenRegID(any())).thenReturn(rmnchBenDetails);
 
