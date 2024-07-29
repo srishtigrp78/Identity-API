@@ -344,7 +344,7 @@ public interface IdentityMapper {
 	@Mapping(target = "email", source = "map.MBeneficiarycontact.emailId")
 
 	@Mapping(source = "map.MBeneficiarydetail.occupationId", target = "occupationId")
-	@Mapping(source = "map.MBeneficiarydetail.occupation", target = "occupation")
+	@Mapping(source = "map.MBeneficiarydetail.occupation", target = "occupationName")
 	@Mapping(source = "map.MBeneficiarydetail.incomeStatus", target = "incomeStatus")
 	@Mapping(source = "map.MBeneficiarydetail.monthlyFamilyIncome", target = "monthlyFamilyIncome")
 	@Mapping(source = "map.MBeneficiarydetail.religionId", target = "religionId")

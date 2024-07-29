@@ -776,7 +776,7 @@ public class IdentityService {
 //					}
 //				}
 //				String otherFieldsJsonString = otherFieldsJson.toString();
-				mbDetl.setOtherFields(benDetails.getOtherFields());
+			//	mbDetl.setOtherFields(benDetails.getOtherFields());
 				logger.debug("Beneficiary details to update = " + new OutputMapper().gson().toJson(mbDetl));
 				if (benDetails.getEmergencyRegistration() != null && benDetails.getEmergencyRegistration()) {
 					mbDetl.setEmergencyRegistration(true);
@@ -1004,7 +1004,7 @@ public class IdentityService {
 		beneficiarydetail.setMaritalStatusId(dto.getMaritalStatusId());
 		beneficiarydetail.setMaritalStatus(dto.getMaritalStatus());
 		beneficiarydetail.setMiddleName(dto.getMiddleName());
-		beneficiarydetail.setOccupation(dto.getOccupation());
+		beneficiarydetail.setOccupation(dto.getOccupationName());
 		beneficiarydetail.setOccupationId(dto.getOccupationId());
 		beneficiarydetail.setPhcId(dto.getPhcId());
 		beneficiarydetail.setPlaceOfWork(dto.getPlaceOfWork());
@@ -1027,6 +1027,8 @@ public class IdentityService {
 				MBeneficiarydetail.getAgeAtMarriageCalc(dto.getDob(), dto.getMarriageDate(), dto.getAgeAtMarriage()));
 		beneficiarydetail.setMarriageDate(
 				MBeneficiarydetail.getMarriageDateCalc(dto.getDob(), dto.getMarriageDate(), dto.getAgeAtMarriage()));
+		if(dto.getOtherFields() != null)
+			beneficiarydetail.setOtherFields(dto.getOtherFields());
 
 		return beneficiarydetail;
 	}
@@ -1335,7 +1337,7 @@ public class IdentityService {
 		beneficiarydetail.setMaritalStatusId(dto.getMaritalStatusId());
 		beneficiarydetail.setMaritalStatus(dto.getMaritalStatus());
 		beneficiarydetail.setMiddleName(dto.getMiddleName());
-		beneficiarydetail.setOccupation(dto.getOccupation());
+		beneficiarydetail.setOccupation(dto.getOccupationName());
 		beneficiarydetail.setOccupationId(dto.getOccupationId());
 		beneficiarydetail.setPhcId(dto.getPhcId());
 		beneficiarydetail.setPlaceOfWork(dto.getPlaceOfWork());

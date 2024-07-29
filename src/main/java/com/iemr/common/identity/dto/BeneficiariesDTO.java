@@ -83,7 +83,7 @@ public class BeneficiariesDTO implements Comparable<BeneficiariesDTO> {
 	private String accountNo;
 	private Long benAccountID;
 	private Integer occupationId;
-	private String occupation;
+	private String occupationName;
 	private String incomeStatus;
 	private BigInteger religionId;
 	private String religion;

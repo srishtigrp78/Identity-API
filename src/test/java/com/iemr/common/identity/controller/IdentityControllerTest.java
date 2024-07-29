@@ -142,7 +142,7 @@ class IdentityControllerTest {
 		dto.setModifiedBy(null);
 		dto.setMonthlyFamilyIncome(null);
 		dto.setMotherName(null);
-		dto.setOccupation(null);
+		dto.setOccupationName(null);
 		dto.setOccupationId(null);
 		dto.setPermanentAddress(address);
 		dto.setPreferredEmailId(null);

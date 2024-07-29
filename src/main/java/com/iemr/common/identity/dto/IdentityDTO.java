@@ -74,7 +74,7 @@ public class IdentityDTO {
 	private String maritalStatus;
 	private String middleName;
 	private Integer occupationId;
-	private String occupation;
+	private String occupationName;
 	private Integer phcId;
 	private Integer parkingPlaceId;
 	private String placeOfWork;
