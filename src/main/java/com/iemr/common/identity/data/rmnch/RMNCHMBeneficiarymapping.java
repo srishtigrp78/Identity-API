@@ -92,7 +92,7 @@ public class RMNCHMBeneficiarymapping implements Serializable {
 	private BigInteger benAccountID;
 
 	@Column(name = "BenRegId")
-	private Long benRegId;
+	private BigInteger benRegId;
 
 	@Expose
 	@Column(name = "vanID")

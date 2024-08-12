@@ -251,7 +251,7 @@ public class IdentityServiceTest {
 		rmnchBenDetails.setRchid("7");
 		rmnchBenDetails.toString();
 
-		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID(new Long( elements[5].toString())))
+		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID(new BigInteger( elements[5].toString())))
 				.thenReturn(rmnchBenDetails);
 		MBeneficiaryaddress beneficiaryaddress1 = new MBeneficiaryaddress();
 		beneficiaryaddress1.setCreatedBy(null);

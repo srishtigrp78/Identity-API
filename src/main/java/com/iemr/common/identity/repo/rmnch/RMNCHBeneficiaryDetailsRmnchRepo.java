@@ -37,5 +37,5 @@ public interface RMNCHBeneficiaryDetailsRmnchRepo extends CrudRepository<RMNCHBe
 			@Param("vanID") int vanID);
 
 	@Query(" SELECT t FROM RMNCHBeneficiaryDetailsRmnch t WHERE t.BenRegId =:benRegID ")
-	public RMNCHBeneficiaryDetailsRmnch getByRegID(@Param("benRegID") Long benRegId);
+	public RMNCHBeneficiaryDetailsRmnch getByRegID(@Param("benRegID") BigInteger benRegId);
 }

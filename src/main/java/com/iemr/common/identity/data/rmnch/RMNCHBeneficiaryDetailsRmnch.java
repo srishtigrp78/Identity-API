@@ -54,7 +54,7 @@ public class RMNCHBeneficiaryDetailsRmnch {
 
 	@Expose
 	@Column(name = "BeneficiaryRegID")
-	private Long BenRegId;
+	private BigInteger BenRegId;
 
 	@Expose
 	@Column(name = "aadhaNo")

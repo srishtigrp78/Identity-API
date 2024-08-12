@@ -161,12 +161,12 @@ class RmnchDataSyncServiceImplTest {
 		when(rMNCHHouseHoldDetailsRepo.getByHouseHoldID(Long.valueOf(987))).thenReturn(rMNCHHouseHoldDetails);
 		when(rMNCHCBACDetailsRepo.saveAll(anyList())).thenReturn(rMNCHCBACdetailslist);
 		when(rMNCHCBACDetailsRepo.getByRegID(any())).thenReturn(rMNCHCBACdetails);
-		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(Long.valueOf(987));
+		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(BigInteger.valueOf(987));
 		when(rMNCHBornBirthDetailsRepo.saveAll(anyList())).thenReturn(rMNCHBornBirthDetailslist);
 		when(rMNCHBornBirthDetailsRepo.getByRegID(any())).thenReturn(rMNCHBornBirthDetails);
-		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(Long.valueOf(987));
+		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(BigInteger.valueOf(987));
 		when(rMNCHBeneficiaryDetailsRmnchRepo.getByRegID(any())).thenReturn(rMNCHBeneficiaryDetailsRmnch);
-		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(Long.valueOf(987));
+		when(rMNCHMBenRegIdMapRepo.getRegID(any())).thenReturn(BigInteger.valueOf(987));
 		RMNCHMBeneficiarydetail rmnchBenDetails = new RMNCHMBeneficiarydetail();
 		when(rMNCHBenDetailsRepo.getByBenRegID(any())).thenReturn(rmnchBenDetails);
 
@@ -238,7 +238,7 @@ class RmnchDataSyncServiceImplTest {
 		m.setBenImageId(BigInteger.valueOf(9));
 		m.setBenAddressId(BigInteger.valueOf(9));
 		m.setBenConsentId(BigInteger.valueOf(9));
-		m.setBenRegId(Long.valueOf(9));
+		m.setBenRegId(BigInteger.valueOf(9));
 		m.toString();
 		RMNCHMBeneficiarydetail benDetailsOBJ = new RMNCHMBeneficiarydetail();
 
@@ -334,7 +334,7 @@ class RmnchDataSyncServiceImplTest {
 		m.setBenImageId(BigInteger.valueOf(9));
 		m.setBenAddressId(BigInteger.valueOf(9));
 		m.setBenConsentId(BigInteger.valueOf(9));
-		m.setBenRegId(Long.valueOf(9));
+		m.setBenRegId(BigInteger.valueOf(9));
 		m.toString();
 		RMNCHMBeneficiarydetail benDetailsOBJ = new RMNCHMBeneficiarydetail();
 		benDetailsOBJ.toString();
@@ -419,7 +419,7 @@ class RmnchDataSyncServiceImplTest {
 		m.setBenImageId(BigInteger.valueOf(9));
 		m.setBenAddressId(BigInteger.valueOf(9));
 		m.setBenConsentId(BigInteger.valueOf(9));
-		m.setBenRegId(Long.valueOf(9));
+		m.setBenRegId(BigInteger.valueOf(9));
 		m.hashCode();
 		m.equals(m);
 		m.toString();
@@ -548,7 +548,7 @@ class RmnchDataSyncServiceImplTest {
 		m.setBenImageId(BigInteger.valueOf(9));
 		m.setBenAddressId(BigInteger.valueOf(9));
 		m.setBenConsentId(BigInteger.valueOf(9));
-		m.setBenRegId(Long.valueOf(9));
+		m.setBenRegId(BigInteger.valueOf(9));
 		m.toString();
 		RMNCHMBeneficiarydetail benDetailsOBJ = new RMNCHMBeneficiarydetail();
 		benDetailsOBJ.toString();
@@ -629,7 +629,7 @@ class RmnchDataSyncServiceImplTest {
 		m.setBenImageId(BigInteger.valueOf(9));
 		m.setBenAddressId(BigInteger.valueOf(9));
 		m.setBenConsentId(BigInteger.valueOf(9));
-		m.setBenRegId(Long.valueOf(9));
+		m.setBenRegId(BigInteger.valueOf(9));
 		m.toString();
 		RMNCHMBeneficiarydetail benDetailsOBJ = new RMNCHMBeneficiarydetail();
 
@@ -729,7 +729,7 @@ class RmnchDataSyncServiceImplTest {
 		m.setBenImageId(BigInteger.valueOf(9));
 		m.setBenAddressId(BigInteger.valueOf(9));
 		m.setBenConsentId(BigInteger.valueOf(9));
-		m.setBenRegId(Long.valueOf(9));
+		m.setBenRegId(BigInteger.valueOf(9));
 		m.toString();
 		RMNCHMBeneficiarydetail benDetailsOBJ = new RMNCHMBeneficiarydetail();
 
@@ -825,7 +825,7 @@ class RmnchDataSyncServiceImplTest {
 		m.setBenImageId(BigInteger.valueOf(9));
 		m.setBenAddressId(BigInteger.valueOf(9));
 		m.setBenConsentId(BigInteger.valueOf(9));
-		m.setBenRegId(Long.valueOf(9));
+		m.setBenRegId(BigInteger.valueOf(9));
 		m.toString();
 		RMNCHMBeneficiarydetail benDetailsOBJ = new RMNCHMBeneficiarydetail();
 

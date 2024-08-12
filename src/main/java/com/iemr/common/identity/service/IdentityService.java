@@ -584,7 +584,7 @@ public class IdentityService {
 			benMapOBJ = mappingRepo.getMapping(getBigIntegerValueFromObject(benMapArr[9]), (Integer) benMapArr[8]);
  
 			RMNCHBeneficiaryDetailsRmnch obj = rMNCHBeneficiaryDetailsRmnchRepo
-					.getByRegID(((BigInteger) benMapArr[5]).longValue());
+					.getByRegID(((BigInteger) benMapArr[5]));
 			if (obj != null) {
 				if (obj.getHouseoldId() != null)
 					benMapOBJ.setHouseHoldID(obj.getHouseoldId());

@@ -53,7 +53,7 @@ public class RMNCHCBACdetails {
 
 	@Expose
 	@Column(name = "BeneficiaryRegId")
-	private Long BenRegId;
+	private BigInteger BenRegId;
 
 	@Expose
 	@Column(name = "cbac_age")

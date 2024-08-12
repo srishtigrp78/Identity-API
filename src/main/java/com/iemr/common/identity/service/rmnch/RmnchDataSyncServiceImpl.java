@@ -132,7 +132,7 @@ public class RmnchDataSyncServiceImpl implements RmnchDataSyncService {
 				// other tables data saving
 				// ben details RMNCH extra fields details
 
-				Long benRegID = null;
+				BigInteger benRegID = null;
 
 				if (jsnOBJ != null && jsnOBJ.has("beneficiaryDetails")) {
 					RMNCHBeneficiaryDetailsRmnch[] objArr = InputMapper.gson()
