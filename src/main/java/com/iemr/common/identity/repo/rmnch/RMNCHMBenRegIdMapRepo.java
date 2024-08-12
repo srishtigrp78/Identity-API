@@ -50,5 +50,5 @@ public interface RMNCHMBenRegIdMapRepo extends CrudRepository<RMNCHMBeneficiaryr
 			@Param("providerServiceMapID") int providerServiceMapID);
 
 	@Query(" SELECT t.benRegId FROM RMNCHMBeneficiaryregidmapping t  WHERE t.beneficiaryID = :benID ")
-	public BigInteger getRegID(@Param("benID") BigInteger benID);
+	public Long getRegID(@Param("benID") BigInteger benID);
 }
