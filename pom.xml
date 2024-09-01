@@ -303,6 +303,32 @@
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
+			</plugin> 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>filter-resources</id>
+								<phase>process-resources</phase>
+								<goals>
+									<goal>resources</goal>
+								</goals>
+								<configuration>
+									<delimiters>@</delimiters>
+									<useDefaultDelimiters>false</useDefaultDelimiters>
+									<resources>
+										<resource>
+											<directory>src/main/environment</directory>
+											<filtering>true</filtering>
+											<includes>
+												<include>common_${environment}.properties</include>
+											</includes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
