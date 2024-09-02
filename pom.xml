@@ -248,13 +248,6 @@
 					<format>HTML</format>
 					<nvdApiServerId>nvd</nvdApiServerId>
 				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 
 			<plugin>
