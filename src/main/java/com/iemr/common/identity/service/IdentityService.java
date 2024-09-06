@@ -1329,6 +1329,8 @@ public class IdentityService {
 		beneficiarydetail.setPlaceOfWork(dto.getPlaceOfWork());
 		beneficiarydetail.setPreferredLanguage(dto.getPreferredLanguage());
 		beneficiarydetail.setReligion(dto.getReligion());
+		if (dto.getFaceEmbedding() != null)
+			beneficiarydetail.setFaceEmbedding(dto.getFaceEmbedding().toString());
 		if (dto.getReligionId() != null)
 			beneficiarydetail.setReligionId(BigInteger.valueOf(dto.getReligionId()));
 		beneficiarydetail.setRemarks(dto.getRemarks());
