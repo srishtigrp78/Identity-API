@@ -285,9 +285,9 @@ public interface IdentityMapper {
 	@Mapping(target = "beneficiaryDetails.healthCareWorkerId", source = "map.MBeneficiarydetail.healthCareWorkerId")
 	@Mapping(target = "beneficiaryDetails.healthCareWorker", source = "map.MBeneficiarydetail.healthCareWorker")
 	@Mapping(target = "beneficiaryDetails.preferredLanguage", source = "map.MBeneficiarydetail.preferredLanguage")
-    @Mapping(target = "beneficiaryDetails.faceEmbedding", source = "map.MBeneficiarydetail.faceEmbedding", qualifiedByName = "stringToListFloat")
+	@Mapping(target = "beneficiaryDetails.faceEmbedding", source = "map.MBeneficiarydetail.faceEmbedding", qualifiedByName = "stringToListFloat")
 	@Named("stringToListFloat")
-    default List<Float> stringToListFloat(String faceEmbedding) {
+	default List<Float> stringToListFloat(String faceEmbedding) {
         if (faceEmbedding == null || faceEmbedding.isEmpty()) {
             return null;
         }
@@ -295,7 +295,7 @@ public interface IdentityMapper {
                      .map(String::trim)
                      .map(Float::parseFloat)
                      .collect(Collectors.toList());
-    }
+	}
 
 	@Mapping(target = "beneficiaryDetails.religion", source = "map.MBeneficiarydetail.religion")
 	@Mapping(target = "beneficiaryDetails.remarks", source = "map.MBeneficiarydetail.remarks")
