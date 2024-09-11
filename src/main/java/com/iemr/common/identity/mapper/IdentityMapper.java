@@ -22,14 +22,17 @@
 package com.iemr.common.identity.mapper;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
 import com.iemr.common.identity.domain.Identity;
@@ -282,6 +285,17 @@ public interface IdentityMapper {
 	@Mapping(target = "beneficiaryDetails.healthCareWorkerId", source = "map.MBeneficiarydetail.healthCareWorkerId")
 	@Mapping(target = "beneficiaryDetails.healthCareWorker", source = "map.MBeneficiarydetail.healthCareWorker")
 	@Mapping(target = "beneficiaryDetails.preferredLanguage", source = "map.MBeneficiarydetail.preferredLanguage")
+	@Mapping(target = "beneficiaryDetails.faceEmbedding", source = "map.MBeneficiarydetail.faceEmbedding", qualifiedByName = "stringToListFloat")
+	@Named("stringToListFloat")
+	default List<Float> stringToListFloat(String faceEmbedding) {
+        if (faceEmbedding == null || faceEmbedding.isEmpty()) {
+            return null;
+        }
+        return Arrays.stream(faceEmbedding.split(","))
+                     .map(String::trim)
+                     .map(Float::parseFloat)
+                     .collect(Collectors.toList());
+	}
 
 	@Mapping(target = "beneficiaryDetails.religion", source = "map.MBeneficiarydetail.religion")
 	@Mapping(target = "beneficiaryDetails.remarks", source = "map.MBeneficiarydetail.remarks")

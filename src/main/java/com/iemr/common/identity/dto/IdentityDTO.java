@@ -92,6 +92,7 @@ public class IdentityDTO {
 	private Integer titleId;
 	private String title;
 	private Integer zoneId;
+	private List<Float> faceEmbedding;
 
 	private Address currentAddress;
 	private Address permanentAddress;
@@ -113,7 +114,6 @@ public class IdentityDTO {
 	private String sexualOrientationType;
 	private String isHIVPositive;
 
-	
 	private String bankName;
 	private String branchName;
 	private String ifscCode;
@@ -130,9 +130,8 @@ public class IdentityDTO {
 	private Integer vanID;
 	private String otherFields;
 
-
 	@Expose
 	private Boolean beneficiaryConsent;
-//	private Object otherFields;
+	// private Object otherFields;
 
 }
