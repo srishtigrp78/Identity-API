@@ -24,6 +24,10 @@ package com.iemr.common.identity.dto;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.json.JSONObject;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.iemr.common.identity.domain.Address;
 import com.iemr.common.identity.domain.Contact;
@@ -70,7 +74,7 @@ public class IdentityDTO {
 	private String maritalStatus;
 	private String middleName;
 	private Integer occupationId;
-	private String occupation;
+	private String occupationName;
 	private Integer phcId;
 	private Integer parkingPlaceId;
 	private String placeOfWork;
@@ -88,6 +92,7 @@ public class IdentityDTO {
 	private Integer titleId;
 	private String title;
 	private Integer zoneId;
+	private List<Float> faceEmbedding;
 
 	private Address currentAddress;
 	private Address permanentAddress;
@@ -109,7 +114,6 @@ public class IdentityDTO {
 	private String sexualOrientationType;
 	private String isHIVPositive;
 
-	
 	private String bankName;
 	private String branchName;
 	private String ifscCode;
@@ -124,9 +128,10 @@ public class IdentityDTO {
 
 	@Expose
 	private Integer vanID;
-
+	private String otherFields;
 
 	@Expose
 	private Boolean beneficiaryConsent;
+	// private Object otherFields;
 
 }

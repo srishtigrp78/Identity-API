@@ -21,10 +21,18 @@
 */
 package com.iemr.common.identity.dto;
 
+
+
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.iemr.common.identity.domain.Address;
 import com.iemr.common.identity.domain.Phone;
 
@@ -55,6 +63,7 @@ public class BeneficiariesDTO implements Comparable<BeneficiariesDTO> {
 	private List<BenIdentityDTO> beneficiaryIdentites;
 	private List<BenServiceDTO> beneficiaryServiceMap;
 	private List<Phone> contacts;
+	private List<Float> faceEmbedding;
 
 // ABHA address
 	List<AbhaAddressDTO> abhaDetails;
@@ -75,7 +84,7 @@ public class BeneficiariesDTO implements Comparable<BeneficiariesDTO> {
 	private String accountNo;
 	private Long benAccountID;
 	private Integer occupationId;
-	private String occupation;
+	private String occupationName;
 	private String incomeStatus;
 	private BigInteger religionId;
 	private String religion;
@@ -87,4 +96,7 @@ public class BeneficiariesDTO implements Comparable<BeneficiariesDTO> {
 	private String sourceOfInformation;
 	private String isHIVPos;
 	// End 1097
+	
+	private String otherFields;
+	
 }

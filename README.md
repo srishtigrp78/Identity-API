@@ -9,28 +9,11 @@ Identity API is a microservice which is used for the creation and management of 
 * Beneficiary Management
 
 
-## Building From Source
-This microservice is built on Java, Spring boot framework and MySQL DB.
-
-### Prerequisites 
-* JDK 1.8
-* Maven 
-
-$ ./mvn clean install
-
-## Installation
-This service has been tested on Wildfly as the application server.
-
-### Prerequisites 
-* Wildfly (or any compatible app server)
-* Redis
-* MySQL Database
-
 ## Environment and setup
+For setting up the development environment, please refer to the [Developer Guide](https://piramal-swasthya.gitbook.io/amrit/developer-guide/development-environment-setup) .
 
-1. Install dependencies `mvn clean install`
-2. You can copy `common_example.properties` to `common_local.properties` and edit the file accordingly. The file is under `src/main/environment` folder.
-3. Run the spring server with local configuration `mvn spring-boot:run -DENV_VAR=local`
+## API Guide
+Detailed information on API endpoints can be found in the [API Guide](https://piramal-swasthya.gitbook.io/amrit/architecture/api-guide).
 
 ## Integrations
 * RMNCH (Reproductive, Maternal, Newborn, and Child Health)

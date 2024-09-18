@@ -121,18 +121,7 @@ public interface BenMappingRepo extends CrudRepository<MBeneficiarymapping, BigI
 	Long getBeneficiaryCountsByVillageIDAndLastModifyDate(@Param("villageIDs") List<Integer> villageID,
 			@Param("lastModDate") Timestamp lastModifiedDate);
 
-	/*
-	 * List<MBeneficiarymapping> dynamicFilterSearch(IdentitySearchDTO searchDTO);
-	 * 
-	 *//**
-		 * This method is to search finite beneficiary for MCTS before in order to
-		 * generate iemr ID and can be use to finite search generally
-		 * 
-		 * @param identityDTO
-		 * @return mBeneficiarymappingList
-		 *//*
-			 * List<MBeneficiarymapping> finiteSearch(IdentityDTO identityDTO);
-			 * 
-			 * List<VBenAdvanceSearch> dynamicFilterSearchNew(IdentitySearchDTO searchDTO);
-			 */
+	
+	@Query("SELECT t FROM MBeneficiarymapping t WHERE t.vanSerialNo =:vanSerialNo AND t.vanID=:vanID")
+	MBeneficiarymapping getMapping(@Param("vanSerialNo") BigInteger vanSerialNo,@Param("vanID") Integer vanID);
 }

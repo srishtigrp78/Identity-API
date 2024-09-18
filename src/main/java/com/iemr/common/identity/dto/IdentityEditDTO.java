@@ -98,7 +98,7 @@ public class IdentityEditDTO {
 	private Integer incomeStatusId;
 	private String incomeStatus;
 	private Integer occupationId;
-	private String occupation;
+	private String occupationName;
 	private Integer religionId;
 	private String religion;
 	private String placeOfWork;
@@ -146,4 +146,5 @@ public class IdentityEditDTO {
 	private Integer vanID;
 	private Integer parkingPlaceId;
 	private boolean emergencyRegistration;
+	private String otherFields;
 }
