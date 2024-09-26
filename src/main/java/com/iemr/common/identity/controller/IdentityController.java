@@ -603,11 +603,7 @@ public class IdentityController {
 			+ "  \"sexualOrientationType\": \"String\",\r\n" + "  \"vanID\": \"Integer\",\r\n"
 			+ "  \"createdDate\": \"Timestamp\"\r\n" + "  \"faceEmbedding\": [\"Float\"]\r\n" + "}") @RequestBody String identityData) throws IEMRException {
 		logger.info("IdentityController.createIdentity - start");
-	//	JsonElement json = JsonParser.parseString(identityData);
-
-//		if (json instanceof JsonNull || json instanceof JsonPrimitive) {
-//			return getErrorResponseString("Null/Empty Identity Create Data.", 200, "success", "");
-//		}
+	
 		IdentityDTO identity = new Gson().fromJson(identityData, IdentityDTO.class);
 		logger.info("identity hit: " + identity);
 		BeneficiaryCreateResp map;
