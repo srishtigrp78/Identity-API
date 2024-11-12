@@ -1040,7 +1040,7 @@ public class IdentityService {
 		}
 		regMap.setReserved(true);
 		if (regMap.getCreatedDate() == null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 			String dateToStoreInDataBase = sdf.format(new Date());
 			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			regMap.setCreatedDate(ts);
@@ -1079,7 +1079,7 @@ public class IdentityService {
 			mAddr.setEmergencyAddress(identity.getPermanentAddress());
 		}
 		if (mAddr.getCreatedDate() == null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 			String dateToStoreInDataBase = sdf.format(new Date());
 			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			mAddr.setCreatedDate(ts);
@@ -1094,7 +1094,7 @@ public class IdentityService {
 		MBeneficiaryconsent mConsnt = mapper.identityDTOToDefaultMBeneficiaryconsent(identity, true, false);
 		logger.info("IdentityService.createIdentity - saving Consent");
 		if (mConsnt.getCreatedDate() == null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 			String dateToStoreInDataBase = sdf.format(new Date());
 			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			mConsnt.setCreatedDate(ts);
@@ -1110,7 +1110,7 @@ public class IdentityService {
 		// MBeneficiarycontact mContc =
 		// mapper.identityDTOToMBeneficiarycontact(identity);
 		if (mContc.getCreatedDate() == null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 			String dateToStoreInDataBase = sdf.format(new Date());
 			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			mContc.setCreatedDate(ts);
@@ -1126,7 +1126,7 @@ public class IdentityService {
 		MBeneficiarydetail mDetl = convertIdentityDTOToMBeneficiarydetail(identity);
 
 		if (mDetl.getCreatedDate() == null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 			String dateToStoreInDataBase = sdf.format(new Date());
 			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			mDetl.setCreatedDate(ts);
@@ -1139,7 +1139,7 @@ public class IdentityService {
 
 		MBeneficiaryAccount bankOBJ = mapper.identityDTOToMBeneficiaryAccount(identity);
 		if (bankOBJ.getCreatedDate() == null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 			String dateToStoreInDataBase = sdf.format(new Date());
 			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			bankOBJ.setCreatedDate(ts);
@@ -1152,7 +1152,7 @@ public class IdentityService {
 		MBeneficiaryImage benImageOBJ = identityDTOToMBeneficiaryImage(identity);
 
 		if (benImageOBJ.getCreatedDate() == null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 			String dateToStoreInDataBase = sdf.format(new Date());
 			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			benImageOBJ.setCreatedDate(ts);
@@ -1185,7 +1185,7 @@ public class IdentityService {
 
 		regIdRepo.save(regMap);
 		if (benMapping.getCreatedDate() == null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 			String dateToStoreInDataBase = sdf.format(new Date());
 			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			benMapping.setCreatedDate(ts);
@@ -1237,7 +1237,7 @@ public class IdentityService {
 		MBeneficiaryservicemapping sMap = mapper.identityDTOToMBeneficiaryservicemapping(identity);
 		sMap.setBenMapId(benMapping.getBenMapId());
 		if (sMap.getCreatedDate() == null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 			String dateToStoreInDataBase = sdf.format(new Date());
 			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			sMap.setCreatedDate(ts);
