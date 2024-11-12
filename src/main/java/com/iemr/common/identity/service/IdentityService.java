@@ -1124,27 +1124,7 @@ public class IdentityService {
 		logger.info("IdentityService.createIdentity - saving Details");
 		// MBeneficiarydetail mDetl = mapper.identityDTOToMBeneficiarydetail(identity);
 		MBeneficiarydetail mDetl = convertIdentityDTOToMBeneficiarydetail(identity);
-//		String identityJson = new Gson().toJson(json);
-//		JsonObject identityJsonObject = new Gson().fromJson(identityJson, JsonObject.class);
-//		JsonObject otherFieldsJson = new JsonObject();
-//		Set<String> identityFieldNames = new HashSet<>();
-//		for (Field field : IdentityDTO.class.getDeclaredFields()) {
-//			identityFieldNames.add(field.getName());
-//		}
-//		Set<String> entityFieldNames = new HashSet<>();
-//		for (Field field : MBeneficiarydetail.class.getDeclaredFields()) {
-//			entityFieldNames.add(field.getName());
-//		}
-//		for (Map.Entry<String, JsonElement> entry : identityJsonObject.entrySet()) {
-//			String fieldName = entry.getKey();
-//
-//			// Check if the field is not present in either class
-//			if (!identityFieldNames.contains(fieldName) && !entityFieldNames.contains(fieldName)) {
-//				otherFieldsJson.add(fieldName, entry.getValue());
-//			}
-//		}
-//		String otherFieldsJsonString = otherFieldsJson.toString();
-	//	mDetl.setOtherFields(otherFieldsJsonString);
+
 		if (mDetl.getCreatedDate() == null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
 			String dateToStoreInDataBase = sdf.format(new Date());
@@ -1607,11 +1587,14 @@ public class IdentityService {
 		if (null != benMap && null != benMap.getMBeneficiarydetail()
 				&& null != benMap.getMBeneficiarydetail().getFaceEmbedding()) {
 			String faceEmbedding = benMap.getMBeneficiarydetail().getFaceEmbedding();
-			List<Float> collect = Arrays.stream(faceEmbedding.split(",")).map(String::trim).map(Float::parseFloat)
-					.collect(Collectors.toList());
-			bdto.setFaceEmbedding(collect);
+			String trimmedInput = faceEmbedding.replaceAll("[\\[\\]]", "");
+			String[] stringNumbers = trimmedInput.split(",\\s*");
+			List<Float> floatList = new ArrayList<>();
+			for (String str : stringNumbers) {
+				floatList.add(Float.parseFloat(str));
+			}
+			bdto.setFaceEmbedding(floatList);
 		}
-		
 		// bdto.setOtherFields(benMap.getMBeneficiarydetail().getOtherFields());
 		bdto.setBeneficiaryFamilyTags(
 				mapper.mapToMBeneficiaryfamilymappingWithBenFamilyDTOList(benMap.getMBeneficiaryfamilymappings()));
