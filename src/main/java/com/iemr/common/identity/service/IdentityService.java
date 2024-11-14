@@ -21,22 +21,17 @@
 */
 package com.iemr.common.identity.service;
 
-import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.sql.DataSource;
 
@@ -47,7 +42,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -104,7 +98,7 @@ import jakarta.persistence.QueryTimeoutException;
 @Service
 public class IdentityService {
 	private static final Logger logger = LoggerFactory.getLogger(IdentityService.class);
-
+	public static final String CREATED_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
 	@Autowired
 	private DataSource dataSource;
 
@@ -1040,7 +1034,7 @@ public class IdentityService {
 		}
 		regMap.setReserved(true);
 		if (regMap.getCreatedDate() == null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat(CREATED_DATE_FORMAT);
 			String dateToStoreInDataBase = sdf.format(new Date());
 			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			regMap.setCreatedDate(ts);
@@ -1079,7 +1073,7 @@ public class IdentityService {
 			mAddr.setEmergencyAddress(identity.getPermanentAddress());
 		}
 		if (mAddr.getCreatedDate() == null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat(CREATED_DATE_FORMAT);
 			String dateToStoreInDataBase = sdf.format(new Date());
 			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			mAddr.setCreatedDate(ts);
@@ -1094,7 +1088,7 @@ public class IdentityService {
 		MBeneficiaryconsent mConsnt = mapper.identityDTOToDefaultMBeneficiaryconsent(identity, true, false);
 		logger.info("IdentityService.createIdentity - saving Consent");
 		if (mConsnt.getCreatedDate() == null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat(CREATED_DATE_FORMAT);
 			String dateToStoreInDataBase = sdf.format(new Date());
 			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			mConsnt.setCreatedDate(ts);
@@ -1110,7 +1104,7 @@ public class IdentityService {
 		// MBeneficiarycontact mContc =
 		// mapper.identityDTOToMBeneficiarycontact(identity);
 		if (mContc.getCreatedDate() == null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat(CREATED_DATE_FORMAT);
 			String dateToStoreInDataBase = sdf.format(new Date());
 			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			mContc.setCreatedDate(ts);
@@ -1124,29 +1118,9 @@ public class IdentityService {
 		logger.info("IdentityService.createIdentity - saving Details");
 		// MBeneficiarydetail mDetl = mapper.identityDTOToMBeneficiarydetail(identity);
 		MBeneficiarydetail mDetl = convertIdentityDTOToMBeneficiarydetail(identity);
-//		String identityJson = new Gson().toJson(json);
-//		JsonObject identityJsonObject = new Gson().fromJson(identityJson, JsonObject.class);
-//		JsonObject otherFieldsJson = new JsonObject();
-//		Set<String> identityFieldNames = new HashSet<>();
-//		for (Field field : IdentityDTO.class.getDeclaredFields()) {
-//			identityFieldNames.add(field.getName());
-//		}
-//		Set<String> entityFieldNames = new HashSet<>();
-//		for (Field field : MBeneficiarydetail.class.getDeclaredFields()) {
-//			entityFieldNames.add(field.getName());
-//		}
-//		for (Map.Entry<String, JsonElement> entry : identityJsonObject.entrySet()) {
-//			String fieldName = entry.getKey();
-//
-//			// Check if the field is not present in either class
-//			if (!identityFieldNames.contains(fieldName) && !entityFieldNames.contains(fieldName)) {
-//				otherFieldsJson.add(fieldName, entry.getValue());
-//			}
-//		}
-//		String otherFieldsJsonString = otherFieldsJson.toString();
-	//	mDetl.setOtherFields(otherFieldsJsonString);
+
 		if (mDetl.getCreatedDate() == null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat(CREATED_DATE_FORMAT);
 			String dateToStoreInDataBase = sdf.format(new Date());
 			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			mDetl.setCreatedDate(ts);
@@ -1159,7 +1133,7 @@ public class IdentityService {
 
 		MBeneficiaryAccount bankOBJ = mapper.identityDTOToMBeneficiaryAccount(identity);
 		if (bankOBJ.getCreatedDate() == null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat(CREATED_DATE_FORMAT);
 			String dateToStoreInDataBase = sdf.format(new Date());
 			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			bankOBJ.setCreatedDate(ts);
@@ -1172,7 +1146,7 @@ public class IdentityService {
 		MBeneficiaryImage benImageOBJ = identityDTOToMBeneficiaryImage(identity);
 
 		if (benImageOBJ.getCreatedDate() == null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat(CREATED_DATE_FORMAT);
 			String dateToStoreInDataBase = sdf.format(new Date());
 			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			benImageOBJ.setCreatedDate(ts);
@@ -1205,7 +1179,7 @@ public class IdentityService {
 
 		regIdRepo.save(regMap);
 		if (benMapping.getCreatedDate() == null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat(CREATED_DATE_FORMAT);
 			String dateToStoreInDataBase = sdf.format(new Date());
 			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			benMapping.setCreatedDate(ts);
@@ -1257,7 +1231,7 @@ public class IdentityService {
 		MBeneficiaryservicemapping sMap = mapper.identityDTOToMBeneficiaryservicemapping(identity);
 		sMap.setBenMapId(benMapping.getBenMapId());
 		if (sMap.getCreatedDate() == null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			SimpleDateFormat sdf = new SimpleDateFormat(CREATED_DATE_FORMAT);
 			String dateToStoreInDataBase = sdf.format(new Date());
 			Timestamp ts = Timestamp.valueOf(dateToStoreInDataBase);
 			sMap.setCreatedDate(ts);
@@ -1607,11 +1581,14 @@ public class IdentityService {
 		if (null != benMap && null != benMap.getMBeneficiarydetail()
 				&& null != benMap.getMBeneficiarydetail().getFaceEmbedding()) {
 			String faceEmbedding = benMap.getMBeneficiarydetail().getFaceEmbedding();
-			List<Float> collect = Arrays.stream(faceEmbedding.split(",")).map(String::trim).map(Float::parseFloat)
-					.collect(Collectors.toList());
-			bdto.setFaceEmbedding(collect);
+			String trimmedInput = faceEmbedding.replaceAll("[\\[\\]]", "");
+			String[] stringNumbers = trimmedInput.split(",\\s*");
+			List<Float> floatList = new ArrayList<>();
+			for (String str : stringNumbers) {
+				floatList.add(Float.parseFloat(str));
+			}
+			bdto.setFaceEmbedding(floatList);
 		}
-		
 		// bdto.setOtherFields(benMap.getMBeneficiarydetail().getOtherFields());
 		bdto.setBeneficiaryFamilyTags(
 				mapper.mapToMBeneficiaryfamilymappingWithBenFamilyDTOList(benMap.getMBeneficiaryfamilymappings()));
