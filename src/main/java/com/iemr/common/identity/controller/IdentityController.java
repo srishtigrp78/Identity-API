@@ -698,8 +698,7 @@ public class IdentityController {
 	@PostMapping(path = "/getByBenRegIdList", headers = "Authorization")
 	public String getBeneficiariesByBenRegIds(
 	        @RequestBody Long[] benRegIds) {  // Accepting an array of Longs directly
-		String logMessage = String.format("IdentityController.getBeneficiariesByBenRegIds - start. benRegIdList = %s", Arrays.toString(benRegIds)) ;
-				logger.info(logMessage);
+				logger.info("IdentityController.getBeneficiariesByBenRegIds - start. benRegIdList = " + benRegIds.length);
 
 	    // If benRegIds is null or empty, return an error response
 	    if (benRegIds == null || benRegIds.length == 0) {
