@@ -571,6 +571,31 @@ public class IdentityService {
 		return beneficiaryList;
 	}
 
+	private MBeneficiarymapping getBeneficiariesDTONewForList(Object[] benMapArr) {
+		MBeneficiarymapping benMapOBJ = new MBeneficiarymapping();
+		if (benMapArr != null && benMapArr.length == 12 && benMapArr[8] != null && benMapArr[9] != null) {
+			benMapOBJ.setBenMapId(getBigIntegerValueFromObject(benMapArr[0]));
+			benMapOBJ.setCreatedBy(String.valueOf(benMapArr[10]));
+			benMapOBJ.setCreatedDate((Timestamp) benMapArr[11]);
+			benMapOBJ = mappingRepo.getMapping(getBigIntegerValueFromObject(benMapArr[9]), (Integer) benMapArr[8]);
+		
+			BigInteger regId = BigInteger.valueOf(((Long) benMapArr[5]).longValue());
+			RMNCHBeneficiaryDetailsRmnch obj = rMNCHBeneficiaryDetailsRmnchRepo.getByRegID(regId);
+
+		//	RMNCHBeneficiaryDetailsRmnch obj = rMNCHBeneficiaryDetailsRmnchRepo.getByRegID(((BigInteger) benMapArr[5]));
+			if (obj != null) {
+				if (obj.getHouseoldId() != null)
+					benMapOBJ.setHouseHoldID(obj.getHouseoldId());
+				if (obj.getGuidelineId() != null)
+					benMapOBJ.setGuideLineID(obj.getGuidelineId());
+				if (obj.getRchid() != null)
+					benMapOBJ.setRchID(obj.getRchid());
+			}
+ 
+		}
+		return benMapOBJ;
+	}
+	
 	private MBeneficiarymapping getBeneficiariesDTONew(Object[] benMapArr) {
 		MBeneficiarymapping benMapOBJ = new MBeneficiarymapping();
 		if (benMapArr != null && benMapArr.length == 12 && benMapArr[8] != null && benMapArr[9] != null) {
@@ -1559,7 +1584,7 @@ public class IdentityService {
 			benMapObjArr = mappingRepo.getBenMappingByRegIDList(benRegIds);
 			if (benMapObjArr != null && !benMapObjArr.isEmpty()) {
 				for (Object[] objArr : benMapObjArr) {
-					MBeneficiarymapping benMap = this.getBeneficiariesDTONew(objArr);
+					MBeneficiarymapping benMap = this.getBeneficiariesDTONewForList(objArr);
 					list.add(this.getBeneficiariesDTO(benMap));
 				}
 			}
