@@ -697,25 +697,29 @@ public class IdentityController {
 	@Operation(summary = "Get beneficiaries by beneficiary registration id")
 	@PostMapping(path = "/getByBenRegIdList", headers = "Authorization")
 	public String getBeneficiariesByBenRegIds(
-			@Param(value = " {\"beneficiaryRegID\": \"Long\"}") @RequestBody String benRegIds) {
-		logger.info("IdentityController.getBeneficiariesByBenRegIds - start. benRegIdList = " + benRegIds);
-		BigInteger[] benRegIdarray = null;
-		JsonElement json = JsonParser.parseString(benRegIds);
+	        @RequestBody Long[] benRegIds) {  // Accepting an array of Longs directly
+				logger.info("IdentityController.getBeneficiariesByBenRegIds - start. benRegIdList = " + benRegIds.length);
 
-		if (json instanceof JsonNull) {
-			return getErrorResponseString("Null/Empty Phone Number.", 200, "success", "");
-		}
+	    // If benRegIds is null or empty, return an error response
+	    if (benRegIds == null || benRegIds.length == 0) {
+	        return getErrorResponseString("No beneficiary registration IDs provided", 400, "error", "Array is empty");
+	    }
 
-		benRegIdarray = InputMapper.getInstance().gson().fromJson(json, BigInteger[].class);
+	 // Convert the Long[] to BigInteger[] for further processing
+	    BigInteger[] benRegIdArray = Arrays.stream(benRegIds)
+	                                       .map(BigInteger::valueOf)
+	                                       .toArray(BigInteger[]::new);
+	    
+	    List<BeneficiariesDTO> list = svc.getBeneficiariesDeatilsByBenRegIdList(Arrays.asList(benRegIdArray));
+	    list.removeIf(Objects::isNull);
+	    Collections.sort(list);
 
-		List<BeneficiariesDTO> list = svc.getBeneficiariesDeatilsByBenRegIdList(Arrays.asList(benRegIdarray));
-		list.removeIf(Objects::isNull);
-		Collections.sort(list);
-		String response = getSuccessResponseString(list, 200, "success", "getBeneficiariesByBenRegIds");
+	    String response = getSuccessResponseString(list, 200, "success", "getBeneficiariesByBenRegIds");
 
-		logger.info("IdentityController.getBeneficiariesByBenRegIds - end : ");
-		return response;
+	    logger.info("IdentityController.getBeneficiariesByBenRegIds - end : ");
+	    return response;
 	}
+
 
 	/**
 	 * Overloaded method with string

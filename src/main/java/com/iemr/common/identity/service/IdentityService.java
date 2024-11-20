@@ -570,7 +570,7 @@ public class IdentityService {
 		}
 		return beneficiaryList;
 	}
-
+	
 	private MBeneficiarymapping getBeneficiariesDTONew(Object[] benMapArr) {
 		MBeneficiarymapping benMapOBJ = new MBeneficiarymapping();
 		if (benMapArr != null && benMapArr.length == 12 && benMapArr[8] != null && benMapArr[9] != null) {
@@ -579,8 +579,11 @@ public class IdentityService {
 			benMapOBJ.setCreatedDate((Timestamp) benMapArr[11]);
 			benMapOBJ = mappingRepo.getMapping(getBigIntegerValueFromObject(benMapArr[9]), (Integer) benMapArr[8]);
  
+
+			BigInteger benRegId = new BigInteger(benMapArr[5].toString());
 			RMNCHBeneficiaryDetailsRmnch obj = rMNCHBeneficiaryDetailsRmnchRepo
-					.getByRegID(((BigInteger) benMapArr[5]));
+					.getByRegID(benRegId);
+			
 			if (obj != null) {
 				if (obj.getHouseoldId() != null)
 					benMapOBJ.setHouseHoldID(obj.getHouseoldId());
