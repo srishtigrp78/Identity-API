@@ -963,6 +963,7 @@ public class IdentityService {
 		beneficiarydetail.setAreaId(dto.getAreaId());
 		beneficiarydetail.setBeneficiaryRegID(dto.getBeneficiaryRegId());
 		beneficiarydetail.setCommunity(dto.getCommunity());
+		beneficiarydetail.setLiteracyStatus(dto.getLiteracyStatus());
 		beneficiarydetail.setCommunityId(dto.getCommunityId());
 		beneficiarydetail.setDob(dto.getDob());
 		beneficiarydetail.setEducation(dto.getEducation());
