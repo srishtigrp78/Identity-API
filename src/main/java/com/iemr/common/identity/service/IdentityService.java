@@ -59,6 +59,7 @@ import com.iemr.common.identity.domain.MBeneficiaryidentity;
 import com.iemr.common.identity.domain.MBeneficiarymapping;
 import com.iemr.common.identity.domain.MBeneficiaryregidmapping;
 import com.iemr.common.identity.domain.MBeneficiaryservicemapping;
+import com.iemr.common.identity.domain.TBendataaccess;
 import com.iemr.common.identity.domain.VBenAdvanceSearch;
 import com.iemr.common.identity.dto.AbhaAddressDTO;
 import com.iemr.common.identity.dto.BenIdImportDTO;
@@ -92,8 +93,15 @@ import com.iemr.common.identity.repo.rmnch.RMNCHBeneficiaryDetailsRmnchRepo;
 import com.iemr.common.identity.utils.mapper.OutputMapper;
 import com.iemr.common.identity.utils.response.OutputResponse;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.QueryTimeoutException;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 
 @Service
 public class IdentityService {
@@ -101,6 +109,9 @@ public class IdentityService {
 	public static final String CREATED_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
 	@Autowired
 	private DataSource dataSource;
+	
+	@Autowired
+    private EntityManager entityManager;
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -578,7 +589,8 @@ public class IdentityService {
 			benMapOBJ.setCreatedBy(String.valueOf(benMapArr[10]));
 			benMapOBJ.setCreatedDate((Timestamp) benMapArr[11]);
 			benMapOBJ = mappingRepo.getMapping(getBigIntegerValueFromObject(benMapArr[9]), (Integer) benMapArr[8]);
- 
+		
+			
 
 			BigInteger benRegId = new BigInteger(benMapArr[5].toString());
 			RMNCHBeneficiaryDetailsRmnch obj = rMNCHBeneficiaryDetailsRmnchRepo
