@@ -95,6 +95,7 @@ import com.iemr.common.identity.utils.response.OutputResponse;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.QueryTimeoutException;
 
+
 @Service
 public class IdentityService {
 	private static final Logger logger = LoggerFactory.getLogger(IdentityService.class);
@@ -578,7 +579,8 @@ public class IdentityService {
 			benMapOBJ.setCreatedBy(String.valueOf(benMapArr[10]));
 			benMapOBJ.setCreatedDate((Timestamp) benMapArr[11]);
 			benMapOBJ = mappingRepo.getMapping(getBigIntegerValueFromObject(benMapArr[9]), (Integer) benMapArr[8]);
- 
+		
+			
 
 			BigInteger benRegId = new BigInteger(benMapArr[5].toString());
 			RMNCHBeneficiaryDetailsRmnch obj = rMNCHBeneficiaryDetailsRmnchRepo
